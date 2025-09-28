@@ -1,0 +1,12 @@
+# Builds & deps
+.next
+dist
+out
+node_modules
+coverage
+
+# Environment / misc
+*.log
+*.lock
+.env*
+.vercel
