@@ -6,7 +6,7 @@ export default function Wedding() {
             <h1>Wedding</h1>
             <p>This page is public. Share general info here.</p>
             <nav style={{ display: "grid", gap: 8, marginTop: 16 }}>
-                <Link href="/weddingInvite/11111111-1111-1111-1111-111111111111">Example invite</Link>
+                <Link href="/wedding-invite/f8234976-a9a7-4d86-a02f-9539c0307d33">Example invite</Link>
             </nav>
         </main>
     );
