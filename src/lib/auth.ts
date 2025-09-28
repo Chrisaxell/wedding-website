@@ -9,7 +9,7 @@ const SECRET = new TextEncoder().encode(process.env.AUTH_JWT_SECRET);
 
 // Works in Next 14 (sync) and 15 (async)
 async function getJar() {
-    const maybe = (nextCookies as unknown as () => any | Promise<any>)();
+    const maybe = nextCookies();
     return Promise.resolve(maybe);
 }
 
@@ -19,7 +19,7 @@ export type Session = { sub: string; role?: "admin" | "user" };
 export async function createSessionCookie(session: Session) {
     const exp = Math.floor(Date.now() / 1000) + TTL_DAYS * 24 * 60 * 60;
 
-    const token = await new SignJWT(session as any)
+    const token = await new SignJWT(session)
         .setProtectedHeader({ alg: "HS256" })
         .setExpirationTime(exp)
         .setIssuedAt()
