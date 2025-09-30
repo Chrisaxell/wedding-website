@@ -1,38 +1,29 @@
-import { Invite, RSVP } from '@/types';
+import { notFound } from 'next/navigation';
+import { z } from 'zod';
 
-const invites = new Map<string, Invite>([
-  [
-    '11111111-1111-1111-1111-111111111111',
-    {
-      id: '11111111-1111-1111-1111-111111111111',
-      guestName: 'Chris',
-      maxGuests: 2,
-      dateISO: '2026-03-29',
-      datePretty: 'March 29, 2026',
-      venue: 'Busan Hanok Garden',
-      address: '123 Hanok-ro, Busan',
-      scheduleSummary: 'Ceremony 13:00 → Photos → Dinner 17:00',
-      dressCode: 'Semi-formal',
-    },
-  ],
-]);
+export const inviteIdSchema = z.string().uuid();
 
-const rsvps = new Map<string, RSVP[]>();
+export type Invite = {
+  id: string;
+  guestName?: string;
+  language?: 'en' | 'ko' | 'no';
+  rsvp?: 'yes' | 'no' | 'maybe';
+};
 
-export async function getInviteById(id: string): Promise<Invite | null> {
-  // In production, fetch from your DB
-  return invites.get(id) ?? null;
-}
+const MOCK_INVITES: Invite[] = [
+  { id: '11111111-1111-1111-1111-111111111111', guestName: 'Chris', language: 'en' },
+  { id: '22222222-2222-2222-2222-222222222222', guestName: 'Scarlett', language: 'ko' },
+  { id: 'f8234976-a9a7-4d86-a02f-9539c0307d33', guestName: 'Vikors', language: 'ko' },
+];
 
-export async function saveRSVP(inviteId: string, rsvp: RSVP): Promise<void> {
-  const list = rsvps.get(inviteId) ?? [];
-  list.push({ ...rsvp, createdAt: new Date().toISOString() });
-  rsvps.set(inviteId, list);
-  // Replace with DB write
-  console.log('RSVP Saved', inviteId, rsvp);
-}
+export async function getInviteOr404(inviteId: string): Promise<Invite> {
+  // 1) UUID shape check
+  const parsed = inviteIdSchema.safeParse(inviteId);
+  if (!parsed.success) notFound();
 
-// (Optional) helper to fetch RSVPs for admin views
-export async function getRSVPs(inviteId: string): Promise<RSVP[]> {
-  return rsvps.get(inviteId) ?? [];
+  // 2) lookup (replace with DB)
+  const hit = MOCK_INVITES.find((i) => i.id === inviteId);
+  if (!hit) notFound();
+
+  return hit;
 }
