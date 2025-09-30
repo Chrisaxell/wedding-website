@@ -14,8 +14,6 @@ const eslintConfig = [
   {
     ignores: ['node_modules/**', '.next/**', 'out/**', 'build/**', 'next-env.d.ts'],
   },
-  { extends: ['prettier'] },
 ];
 
 export default eslintConfig;
-s;

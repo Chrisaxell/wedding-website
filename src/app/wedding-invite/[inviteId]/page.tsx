@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import {
   AccountAccordion,
   Countdown,
@@ -101,7 +102,13 @@ export default async function Page({ params }: Props) {
 
       {/* Outro */}
       <figure className="relative">
-        <img src={WEDDING.outroImage} alt="outro" className="w-full opacity-90" />
+        <Image
+          src={WEDDING.outroImage}
+          alt="outro"
+          width={1200}
+          height={800}
+          className="w-full opacity-90"
+        />
         <figcaption className="absolute inset-0 flex items-center justify-center px-6 text-center text-white drop-shadow">
           응원해주신 모든 분들께 감사드리며 행복하게 잘 살겠습니다.
         </figcaption>

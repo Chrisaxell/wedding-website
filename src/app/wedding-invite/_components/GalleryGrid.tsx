@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 const IMAGES = ['/cat.jpg', '/cat.jpg', '/cat.jpg', '/cat.jpg', '/cat.jpg', '/cat.jpg'];
 
 export function GalleryGrid() {
@@ -12,7 +14,14 @@ export function GalleryGrid() {
       <div className="mt-4 grid grid-cols-2 gap-2 px-2">
         {IMAGES.map((src, i) => (
           <div key={i} className="overflow-hidden rounded-md">
-            <img src={src} alt={`gallery ${i + 1}`} className="aspect-[4/3] w-full object-cover" />
+            {/* Replaced img with Image; width/height approximate 4:3 ratio */}
+            <Image
+              src={src}
+              alt={`gallery ${i + 1}`}
+              width={800}
+              height={600}
+              className="aspect-[4/3] w-full object-cover"
+            />
           </div>
         ))}
       </div>
