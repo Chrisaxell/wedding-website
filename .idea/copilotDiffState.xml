@@ -3,6 +3,22 @@
   <component name="CopilotDiffPersistence">
     <option name="pendingDiffs">
       <map>
+        <entry key="$PROJECT_DIR$/.eslintrc.js">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/.eslintrc.js" />
+              <option name="updatedContent" value="// This file is now deprecated. Please use eslint.config.js with the flat config format.&#10;// ...existing code...&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/eslint.config.js">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/eslint.config.js" />
+              <option name="updatedContent" value="import js from '@eslint/js';&#10;import reactRecommended from 'eslint-plugin-react/configs/recommended';&#10;import tseslintRecommended from '@typescript-eslint/eslint-plugin/dist/configs/recommended';&#10;&#10;// ...existing code...&#10;&#10;export default [&#10;  js,&#10;  reactRecommended,&#10;  tseslintRecommended,&#10;  {&#10;    files: ['**/*.ts', '**/*.tsx'],&#10;    languageOptions: {&#10;      parser: '@typescript-eslint/parser',&#10;      parserOptions: {&#10;        project: './tsconfig.json',&#10;      },&#10;    },&#10;    // ...your custom rules...&#10;    rules: {&#10;      // ...existing code...&#10;    },&#10;  },&#10;  // ...existing code...&#10;];&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/app/wedding-invite/components/KakaoMap.tsx">
           <value>
             <PendingDiffInfo>

@@ -19,14 +19,15 @@ const WEDDING = {
   weekday: 'SUNDAY',
   venueName: 'Hanok Garden Hall',
   venueAddress: 'Busan, South Korea',
-  heroImage: '/wedding/hero.jpg',
-  outroImage: '/wedding/outro.jpg',
+  heroImage: '/cat.jpg',
+  outroImage: '/cat.jpg',
 };
 
 export const dynamic = 'force-static'; // or "force-dynamic" if you’ll fetch from DB
 
 export default async function Page({ params }: Props) {
-  const invite = await getInviteOr404(params.inviteId);
+  const { inviteId } = await params;
+  const invite = await getInviteOr404(inviteId);
 
   return (
     <main className="mx-auto w-full max-w-[430px] bg-white text-zinc-700 shadow-sm">

@@ -1,13 +1,6 @@
 'use client';
 
-const IMAGES = [
-  '/wedding/g1.jpg',
-  '/wedding/g2.jpg',
-  '/wedding/g3.jpg',
-  '/wedding/g4.jpg',
-  '/wedding/g5.jpg',
-  '/wedding/g6.jpg',
-];
+const IMAGES = ['/cat.jpg', '/cat.jpg', '/cat.jpg', '/cat.jpg', '/cat.jpg', '/cat.jpg'];
 
 export function GalleryGrid() {
   return (
