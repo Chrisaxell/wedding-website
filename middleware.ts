@@ -4,7 +4,7 @@ const COOKIE_NAME = process.env.AUTH_COOKIE_NAME ?? 'session';
 const PUBLIC_PATHS = [
   '/',
   '/wedding',
-  '/weddingInvite',
+  '/wedding-invite',
   '/login',
   '/api/login',
   '/api/logout',
