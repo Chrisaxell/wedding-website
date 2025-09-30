@@ -1,156 +1,115 @@
-'use client';
-
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Calendar } from '@/components/ui/calendar';
+  AccountAccordion,
+  Countdown,
+  GalleryGrid,
+  InfoTabs,
+  InviteHero,
+  RsvpDialog,
+} from '@/app/wedding-invite/_components';
+import { getInviteOr404 } from '@/lib/invites';
+import MapCard from '@/app/wedding-invite/_components/MapCard';
 
-import GoogleMap from '@/components/maps/GoogleMap';
+type Props = { params: { inviteId: string } };
 
-export default function WeddingInvite() {
+// --- Hard-coded wedding data for now (you’ll likely store this in DB) ---
+const WEDDING = {
+  coupleA: 'Chris',
+  coupleB: 'Scarlett',
+  dateISO: '2026-03-29T13:30:00+09:00', // Busan/KST example
+  weekday: 'SUNDAY',
+  venueName: 'Hanok Garden Hall',
+  venueAddress: 'Busan, South Korea',
+  heroImage: '/wedding/hero.jpg',
+  outroImage: '/wedding/outro.jpg',
+};
+
+export const dynamic = 'force-static'; // or "force-dynamic" if you’ll fetch from DB
+
+export default async function Page({ params }: Props) {
+  const invite = await getInviteOr404(params.inviteId);
+
   return (
-    <div className="flex min-h-screen flex-col bg-neutral-50 text-neutral-900">
-      {/* Top bar */}
-      <div className="flex w-full justify-end px-4 py-3">
-        <Button variant="ghost" size="sm" className="ml-auto">
-          Icon
-        </Button>
-      </div>
+    <main className="mx-auto w-full max-w-[430px] bg-white text-zinc-700 shadow-sm">
+      {/* Intro / hero */}
+      <InviteHero
+        heroImage={WEDDING.heroImage}
+        coupleA={WEDDING.coupleA}
+        coupleB={WEDDING.coupleB}
+        dateISO={WEDDING.dateISO}
+        weekday={WEDDING.weekday}
+        venueName={WEDDING.venueName}
+      />
 
-      {/* Main content */}
-      <main className="flex flex-1 flex-col items-center space-y-6 px-4 pb-12">
-        <header className="mt-4 space-y-1 text-center">
-          <h1 className="text-4xl font-light tracking-widest">25 | 10 | 12</h1>
-          <h2 className="text-xs tracking-[0.4em] text-neutral-500 uppercase">Sunday</h2>
-        </header>
+      {/* Greeting */}
+      <section className="px-6 py-10 text-center">
+        <p className="text-xs tracking-[0.3em] text-zinc-400">INVITATION</p>
+        <h2 className="mt-1 text-lg font-medium text-zinc-700">소중한 분들을 초대합니다</h2>
+        <p className="mt-4 leading-7">
+          살랑이는 바람결에 사랑이 묻어나는 계절입니다.
+          <br />두 사람이 사랑을 맺어 인생의 반려자가 되려 합니다.
+        </p>
+      </section>
 
-        <div className="relative h-[400px] w-[300px]">
-          <Image
-            src="/cat.jpg"
-            alt="Cat"
-            width={300}
-            height={400}
-            className="rounded-md object-cover shadow-md"
-            priority
-          />
-        </div>
+      {/* Calendar + countdown */}
+      <Countdown dateISO={WEDDING.dateISO} />
 
-        <section className="space-y-1 text-center">
-          <h1 className="text-lg tracking-wide">Some text | More text</h1>
-          <h2 className="text-sm text-neutral-600">2025 somewhat 10 and 12 maybe 30</h2>
-          <h2 className="text-sm text-neutral-500">More stuff</h2>
-          <h2 className="text-sm text-neutral-600">2025 somewhat 10 and 12 maybe 30</h2>
-          <h2 className="text-sm text-neutral-500">More stuff</h2>
-          <h2 className="text-sm text-neutral-600">2025 somewhat 10 and 12 maybe 30</h2>
-          <h2 className="text-sm text-neutral-500">More stuff</h2>
-        </section>
+      {/* Gallery */}
+      <GalleryGrid />
 
-        <Calendar selected={'01'} className="rounded-lg border" />
+      {/* Location */}
+      <MapCard
+        venueName={WEDDING.venueName}
+        address={WEDDING.venueAddress}
+        // lat/lng optional until you wire Kakao/Naver
+      />
 
-        <div>Time left to the big day</div>
+      {/* Info tabs */}
+      <section className="px-6 py-10">
+        <p className="text-center text-[10px] tracking-[0.3em] text-zinc-400">INFORMATION</p>
+        <h3 className="mb-6 text-center text-lg font-medium">예식정보 및 안내사항</h3>
+        <InfoTabs />
+      </section>
 
-        <div>
-          <h3>Gallery</h3>
-          <div className={'grid grid-cols-3 gap-4'}>
-            <Image
-              src="/cat.jpg"
-              alt="Cat"
-              width={300}
-              height={400}
-              className="rounded-md object-cover shadow-md"
-              priority
-            />
-            <Image
-              src="/cat.jpg"
-              alt="Cat"
-              width={300}
-              height={400}
-              className="rounded-md object-cover shadow-md"
-              priority
-            />
+      {/* RSVP */}
+      <section className="px-6 py-10">
+        <div className="rounded-xl border bg-zinc-50 p-6">
+          <h3 className="text-center text-lg font-medium text-zinc-700">참석 의사 전달</h3>
+          <p className="mt-2 text-center text-sm text-zinc-500">
+            더 잘 모실 수 있도록 참석 여부를 알려주세요.
+          </p>
+          <div className="mt-4 flex justify-center">
+            <RsvpDialog inviteId={invite.id} guestName={invite.guestName} />
           </div>
         </div>
+      </section>
 
-        <h3>Directions</h3>
-        <h3>Bla bla</h3>
-        <h3>bla bla</h3>
+      {/* Accounts */}
+      <section className="px-6 pb-12">
+        <h3 className="mb-4 text-center text-lg font-medium">마음 전하실 곳</h3>
+        <AccountAccordion
+          groom={[
+            { bank: 'DNB', number: '1234.56.78901', owner: 'Chris' },
+            { bank: 'Sparebank', number: '2222.33.44444', owner: 'Chris’s Dad' },
+          ]}
+          bride={[
+            { bank: 'KB', number: '110-123-456789', owner: 'Scarlett' },
+            { bank: 'Shinhan', number: '110-987-654321', owner: 'Scarlett’s Dad' },
+          ]}
+        />
+      </section>
 
-        <Tabs defaultValue="kakao_map" className={'w-full'}>
-          <TabsList>
-            <TabsTrigger value="kakao_map">Kakao Navi</TabsTrigger>
-            <TabsTrigger value="google_map">Google mps</TabsTrigger>
-          </TabsList>
-          <TabsContent value="kakao_map">
-            <GoogleMap />
-          </TabsContent>
-          <TabsContent value="google_map">
-            <GoogleMap />
-          </TabsContent>
-        </Tabs>
+      {/* Outro */}
+      <figure className="relative">
+        <img src={WEDDING.outroImage} alt="outro" className="w-full opacity-90" />
+        <figcaption className="absolute inset-0 flex items-center justify-center px-6 text-center text-white drop-shadow">
+          응원해주신 모든 분들께 감사드리며 행복하게 잘 살겠습니다.
+        </figcaption>
+      </figure>
 
-        <div>
-          <div>Subway</div>
-          <div>Bus</div>
-          <div>Parking inormation</div>
-        </div>
-
-        <h1>Ceremony information and information</h1>
-
-        <Tabs defaultValue="photo_both" className={'w-full'}>
-          <TabsList>
-            <TabsTrigger value="photo_both">Photo booth</TabsTrigger>
-            <TabsTrigger value="meal_info">Meal information</TabsTrigger>
-            <TabsTrigger value="parking_info">Parking Information</TabsTrigger>
-          </TabsList>
-          <TabsContent value="photo_both">A Photo booth</TabsContent>
-          <TabsContent value="meal_info">Meals are serverd after wedding. buffet style</TabsContent>
-          <TabsContent value="parking_info">Parking is avaliable</TabsContent>
-        </Tabs>
-
-        <Card className="w-full max-w-sm">
-          <CardHeader>
-            <CardTitle>Reception Information</CardTitle>
-          </CardHeader>
-          <CardContent>Lets arty</CardContent>
-          <CardFooter className="flex-col gap-2">
-            <Button className="w-full">View Reception map</Button>
-          </CardFooter>
-        </Card>
-
-        <Card className="w-full max-w-sm">
-          <CardHeader>
-            <CardTitle>Communicate our intention to attend</CardTitle>
-          </CardHeader>
-          <CardContent>
-            Thank you for attending with congralulations So we can treat everyne with respect Please
-            convey your intention to attend
-          </CardContent>
-          <CardFooter className="flex-col gap-2">
-            <Button className="w-full">Communicate your intention to attend</Button>
-          </CardFooter>
-        </Card>
-
-        <h1>A place to convey your feelings</h1>
-        <Accordion type="single" collapsible>
-          <AccordionItem value="item-1">
-            <AccordionTrigger>Grooms account number</AccordionTrigger>
-            <AccordionContent>Chris | 1204.61.21000</AccordionContent>
-          </AccordionItem>
-        </Accordion>
-        <Accordion type="single" collapsible>
-          <AccordionItem value="item-1">
-            <AccordionTrigger>Brides account number</AccordionTrigger>
-            <AccordionContent>Scarlett | 1204.61.21000</AccordionContent>
-          </AccordionItem>
-        </Accordion>
-      </main>
-    </div>
+      {/* Footer */}
+      <footer className="bg-zinc-100 py-6 text-center text-xs text-zinc-500">
+        © {new Date().getFullYear()} Chris & Scarlett
+      </footer>
+    </main>
   );
 }
