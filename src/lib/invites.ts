@@ -11,9 +11,9 @@ export type Invite = {
 };
 
 const MOCK_INVITES: Invite[] = [
-  { id: '11111111-1111-1111-1111-111111111111', guestName: 'Chris', language: 'en' },
-  { id: '22222222-2222-2222-2222-222222222222', guestName: 'Scarlett', language: 'ko' },
-  { id: 'f8234976-a9a7-4d86-a02f-9539c0307d33', guestName: 'Vikors', language: 'ko' },
+  { id: '0d44434f-e193-49ea-bdc2-3d3f6deab3ab', guestName: 'Chris', language: 'en' },
+  { id: '3663d23a-771b-44c8-b41a-a6ebea727427', guestName: 'Scarlett', language: 'ko' },
+  { id: 'f8234976-a9a7-4d86-a02f-9539c0307d33', guestName: 'Vikors', language: 'no' },
 ];
 
 export async function getInviteOr404(inviteId: string): Promise<Invite> {
