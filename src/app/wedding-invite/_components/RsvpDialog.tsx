@@ -12,17 +12,36 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { submitRSVP } from '@/actions/rsvp';
 
 type Props = { inviteId: string; guestName?: string };
 
 export function RsvpDialog({ inviteId, guestName }: Props) {
   const [name, setName] = useState(guestName ?? '');
   const [status, setStatus] = useState<'yes' | 'no' | 'maybe'>('yes');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const t = useTranslations('WeddingInvite');
 
   async function submit() {
-    console.log({ inviteId, name, status });
-    alert(t('RSVP_ALERT'));
+    setLoading(true);
+    setError(null);
+    try {
+      const fd = new FormData();
+      fd.set('inviteId', inviteId);
+      fd.set('name', name);
+      fd.set('status', status);
+      const res = await submitRSVP(fd);
+      if (!res.ok) {
+        setError(res.error ?? 'Error');
+        return;
+      }
+      alert(t('RSVP_ALERT'));
+    } catch {
+      setError('Network error');
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -60,9 +79,10 @@ export function RsvpDialog({ inviteId, guestName }: Props) {
               );
             })}
           </div>
-          <Button onClick={submit} className="w-full">
-            {t('RSVP_SUBMIT')}
+          <Button onClick={submit} className="w-full" disabled={loading || !name}>
+            {loading ? '...' : t('RSVP_SUBMIT')}
           </Button>
+          {error && <p className="text-xs text-red-600">{error}</p>}
         </div>
       </DialogContent>
     </Dialog>

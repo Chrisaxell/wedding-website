@@ -1,5 +1,5 @@
 {
-  "HomePage": {"wedding_info": "欢迎来到婚礼网站", "admin": "管理员"},
+  "HomePage": { "wedding_info": "欢迎来到婚礼网站", "admin": "管理员" },
   "WeddingInvite": {
     "WEDDING_DAY": "婚礼日",
     "DATE_LINE": "{year}年{month}月{day}日 • {venue}",
@@ -46,4 +46,3 @@
     "FOOTER_COPYRIGHT": "© {year} {coupleA} & {coupleB}"
   }
 }
-
