@@ -1,6 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
+# Node dependencies
 /node_modules
 /.pnp
 .pnp.*
@@ -10,34 +10,51 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
-/coverage
-
-# next.js
+# Build / output
 /.next/
 /out/
-
-# production
 /build
+/dist
+.turbo
 
-# misc
-.DS_Store
-*.pem
+# Coverage
+/coverage
 
-# debug
+# Prisma (keep migrations & schema tracked; add SQLite placeholder if ever used)
+# prisma/dev.db
+# prisma/dev.db-journal
+
+# Logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# OS junk
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# IDE / Editor
+.idea/
+.vscode/
+*.iml
+
+# Env files (never commit secrets). Use an explicit .env.example for sharing keys without values.
 .env*
+!.env.example
 
-# vercel
-.vercel
+# Certificates / keys
+*.pem
 
-# typescript
+# TypeScript build info
 *.tsbuildinfo
 next-env.d.ts
-.idea
-.idea/
+
+# Vercel
+.vercel
+
+# Misc
+# lockfiles are tracked (pnpm-lock.yaml) – keep it committed
