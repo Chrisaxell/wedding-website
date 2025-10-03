@@ -1,5 +1,5 @@
 {
-  "HomePage": {"wedding_info": "웨딩 웹사이트에 오신 것을 환영합니다", "admin": "관리"},
+  "HomePage": { "wedding_info": "웨딩 웹사이트에 오신 것을 환영합니다", "admin": "관리" },
   "WeddingInvite": {
     "WEDDING_DAY": "WEDDING DAY",
     "DATE_LINE": "{year}년 {month}월 {day}일 • {venue}",
@@ -46,4 +46,3 @@
     "FOOTER_COPYRIGHT": "© {year} {coupleA} & {coupleB}"
   }
 }
-

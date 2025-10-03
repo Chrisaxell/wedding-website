@@ -1,5 +1,5 @@
 {
-  "HomePage": {"wedding_info": "Velkommen til bryllupsnettsiden", "admin": "Admin"},
+  "HomePage": { "wedding_info": "Velkommen til bryllupsnettsiden", "admin": "Admin" },
   "WeddingInvite": {
     "WEDDING_DAY": "BRYLLUPSDAG",
     "DATE_LINE": "{day}.{month}.{year} • {venue}",
@@ -46,4 +46,3 @@
     "FOOTER_COPYRIGHT": "© {year} {coupleA} & {coupleB}"
   }
 }
-

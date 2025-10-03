@@ -1,0 +1,45 @@
+// Prisma schema for wedding website
+// Using Neon Postgres via DATABASE_URL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Language {
+  en
+  ko
+  no
+}
+
+enum RsvpStatus {
+  yes
+  no
+  maybe
+}
+
+model Invite {
+  id         String      @id @default(uuid())
+  guestName  String?
+  language   Language?   @default(en)
+  rsvpStatus RsvpStatus?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  rsvps      Rsvp[]
+}
+
+// Historical RSVP submissions (optional usage)
+model Rsvp {
+  id        String     @id @default(uuid())
+  inviteId  String
+  invite    Invite     @relation(fields: [inviteId], references: [id], onDelete: Cascade)
+  name      String
+  status    RsvpStatus
+  createdAt DateTime   @default(now())
+
+  @@index([inviteId])
+}
