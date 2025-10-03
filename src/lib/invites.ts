@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { z } from 'zod';
 import { prisma } from '@/lib/prisma';
+import type { Invite as InviteModel } from '@prisma/client';
 
 export const inviteIdSchema = z.string().uuid();
 
@@ -26,7 +27,7 @@ export async function getInviteOr404(inviteId: string): Promise<Invite> {
 }
 
 export async function listInvites(): Promise<Invite[]> {
-  const rows = await prisma.invite.findMany({ orderBy: { createdAt: 'desc' } });
+  const rows: InviteModel[] = await prisma.invite.findMany({ orderBy: { createdAt: 'desc' } });
   return rows.map((r) => ({
     id: r.id,
     guestName: r.guestName ?? undefined,
