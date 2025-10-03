@@ -43,6 +43,10 @@
     "ACCOUNTS_BRIDE_TITLE": "Brudens konti",
     "ACCOUNTS_COPY": "Kopiér",
     "OUTRO_CAPTION": "Tak for al støtte. Vi vil leve lykkeligt sammen.",
-    "FOOTER_COPYRIGHT": "© {year} {coupleA} & {coupleB}"
+    "FOOTER_COPYRIGHT": "© {year} {coupleA} & {coupleB}",
+    "CALENDAR_ADD_BUTTON": "Føj til kalender",
+    "CALENDAR_EVENT_TITLE": "{coupleA} & {coupleB} Bryllup",
+    "CALENDAR_EVENT_DESCRIPTION": "Bryllupsceremoni for {coupleA} & {coupleB} ved {venue}.",
+    "CALENDAR_FILE_NAME": "bryllup.ics"
   }
 }

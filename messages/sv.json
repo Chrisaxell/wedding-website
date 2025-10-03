@@ -43,6 +43,10 @@
     "ACCOUNTS_BRIDE_TITLE": "Brudens konton",
     "ACCOUNTS_COPY": "Kopiera",
     "OUTRO_CAPTION": "Tack för allt stöd. Vi ska leva lyckliga tillsammans.",
-    "FOOTER_COPYRIGHT": "© {year} {coupleA} & {coupleB}"
+    "FOOTER_COPYRIGHT": "© {year} {coupleA} & {coupleB}",
+    "CALENDAR_ADD_BUTTON": "Lägg till i kalender",
+    "CALENDAR_EVENT_TITLE": "Bröllop {coupleA} & {coupleB}",
+    "CALENDAR_EVENT_DESCRIPTION": "Bröllopsceremoni för {coupleA} & {coupleB} vid {venue}.",
+    "CALENDAR_FILE_NAME": "brollop.ics"
   }
 }

@@ -43,6 +43,10 @@
     "ACCOUNTS_BRIDE_TITLE": "신부측 계좌번호",
     "ACCOUNTS_COPY": "복사",
     "OUTRO_CAPTION": "응원해주신 모든 분들께 감사드리며 행복하게 잘 살겠습니다.",
-    "FOOTER_COPYRIGHT": "© {year} {coupleA} & {coupleB}"
+    "FOOTER_COPYRIGHT": "© {year} {coupleA} & {coupleB}",
+    "CALENDAR_ADD_BUTTON": "캘린더에 추가",
+    "CALENDAR_EVENT_TITLE": "{coupleA} & {coupleB} 결혼식",
+    "CALENDAR_EVENT_DESCRIPTION": "{coupleA} & {coupleB} 결혼식 - 장소: {venue}.",
+    "CALENDAR_FILE_NAME": "wedding.ics"
   }
 }

@@ -43,6 +43,10 @@
     "ACCOUNTS_BRIDE_TITLE": "Menda kuñáva cuenta kuéra",
     "ACCOUNTS_COPY": "Monguatia",
     "OUTRO_CAPTION": "Aguyje peẽme pene pytyvõ rehe. Roguerekóta vy'a ára ha ára.",
-    "FOOTER_COPYRIGHT": "© {year} {coupleA} & {coupleB}"
+    "FOOTER_COPYRIGHT": "© {year} {coupleA} & {coupleB}",
+    "CALENDAR_ADD_BUTTON": "Mbojuaju kalendáriape",
+    "CALENDAR_EVENT_TITLE": "Ñemenda {coupleA} & {coupleB}",
+    "CALENDAR_EVENT_DESCRIPTION": "Ñemenda {coupleA} & {coupleB} oikóta {venue} pe.",
+    "CALENDAR_FILE_NAME": "ñemenda.ics"
   }
 }

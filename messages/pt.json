@@ -43,6 +43,10 @@
     "ACCOUNTS_BRIDE_TITLE": "Contas da noiva",
     "ACCOUNTS_COPY": "Copiar",
     "OUTRO_CAPTION": "Obrigado a todos pelo apoio. Seremos muito felizes juntos.",
-    "FOOTER_COPYRIGHT": "© {year} {coupleA} & {coupleB}"
+    "FOOTER_COPYRIGHT": "© {year} {coupleA} & {coupleB}",
+    "CALENDAR_ADD_BUTTON": "Adicionar ao calendário",
+    "CALENDAR_EVENT_TITLE": "Casamento {coupleA} & {coupleB}",
+    "CALENDAR_EVENT_DESCRIPTION": "Cerimônia de casamento de {coupleA} & {coupleB} em {venue}.",
+    "CALENDAR_FILE_NAME": "casamento.ics"
   }
 }
