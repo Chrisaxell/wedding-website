@@ -46,6 +46,10 @@
     "ACCOUNTS_BRIDE_TITLE": "Cuentas de la novia",
     "ACCOUNTS_COPY": "Copiar",
     "OUTRO_CAPTION": "Gracias a todos por su apoyo. Viviremos felices juntos.",
-    "FOOTER_COPYRIGHT": "© {year} {coupleA} & {coupleB}"
+    "FOOTER_COPYRIGHT": "© {year} {coupleA} & {coupleB}",
+    "CALENDAR_ADD_BUTTON": "Añadir al calendario",
+    "CALENDAR_EVENT_TITLE": "Boda de {coupleA} & {coupleB}",
+    "CALENDAR_EVENT_DESCRIPTION": "Ceremonia de boda de {coupleA} & {coupleB} en {venue}.",
+    "CALENDAR_FILE_NAME": "boda.ics"
   }
 }

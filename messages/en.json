@@ -46,6 +46,10 @@
     "ACCOUNTS_BRIDE_TITLE": "Bride's Accounts",
     "ACCOUNTS_COPY": "Copy",
     "OUTRO_CAPTION": "Thank you all for your support. We will live happily together.",
-    "FOOTER_COPYRIGHT": "© {year} {coupleA} & {coupleB}"
+    "FOOTER_COPYRIGHT": "© {year} {coupleA} & {coupleB}",
+    "CALENDAR_ADD_BUTTON": "Add to Calendar",
+    "CALENDAR_EVENT_TITLE": "{coupleA} & {coupleB} Wedding",
+    "CALENDAR_EVENT_DESCRIPTION": "Wedding ceremony for {coupleA} & {coupleB} at {venue}.",
+    "CALENDAR_FILE_NAME": "wedding-event.ics"
   }
 }

@@ -11,18 +11,9 @@ import LanguageSwitcher from '@/app/wedding-invite/_components/LanguageSwitcher'
 import { getInviteOr404 } from '@/lib/invites';
 import MapCard from '@/app/wedding-invite/_components/MapCard';
 import { getTranslations } from 'next-intl/server';
+import { WEDDING_EVENT } from '@/lib/wedding';
 
 type Props = { params: { inviteId: string } };
-
-const WEDDING = {
-  coupleA: 'Chris',
-  coupleB: 'Scarlett',
-  dateISO: '2026-03-29T13:30:00+09:00',
-  venueName: 'Hanok Garden Hall',
-  venueAddress: 'Busan, South Korea',
-  heroImage: '/cat.jpg',
-  outroImage: '/cat.jpg',
-};
 
 export const dynamic = 'force-dynamic';
 
@@ -36,11 +27,11 @@ export default async function Page({ params }: Props) {
   return (
     <main className="mx-auto w-full max-w-[430px] bg-white text-zinc-700 shadow-sm">
       <InviteHero
-        heroImage={WEDDING.heroImage}
-        coupleA={WEDDING.coupleA}
-        coupleB={WEDDING.coupleB}
-        dateISO={WEDDING.dateISO}
-        venueName={WEDDING.venueName}
+        heroImage={WEDDING_EVENT.heroImage}
+        coupleA={WEDDING_EVENT.coupleA}
+        coupleB={WEDDING_EVENT.coupleB}
+        dateISO={WEDDING_EVENT.dateISO}
+        venueName={WEDDING_EVENT.venueName}
       />
       <LanguageSwitcher />
       {/* Greeting */}
@@ -56,11 +47,11 @@ export default async function Page({ params }: Props) {
         </p>
       </section>
 
-      <Countdown dateISO={WEDDING.dateISO} />
+      <Countdown dateISO={WEDDING_EVENT.dateISO} />
 
       <GalleryGrid />
 
-      <MapCard venueName={WEDDING.venueName} address={WEDDING.venueAddress} />
+      <MapCard venueName={WEDDING_EVENT.venueName} address={WEDDING_EVENT.venueAddress} />
 
       <section className="px-6 py-10">
         <p className="text-center text-[10px] tracking-[0.3em] text-zinc-400">{t('INFO_LABEL')}</p>
@@ -96,7 +87,7 @@ export default async function Page({ params }: Props) {
 
       <figure className="relative">
         <Image
-          src={WEDDING.outroImage}
+          src={WEDDING_EVENT.outroImage}
           alt="outro"
           width={1200}
           height={800}
@@ -108,7 +99,11 @@ export default async function Page({ params }: Props) {
       </figure>
 
       <footer className="bg-zinc-100 py-6 text-center text-xs text-zinc-500">
-        {t('FOOTER_COPYRIGHT', { year, coupleA: WEDDING.coupleA, coupleB: WEDDING.coupleB })}
+        {t('FOOTER_COPYRIGHT', {
+          year,
+          coupleA: WEDDING_EVENT.coupleA,
+          coupleB: WEDDING_EVENT.coupleB,
+        })}
       </footer>
     </main>
   );

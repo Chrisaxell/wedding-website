@@ -43,6 +43,10 @@
     "ACCOUNTS_BRIDE_TITLE": "新娘账户",
     "ACCOUNTS_COPY": "复制",
     "OUTRO_CAPTION": "感谢所有祝福，我们会幸福生活。",
-    "FOOTER_COPYRIGHT": "© {year} {coupleA} & {coupleB}"
+    "FOOTER_COPYRIGHT": "© {year} {coupleA} & {coupleB}",
+    "CALENDAR_ADD_BUTTON": "添加到日历",
+    "CALENDAR_EVENT_TITLE": "{coupleA} 与 {coupleB} 婚礼",
+    "CALENDAR_EVENT_DESCRIPTION": "{coupleA} 与 {coupleB} 的婚礼，地点：{venue}。",
+    "CALENDAR_FILE_NAME": "婚礼.ics"
   }
 }

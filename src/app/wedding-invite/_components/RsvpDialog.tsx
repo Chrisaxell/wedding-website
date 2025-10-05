@@ -13,6 +13,8 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { submitRSVP } from '@/actions/rsvp';
+import { downloadICSFile } from '@/lib/ics';
+import { WEDDING_EVENT } from '@/lib/wedding';
 
 type Props = { inviteId: string; guestName?: string };
 
@@ -42,6 +44,28 @@ export function RsvpDialog({ inviteId, guestName }: Props) {
     } finally {
       setLoading(false);
     }
+  }
+
+  function downloadICS() {
+    const start = new Date(WEDDING_EVENT.dateISO);
+    const end = new Date(WEDDING_EVENT.endDateISO || start.getTime() + 2 * 60 * 60 * 1000);
+    const event = {
+      title: t('CALENDAR_EVENT_TITLE', {
+        coupleA: WEDDING_EVENT.coupleA,
+        coupleB: WEDDING_EVENT.coupleB,
+      }),
+      description: t('CALENDAR_EVENT_DESCRIPTION', {
+        coupleA: WEDDING_EVENT.coupleA,
+        coupleB: WEDDING_EVENT.coupleB,
+        venue: WEDDING_EVENT.venueName,
+      }),
+      start,
+      end,
+      location: WEDDING_EVENT.venueName,
+      latitude: WEDDING_EVENT.venueLat,
+      longitude: WEDDING_EVENT.venueLng,
+    };
+    downloadICSFile(event, t('CALENDAR_FILE_NAME'));
   }
 
   return (
@@ -81,6 +105,9 @@ export function RsvpDialog({ inviteId, guestName }: Props) {
           </div>
           <Button onClick={submit} className="w-full" disabled={loading || !name}>
             {loading ? '...' : t('RSVP_SUBMIT')}
+          </Button>
+          <Button type="button" variant="outline" className="w-full" onClick={downloadICS}>
+            {t('CALENDAR_ADD_BUTTON')}
           </Button>
           {error && <p className="text-xs text-red-600">{error}</p>}
         </div>
