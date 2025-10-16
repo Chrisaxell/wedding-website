@@ -10,27 +10,34 @@ import {
 
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { submitRSVP } from '@/actions/rsvp';
 import { downloadICSFile } from '@/lib/ics';
 import { WEDDING_EVENT } from '@/lib/wedding';
 
-type Props = { inviteId: string; guestName?: string };
+type Props = { guestName?: string; autoOpen?: boolean };
 
-export function RsvpDialog({ inviteId, guestName }: Props) {
+export function RsvpDialog({ guestName, autoOpen = false }: Props) {
   const [name, setName] = useState(guestName ?? '');
   const [status, setStatus] = useState<'yes' | 'no' | 'maybe'>('yes');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
   const t = useTranslations('WeddingInvite');
+
+  useEffect(() => {
+    if (autoOpen) {
+      const timer = setTimeout(() => setOpen(true), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [autoOpen]);
 
   async function submit() {
     setLoading(true);
     setError(null);
     try {
       const fd = new FormData();
-      fd.set('inviteId', inviteId);
       fd.set('name', name);
       fd.set('status', status);
       const res = await submitRSVP(fd);
@@ -39,6 +46,10 @@ export function RsvpDialog({ inviteId, guestName }: Props) {
         return;
       }
       alert(t('RSVP_ALERT'));
+      setOpen(false);
+      // Set cookies on client side for immediate feedback
+      document.cookie = `rsvp_seen=true; path=/; max-age=${60 * 60 * 24 * 365}`;
+      document.cookie = `guest_name=${encodeURIComponent(name)}; path=/; max-age=${60 * 60 * 24 * 365}`;
     } catch {
       setError('Network error');
     } finally {
@@ -69,7 +80,7 @@ export function RsvpDialog({ inviteId, guestName }: Props) {
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="px-6">{t('RSVP_OPEN_BUTTON')}</Button>
       </DialogTrigger>

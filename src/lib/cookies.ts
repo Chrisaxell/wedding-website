@@ -23,6 +23,19 @@ export async function getCookie(name: string): Promise<string | undefined> {
  * Note: Setting cookies is only allowed in **Route Handlers** or **Server Actions**,
  * not during Server Component render. Make sure callers respect that.
  */
+export async function setCookie(name: string, value: string, maxAge?: number) {
+  const jar = await getJar();
+  jar.set({
+    name,
+    value,
+    path: '/',
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: maxAge ?? 60 * 60 * 24 * 365, // default 1 year
+  });
+}
+
 export async function deleteCookie(name: string) {
   const jar = await getJar();
   jar.set({

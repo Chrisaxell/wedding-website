@@ -1,15 +1,10 @@
-import Link from 'next/link';
-import { useTranslations } from 'next-intl';
-
 export default function Home() {
-  const t = useTranslations('HomePage');
   return (
-    <main className={'p-12'}>
-      <h1>Welcome</h1>
-      <nav className={'mt-8 grid gap-4'}>
-        <Link href="/wedding">{t('wedding_info')}</Link>
-        <Link href="/admin">{t('admin')}</Link>
-      </nav>
+    <main className="flex min-h-screen items-center justify-center p-24">
+      <div className="text-center">
+        <h1 className="text-4xl font-light text-zinc-700">Coming Soon</h1>
+        <p className="mt-4 text-zinc-500">Wedding information will be available here soon.</p>
+      </div>
     </main>
   );
 }
