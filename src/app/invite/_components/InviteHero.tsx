@@ -29,7 +29,9 @@ export function InviteHero({ heroImage, coupleA, coupleB, dateISO, venueName }: 
         <div className="text-[10px] tracking-[0.3em] text-zinc-400">{t('WEDDING_DAY')}</div>
         <div className="mt-2 font-serif text-2xl text-zinc-700">
           <span className="mr-2">{dd}</span>
+          <span className="mr-2">|</span>
           <span className="mr-2">{mm}</span>
+          <span className="mr-2">|</span>
           <span>{yyyy}</span>
         </div>
         <div className="text-xs tracking-[0.3em] text-zinc-400">{weekdayLocalized}</div>
