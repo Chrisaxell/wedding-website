@@ -8,7 +8,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const locale = await getLocale();
   return (
     <html lang={locale}>
-      <body style={{ fontFamily: 'system-ui, sans-serif' }}>
+      <body style={{ fontFamily: 'system-ui, sans-serif', backgroundColor: '#333333' }}>
         <NextIntlClientProvider
           messages={messages}
           locale={locale}
