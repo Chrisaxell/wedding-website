@@ -6,8 +6,9 @@ import './globals.css';
 
 const notoSerif = Noto_Serif({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
   display: 'swap',
+  variable: '--font-noto-serif',
 });
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -15,7 +16,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const locale = await getLocale();
   return (
     <html lang={locale}>
-      <body className={notoSerif.className} style={{ backgroundColor: '#333333' }}>
+      <body className={notoSerif.variable} style={{ backgroundColor: '#333333' }}>
         <NextIntlClientProvider
           messages={messages}
           locale={locale}
