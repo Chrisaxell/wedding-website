@@ -1,18 +1,14 @@
 'use server';
 import { prisma } from '@/lib/prisma';
-import { inviteIdSchema } from '@/lib/invites';
+import { setCookie } from '@/lib/cookies';
 import { z } from 'zod';
 
 const rsvpSchema = z.union([z.literal('yes'), z.literal('no'), z.literal('maybe')]);
 
 export async function submitRSVP(formData: FormData) {
-  const inviteId = String(formData.get('inviteId') ?? '').trim();
   const name = String(formData.get('name') ?? '').trim();
   const statusRaw = String(formData.get('status') ?? '').trim();
 
-  if (!inviteIdSchema.safeParse(inviteId).success) {
-    return { ok: false as const, error: 'Invalid invite id' };
-  }
   if (!name) {
     return { ok: false as const, error: 'Missing name' };
   }
@@ -23,22 +19,20 @@ export async function submitRSVP(formData: FormData) {
   const status = statusParse.data; // now definitely 'yes' | 'no' | 'maybe'
 
   try {
-    const updated = await prisma.invite.update({
-      where: { id: inviteId },
-      data: { guestName: name, rsvpStatus: status },
+    // Create a new RSVP entry without needing an invite
+    await prisma.rsvp.create({
+      data: {
+        name,
+        status,
+        inviteId: null, // Allow null inviteId
+      },
     });
 
-    await prisma.rsvp.create({ data: { inviteId: updated.id, name, status } });
+    // Store guest name in cookies for future visits
+    await setCookie('guest_name', name);
 
     return { ok: true as const };
   } catch (err: unknown) {
-    let code: string | undefined;
-    if (typeof err === 'object' && err !== null && 'code' in err) {
-      code = (err as { code?: string }).code;
-    }
-    if (code === 'P2025') {
-      return { ok: false as const, error: 'Invite not found' };
-    }
     console.error('RSVP submit failed', err);
     return { ok: false as const, error: 'Server error' };
   }

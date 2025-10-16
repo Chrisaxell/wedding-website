@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import {
   AccountAccordion,
   Countdown,
@@ -6,23 +5,26 @@ import {
   InfoTabs,
   InviteHero,
   RsvpDialog,
-} from '@/app/wedding-invite/_components';
-import LanguageSwitcher from '@/app/wedding-invite/_components/LanguageSwitcher';
-import { getInviteOr404 } from '@/lib/invites';
-import MapCard from '@/app/wedding-invite/_components/MapCard';
+} from '@/app/invite/_components';
+import LanguageSwitcher from '@/app/invite/_components/LanguageSwitcher';
+import MapCard from '@/app/invite/_components/MapCard';
 import { getTranslations } from 'next-intl/server';
 import { WEDDING_EVENT } from '@/lib/wedding';
-
-type Props = { params: { inviteId: string } };
+import { getCookie } from '@/lib/cookies';
+import Image from 'next/image';
 
 export const dynamic = 'force-dynamic';
 
-export default async function Page({ params }: Props) {
-  const { inviteId } = await params;
-  const invite = await getInviteOr404(inviteId);
+export default async function Page() {
   const t = await getTranslations('WeddingInvite');
   const bodyLines = t('INVITATION_BODY').split('\n');
   const year = new Date().getFullYear();
+
+  // Check if user has saved name from previous RSVP
+  const savedGuestName = await getCookie('guest_name');
+
+  // Check if user has seen RSVP dialog before
+  const hasSeenRsvp = (await getCookie('rsvp_seen')) === 'true';
 
   return (
     <main className="mx-auto w-full max-w-[430px] bg-white text-zinc-700 shadow-sm">
@@ -66,7 +68,7 @@ export default async function Page({ params }: Props) {
           </h3>
           <p className="mt-2 text-center text-sm text-zinc-500">{t('RSVP_SECTION_SUB')}</p>
           <div className="mt-4 flex justify-center">
-            <RsvpDialog inviteId={invite.id} guestName={invite.guestName} />
+            <RsvpDialog guestName={savedGuestName} autoOpen={!hasSeenRsvp} />
           </div>
         </div>
       </section>
@@ -76,11 +78,11 @@ export default async function Page({ params }: Props) {
         <AccountAccordion
           groom={[
             { bank: 'DNB', number: '1234.56.78901', owner: 'Chris' },
-            { bank: 'Sparebank', number: '2222.33.44444', owner: 'Chris’s Dad' },
+            { bank: 'Sparebank', number: '2222.33.44444', owner: "Chris's Dad" },
           ]}
           bride={[
             { bank: 'KB', number: '110-123-456789', owner: 'Scarlett' },
-            { bank: 'Shinhan', number: '110-987-654321', owner: 'Scarlett’s Dad' },
+            { bank: 'Shinhan', number: '110-987-654321', owner: "Scarlett's Dad" },
           ]}
         />
       </section>

@@ -1,38 +1,55 @@
 import Link from 'next/link';
 import { readSessionFromCookie } from '@/lib/auth';
-import { listInvites } from '@/lib/invites';
+import { prisma } from '@/lib/prisma';
 
 export default async function AdminPage() {
   const session = await readSessionFromCookie();
-  const invites = await listInvites();
+
+  if (!session) {
+    return (
+      <main style={{ padding: 24 }}>
+        <h1>Admin Access Required</h1>
+        <p>You need to be logged in to access this page.</p>
+        <Link href="/login/">Login</Link>
+      </main>
+    );
+  }
+
+  // Fetch all RSVPs directly
+  const rsvps = await prisma.rsvp.findMany({
+    orderBy: { createdAt: 'desc' },
+  });
 
   return (
     <main style={{ padding: 24 }}>
-      <h1>Admin</h1>
-      <p>Session: {session ? '✅ logged in' : '❌ not logged in'}</p>
+      <h1>Admin Dashboard</h1>
+      <p>Session: ✅ logged in</p>
       <nav style={{ display: 'grid', gap: 8, marginTop: 16 }}>
-        <Link href="/wedding">Public wedding info</Link>
-        <Link href="/wedding-invite">Example invite</Link>
-        {session ? <a href="/api/logout">Logout</a> : <Link href="/login/">Login</Link>}
+        <a href="/api/logout">Logout</a>
+        <Link href="/invite" style={{ color: '#2563eb' }}>
+          View Wedding Invite
+        </Link>
       </nav>
 
       <section style={{ marginTop: 40 }}>
-        <h2>Invites</h2>
+        <h2>RSVPs ({rsvps.length})</h2>
         <div style={{ display: 'grid', gap: 8, marginTop: 12 }}>
-          {invites.map((inv) => (
-            <div key={inv.id} style={{ padding: 12, border: '1px solid #ddd', borderRadius: 8 }}>
-              <code style={{ fontSize: 12 }}>{inv.id}</code>
-              <div style={{ display: 'flex', gap: 12, marginTop: 4, fontSize: 14 }}>
-                <span>Name: {inv.guestName || '—'}</span>
-                <span>Lang: {inv.language || '—'}</span>
-                <span>RSVP: {inv.rsvp || '—'}</span>
+          {rsvps.map((rsvp) => (
+            <div key={rsvp.id} style={{ padding: 12, border: '1px solid #ddd', borderRadius: 8 }}>
+              <div style={{ display: 'flex', gap: 12, fontSize: 14 }}>
+                <span>
+                  <strong>{rsvp.name}</strong>
+                </span>
+                <span>
+                  Status: <strong>{rsvp.status}</strong>
+                </span>
+                <span style={{ color: '#666', fontSize: 12 }}>
+                  {new Date(rsvp.createdAt).toLocaleDateString()}
+                </span>
               </div>
-              <Link href={`/wedding-invite/${inv.id}`} style={{ fontSize: 12, color: '#2563eb' }}>
-                Open invite
-              </Link>
             </div>
           ))}
-          {!invites.length && <p>No invites yet.</p>}
+          {!rsvps.length && <p>No RSVPs yet.</p>}
         </div>
       </section>
     </main>
