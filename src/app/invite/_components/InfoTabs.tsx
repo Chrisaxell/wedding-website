@@ -15,7 +15,7 @@ export function InfoTabs() {
       </TabsList>
       <TabsContent value="photo" className="mt-4 space-y-3">
         <Image
-          src="/cat.jpg"
+          src="/images/gallery photos/1 완-3.jpg"
           alt="photobooth"
           width={800}
           height={600}
@@ -24,12 +24,18 @@ export function InfoTabs() {
         <p className="text-sm text-zinc-600">{t('INFO_PHOTO_DESC')}</p>
       </TabsContent>
       <TabsContent value="food" className="mt-4 space-y-3">
-        <Image src="/cat.jpg" alt="food" width={800} height={600} className="w-full rounded-md" />
+        <Image
+          src="/images/gallery photos/3 완-3.jpg"
+          alt="food"
+          width={800}
+          height={600}
+          className="w-full rounded-md"
+        />
         <p className="text-sm text-zinc-600">{t('INFO_FOOD_DESC')}</p>
       </TabsContent>
       <TabsContent value="parking" className="mt-4 space-y-3">
         <Image
-          src="/cat.jpg"
+          src="/images/gallery photos/5 완-3.jpg"
           alt="parking"
           width={800}
           height={600}
