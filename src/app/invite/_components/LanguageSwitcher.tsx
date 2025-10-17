@@ -13,6 +13,7 @@ const LOCALES: { code: string; label: string }[] = [
   { code: 'ko', label: '한국어' },
   { code: 'zh', label: '中文' },
   { code: 'gn', label: "Avañe'ẽ" },
+  { code: 'ar', label: 'العربية' }, // Added Arabic
 ];
 
 export default function LanguageSwitcher() {
