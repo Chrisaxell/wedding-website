@@ -64,14 +64,16 @@ export function GalleryGrid() {
                 </div>
                 {/* 1 portrait image */}
                 {group.images[2] && (
-                  <div className="flex-1 overflow-hidden rounded-md">
-                    <Image
-                      src={group.images[2]}
-                      alt={t('GALLERY_ALT', { index: groupIndex * 3 + 3 })}
-                      width={600}
-                      height={900}
-                      className="aspect-[2/3] w-full object-cover"
-                    />
+                  <div className="flex flex-1 items-center">
+                    <div className="w-full overflow-hidden rounded-md">
+                      <Image
+                        src={group.images[2]}
+                        alt={t('GALLERY_ALT', { index: groupIndex * 3 + 3 })}
+                        width={600}
+                        height={800}
+                        className="aspect-[3/4] w-full object-cover"
+                      />
+                    </div>
                   </div>
                 )}
               </>
@@ -79,14 +81,16 @@ export function GalleryGrid() {
               <>
                 {/* 1 portrait image */}
                 {group.images[0] && (
-                  <div className="flex-1 overflow-hidden rounded-md">
-                    <Image
-                      src={group.images[0]}
-                      alt={t('GALLERY_ALT', { index: groupIndex * 3 + 1 })}
-                      width={600}
-                      height={900}
-                      className="aspect-[2/3] w-full object-cover"
-                    />
+                  <div className="flex flex-1 items-center">
+                    <div className="w-full overflow-hidden rounded-md">
+                      <Image
+                        src={group.images[0]}
+                        alt={t('GALLERY_ALT', { index: groupIndex * 3 + 1 })}
+                        width={600}
+                        height={800}
+                        className="aspect-[3/4] w-full object-cover"
+                      />
+                    </div>
                   </div>
                 )}
                 {/* 2 horizontal images stacked */}
