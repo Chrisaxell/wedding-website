@@ -31,7 +31,7 @@ export function Countdown({ dateISO }: { dateISO: string }) {
       <Card className="bg-zinc-50">
         <CardContent className="p-6 text-center">
           <div className="text-sm text-zinc-600">{tr('COUNTDOWN_LABEL')}</div>
-          <div className="mt-3 flex items-end justify-center gap-2 font-mono text-xl">
+          <div className="mt-3 flex items-end justify-center gap-2 font-serif text-xl leading-tight tabular-nums">
             <span className="rounded-md bg-white px-3 py-2 shadow">{t.days}</span>
             {tr('COUNTDOWN_DAYS')}
             <span>:</span>

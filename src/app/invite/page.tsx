@@ -5,6 +5,7 @@ import {
   InfoTabs,
   InviteHero,
   RsvpDialog,
+  AddCalendarButton, // Import AddCalendarButton
 } from '@/app/invite/_components';
 import LanguageSwitcher from '@/app/invite/_components/LanguageSwitcher';
 import MapCard from '@/app/invite/_components/MapCard';
@@ -50,6 +51,10 @@ export default async function Page() {
       </section>
 
       <Countdown dateISO={WEDDING_EVENT.dateISO} />
+      {/* Quick access calendar button */}
+      <section className="px-6 pt-2">
+        <AddCalendarButton />
+      </section>
 
       <GalleryGrid />
 

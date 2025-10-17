@@ -12,8 +12,8 @@ export const WEDDING_EVENT = {
   venueLat: 35.36410463760984,
   venueLng: 128.99068710998083,
   timezone: 'Asia/Seoul',
-  heroImage: '/cat.jpg',
-  outroImage: '/cat.jpg',
+  heroImage: '/images/gallery photos/16 완(볼 제거)-3.jpg',
+  outroImage: '/images/gallery photos/21 완-3.jpg',
 };
 
 export type WeddingEvent = typeof WEDDING_EVENT;

@@ -1,7 +1,6 @@
 'use client';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
 export function InfoTabs() {
@@ -14,27 +13,12 @@ export function InfoTabs() {
         <TabsTrigger value="parking">{t('INFO_TAB_PARKING')}</TabsTrigger>
       </TabsList>
       <TabsContent value="photo" className="mt-4 space-y-3">
-        <Image
-          src="/cat.jpg"
-          alt="photobooth"
-          width={800}
-          height={600}
-          className="w-full rounded-md"
-        />
         <p className="text-sm text-zinc-600">{t('INFO_PHOTO_DESC')}</p>
       </TabsContent>
       <TabsContent value="food" className="mt-4 space-y-3">
-        <Image src="/cat.jpg" alt="food" width={800} height={600} className="w-full rounded-md" />
         <p className="text-sm text-zinc-600">{t('INFO_FOOD_DESC')}</p>
       </TabsContent>
       <TabsContent value="parking" className="mt-4 space-y-3">
-        <Image
-          src="/cat.jpg"
-          alt="parking"
-          width={800}
-          height={600}
-          className="w-full rounded-md"
-        />
         <p className="text-sm text-zinc-600">{t('INFO_PARKING_DESC')}</p>
       </TabsContent>
     </Tabs>

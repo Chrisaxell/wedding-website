@@ -47,6 +47,18 @@
     "CALENDAR_ADD_BUTTON": "Føj til kalender",
     "CALENDAR_EVENT_TITLE": "{coupleA} & {coupleB} Bryllup",
     "CALENDAR_EVENT_DESCRIPTION": "Bryllupsceremoni for {coupleA} & {coupleB} ved {venue}.",
-    "CALENDAR_FILE_NAME": "bryllup.ics"
+    "CALENDAR_FILE_NAME": "bryllup.ics",
+    "RSVP_NAME_LABEL": "Navn",
+    "RSVP_EMAIL_LABEL": "E-mail",
+    "RSVP_EMAIL_PLACEHOLDER": "din.email@eksempel.com",
+    "RSVP_PHONE_LABEL": "Telefonnummer",
+    "RSVP_PHONE_PLACEHOLDER": "+45 12 34 56 78",
+    "RSVP_CONTACT_INFO": "Tilføj mindst én kontakt (e-mail eller telefon), så vi kan sende opdateringer om brylluppet.",
+    "RSVP_PLUS_ONE_LABEL": "Jeg medbringer en +1",
+    "RSVP_ATTENDANCE_LABEL": "Deltager du?",
+    "RSVP_SUCCESS_TITLE": "Tak!",
+    "RSVP_SUCCESS_MESSAGE": "Dit svar er registreret. Vi glæder os til at fejre med dig!",
+    "RSVP_CALENDAR_PROMPT": "Vil du tilføje brylluppet til din kalender?",
+    "RSVP_SKIP_CALENDAR": "Senere"
   }
 }

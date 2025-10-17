@@ -10,10 +10,13 @@ export type Invite = {
   dressCode?: string;
 };
 
+// Updated RSVP type to match Prisma model fields used in UI
 export type RSVP = {
+  id?: string;
   name: string;
-  attending: boolean;
-  guests: number;
-  note?: string;
+  status: 'yes' | 'no' | 'maybe';
+  plusOne: boolean;
+  email?: string | null;
+  phone?: string | null;
   createdAt?: string;
 };

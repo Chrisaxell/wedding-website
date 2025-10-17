@@ -5,3 +5,4 @@ export * from './InviteHero';
 export * from './RsvpDialog';
 export * from './GalleryGrid';
 export * from './AccountAccordion';
+export * from './AddCalendarButton';

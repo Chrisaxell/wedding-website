@@ -15,9 +15,18 @@ export default async function AdminPage() {
     );
   }
 
-  // Fetch all RSVPs directly
+  // Fetch all RSVPs directly including contact info
   const rsvps = await prisma.rsvp.findMany({
     orderBy: { createdAt: 'desc' },
+    select: {
+      id: true,
+      name: true,
+      status: true,
+      plusOne: true,
+      email: true,
+      phone: true,
+      createdAt: true,
+    },
   });
 
   return (
@@ -34,21 +43,30 @@ export default async function AdminPage() {
       <section style={{ marginTop: 40 }}>
         <h2>RSVPs ({rsvps.length})</h2>
         <div style={{ display: 'grid', gap: 8, marginTop: 12 }}>
-          {rsvps.map((rsvp) => (
-            <div key={rsvp.id} style={{ padding: 12, border: '1px solid #ddd', borderRadius: 8 }}>
-              <div style={{ display: 'flex', gap: 12, fontSize: 14 }}>
-                <span>
-                  <strong>{rsvp.name}</strong>
-                </span>
-                <span>
-                  Status: <strong>{rsvp.status}</strong>
-                </span>
-                <span style={{ color: '#666', fontSize: 12 }}>
-                  {new Date(rsvp.createdAt).toLocaleDateString()}
-                </span>
+          {rsvps.map((rsvp) => {
+            const contact = rsvp.email || rsvp.phone || '—';
+            return (
+              <div key={rsvp.id} style={{ padding: 12, border: '1px solid #ddd', borderRadius: 8 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 4, fontSize: 14 }}>
+                  <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                    <span>
+                      <strong>{rsvp.name}</strong>
+                    </span>
+                    <span>
+                      Status: <strong>{rsvp.status}</strong>
+                    </span>
+                    <span>
+                      +1: <strong>{rsvp.plusOne ? 'Yes' : 'No'}</strong>
+                    </span>
+                    <span style={{ color: '#666' }}>Contact: {contact}</span>
+                  </div>
+                  <span style={{ color: '#666', fontSize: 12 }}>
+                    {new Date(rsvp.createdAt).toLocaleString()}
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
           {!rsvps.length && <p>No RSVPs yet.</p>}
         </div>
       </section>
