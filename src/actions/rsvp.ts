@@ -2,6 +2,7 @@
 import { prisma } from '@/lib/prisma';
 import { setCookie } from '@/lib/cookies';
 import { z } from 'zod';
+import type { Prisma } from '@prisma/client';
 
 const rsvpSchema = z.union([z.literal('yes'), z.literal('no'), z.literal('maybe')]);
 
@@ -30,16 +31,19 @@ export async function submitRSVP(formData: FormData) {
   const status = statusParse.data; // 'yes' | 'no' | 'maybe'
 
   try {
-    const created = await prisma.rsvp.create({
-      data: {
-        name,
-        email: email || null,
-        phone: phone || null,
-        plusOne,
-        status,
-        inviteId,
-      },
-    });
+    // Use unchecked create to allow direct inviteId assignment
+    const data: Prisma.RsvpUncheckedCreateInput = {
+      name,
+      email: email || null,
+      phone: phone || null,
+      plusOne,
+      status,
+      inviteId, // optional
+      createdAt: undefined, // let DB default handle
+      id: undefined, // auto uuid
+    };
+
+    const created = await prisma.rsvp.create({ data });
 
     await setCookie('guest_name', name);
     await setCookie('rsvp_status', status);
