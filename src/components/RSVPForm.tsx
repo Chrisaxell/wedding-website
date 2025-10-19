@@ -3,55 +3,79 @@
 import { useState, useTransition } from 'react';
 import { submitRSVP } from '@/actions/rsvp';
 
-export default function RSVPForm({ inviteId, maxGuests }: { inviteId: string; maxGuests: number }) {
+export default function RSVPForm({ inviteId }: { inviteId?: string }) {
   const [pending, start] = useTransition();
   const [message, setMessage] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
         const form = e.currentTarget;
-        const formData = new FormData(form);
+        const fd = new FormData(form);
         start(async () => {
-          const res = await submitRSVP(formData);
-          setMessage(res ? 'Thanks! Your RSVP was recorded.' : (res ?? 'Something went wrong.'));
-          if (res) form.reset();
+          setError(null);
+          const res = await submitRSVP(fd);
+          if (!res.ok) {
+            setError(res.error || 'Error');
+          } else {
+            setMessage('RSVP submitted!');
+            form.reset();
+          }
         });
       }}
-      style={{ display: 'grid', gap: 12, maxWidth: 480 }}
+      className="grid max-w-sm gap-3"
     >
-      <input type="hidden" name="inviteId" value={inviteId} />
-      <label>
-        Your name
-        <input name="name" required placeholder="Full name" />
+      {inviteId && <input type="hidden" name="inviteId" value={inviteId} />}
+      <label className="grid gap-1 text-sm">
+        Name
+        <input name="name" required placeholder="Your name" className="rounded border px-2 py-1" />
       </label>
-
-      <fieldset>
-        <legend>Will you attend?</legend>
-        <label>
-          <input type="radio" name="attending" value="yes" defaultChecked /> Yes
-        </label>{' '}
-        <label>
-          <input type="radio" name="attending" value="no" /> No
-        </label>
+      <label className="grid gap-1 text-sm">
+        Email
+        <input
+          name="email"
+          type="email"
+          placeholder="you@example.com"
+          className="rounded border px-2 py-1"
+        />
+      </label>
+      <label className="grid gap-1 text-sm">
+        Phone
+        <input
+          name="phone"
+          type="tel"
+          placeholder="+1 234 567 8900"
+          className="rounded border px-2 py-1"
+        />
+      </label>
+      <div className="flex items-center gap-2 text-sm">
+        <input id="plusOne" name="plusOne" type="checkbox" value="true" className="h-4 w-4" />
+        <label htmlFor="plusOne">Bringing a +1</label>
+      </div>
+      <fieldset className="grid gap-2 text-sm">
+        <legend className="font-medium">Attendance</legend>
+        <div className="flex gap-2">
+          {['yes', 'maybe', 'no'].map((s) => (
+            <label key={s} className="flex items-center gap-1">
+              <input type="radio" name="status" value={s} defaultChecked={s === 'yes'} /> {s}
+            </label>
+          ))}
+        </div>
       </fieldset>
-
-      <label>
-        Number of guests (incl. you)
-        <input name="guests" type="number" min={0} max={maxGuests} defaultValue={1} required />
-      </label>
-
-      <label>
-        Note / allergies
-        <textarea name="note" rows={3} placeholder="Anything we should know?" />
-      </label>
-
-      <button disabled={pending} type="submit">
+      <button
+        disabled={pending}
+        type="submit"
+        className="rounded bg-blue-600 px-3 py-2 text-white disabled:opacity-50"
+      >
         {pending ? 'Submitting…' : 'Send RSVP'}
       </button>
-
-      {message && <p>{message}</p>}
+      <p className="text-xs text-zinc-500">
+        Provide at least email or phone so we can send updates.
+      </p>
+      {error && <p className="text-xs text-red-600">{error}</p>}
+      {message && <p className="text-xs text-green-600">{message}</p>}
     </form>
   );
 }
