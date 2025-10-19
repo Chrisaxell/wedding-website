@@ -2,7 +2,6 @@
 
 import { Card, CardContent } from '@/components/ui/card';
 import { useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
 
 function getParts(targetISO: string) {
   const target = new Date(targetISO).getTime();
@@ -18,34 +17,71 @@ function getParts(targetISO: string) {
   return { days, hours, mins, secs };
 }
 
-export function Countdown({ dateISO }: { dateISO: string }) {
+export interface CountdownProps {
+  dateISO: string;
+  padDays?: boolean; // whether to zero-pad the days value
+  padTime?: boolean; // whether to zero-pad hours/mins/secs
+  showPlural?: boolean; // whether to pluralize unit labels
+}
+
+export function Countdown({
+  dateISO,
+  padDays = true,
+  padTime = true,
+  showPlural = true,
+}: CountdownProps) {
   const [t, setT] = useState(() => getParts(dateISO));
-  const tr = useTranslations('WeddingInvite');
+
   useEffect(() => {
     const id = setInterval(() => setT(getParts(dateISO)), 1000);
     return () => clearInterval(id);
   }, [dateISO]);
 
+  // Closest whole days remaining (rounded to nearest day)
+  const daysLeft = Math.max(0, Math.round((new Date(dateISO).getTime() - Date.now()) / 86400000));
+
   return (
     <section className="px-6 pt-8 pb-10">
       <Card className="bg-zinc-50">
-        <CardContent className="p-6 text-center">
-          <div className="text-sm text-zinc-600">{tr('COUNTDOWN_LABEL')}</div>
-          <div className="mt-3 flex items-end justify-center gap-2 font-serif text-xl leading-tight tabular-nums">
-            <span className="rounded-md bg-white px-3 py-2 shadow">{t.days}</span>
-            {tr('COUNTDOWN_DAYS')}
-            <span>:</span>
-            <span className="rounded-md bg-white px-3 py-2 shadow">{t.hours}</span>
-            {tr('COUNTDOWN_H')}
-            <span>:</span>
-            <span className="rounded-md bg-white px-3 py-2 shadow">{t.mins}</span>
-            {tr('COUNTDOWN_M')}
-            <span>:</span>
-            <span className="rounded-md bg-white px-3 py-2 shadow">{t.secs}</span>
-            {tr('COUNTDOWN_S')}
+        <CardContent className="p-6">
+          <div className="flex justify-center">
+            <div className="flex items-stretch justify-center gap-4">
+              {(() => {
+                const daysStr = padDays ? t.days.toString().padStart(2, '0') : t.days.toString();
+                const dayLabel = showPlural ? (t.days === 1 ? 'Day' : 'Days') : 'Day';
+                return <TimeBlock label={dayLabel} value={daysStr} />;
+              })()}
+              {(() => {
+                const hoursStr = padTime ? t.hours.toString().padStart(2, '0') : t.hours.toString();
+                const hourLabel = showPlural ? (t.hours === 1 ? 'Hour' : 'Hours') : 'Hour';
+                return <TimeBlock label={hourLabel} value={hoursStr} />;
+              })()}
+              {(() => {
+                const minsStr = padTime ? t.mins.toString().padStart(2, '0') : t.mins.toString();
+                const minLabel = showPlural ? (t.mins === 1 ? 'Min' : 'Mins') : 'Min';
+                return <TimeBlock label={minLabel} value={minsStr} />;
+              })()}
+              {(() => {
+                const secsStr = padTime ? t.secs.toString().padStart(2, '0') : t.secs.toString();
+                const secLabel = showPlural ? (t.secs === 1 ? 'Sec' : 'Secs') : 'Sec';
+                return <TimeBlock label={secLabel} value={secsStr} />;
+              })()}
+            </div>
           </div>
+          <p className="mt-4 text-center text-sm text-zinc-600">Wedding {daysLeft} days left!</p>
         </CardContent>
       </Card>
     </section>
+  );
+}
+
+function TimeBlock({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex min-w-[58px] flex-col items-center justify-center rounded-md border border-zinc-200 bg-white px-2 py-2 font-sans shadow-sm">
+      <span className="flex h-8 items-center text-2xl leading-none font-semibold lining-nums tabular-nums">
+        {value}
+      </span>
+      <span className="mt-1 text-[9px] tracking-wide text-zinc-500 uppercase">{label}</span>
+    </div>
   );
 }

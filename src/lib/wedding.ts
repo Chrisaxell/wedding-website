@@ -1,8 +1,8 @@
 // Global wedding event constants for easy centralized updates
 // Adjust date/time, venue, and coordinates here as needed.
 export const WEDDING_EVENT = {
-  coupleA: 'Chris',
-  coupleB: 'Scarlett',
+  coupleB: 'Christian Axell',
+  coupleA: 'JeongHee Hong',
   // Event start (local Korea time UTC+9)
   dateISO: '2026-03-28T13:30:00+09:00',
   // Approximate end time (2h after start)

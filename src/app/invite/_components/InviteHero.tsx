@@ -17,25 +17,25 @@ export function InviteHero({ heroImage, coupleA, coupleB, dateISO, venueName }: 
   const locale = useLocale();
   const date = new Date(dateISO);
   const yyyy = date.getFullYear();
-  const mm = `${date.getMonth() + 1}`.padStart(2, '0');
-  const dd = `${date.getDate()}`.padStart(2, '0');
+  const dayNumber = date.getDate(); // unpadded
   const weekdayLocalized = new Intl.DateTimeFormat(locale, { weekday: 'long' })
     .format(date)
     .toUpperCase();
 
+  // Numeric-only date for first display
+  const numericDate = `${dayNumber.toString().padStart(2, '0')} ${(date.getMonth() + 1).toString().padStart(2, '0')}  ${yyyy} `;
+  // Localized month/day/year string for second line with time
+  const monthDateString = new Intl.DateTimeFormat(locale, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
+  const eventTime = '13:00';
+
   return (
     <section className="relative">
-      <div className="px-6 pt-8 pb-4 text-center">
-        <div className="font-serif text-[10px] tracking-[0.3em] text-zinc-400">
-          {t('WEDDING_DAY')}
-        </div>
-        <div className="mt-2 font-serif text-2xl leading-tight text-zinc-700">
-          <span className="mr-2">{dd}</span>
-          <span className="mr-2">|</span>
-          <span className="mr-2">{mm}</span>
-          <span className="mr-2">|</span>
-          <span>{yyyy}</span>
-        </div>
+      <div className="space-y-4 p-6 pt-8 pb-4 text-center">
+        <div className="mt-2 font-sans text-2xl leading-tight text-zinc-700">{numericDate}</div>
         <div className="font-serif text-xs leading-tight tracking-[0.3em] text-zinc-400">
           {weekdayLocalized}
         </div>
@@ -54,7 +54,7 @@ export function InviteHero({ heroImage, coupleA, coupleB, dateISO, venueName }: 
           <span>{coupleB}</span>
         </div>
         <div className="mt-1 text-sm">
-          {t('DATE_LINE', { year: yyyy, month: mm, day: dd, venue: venueName })}
+          {monthDateString} • {eventTime} • {venueName}
         </div>
       </div>
     </section>
