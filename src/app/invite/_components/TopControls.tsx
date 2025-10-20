@@ -1,6 +1,6 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
-import { Globe, Music2, Music4 } from 'lucide-react';
+import { Globe, Volume2, VolumeX } from 'lucide-react';
 import LanguageSwitcher from '@/app/invite/_components/LanguageSwitcher';
 import { WEDDING_EVENT } from '@/lib/wedding';
 import { Button } from '@/components/ui/button';
@@ -17,6 +17,7 @@ export function TopControls() {
     const audio = audioRef.current;
     if (!audio) return;
     audio.muted = muted;
+    audio.volume = 0.3; // Set volume to 30%
     if (!muted) {
       audio.play().catch(() => {
         // If play fails (autoplay restriction), stay muted until user interacts again
@@ -94,7 +95,11 @@ export function TopControls() {
               variant="ghost"
               size="icon"
             >
-              {muted ? <Music4 className="size-5" /> : <Music2 className="size-5" />}
+              {muted ? (
+                <VolumeX className="size-5 text-zinc-600" />
+              ) : (
+                <Volume2 className="size-5 text-zinc-600" />
+              )}
             </Button>
             <audio
               ref={audioRef}
