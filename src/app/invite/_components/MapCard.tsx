@@ -2,6 +2,10 @@
 
 import { Card, CardContent } from '@/components/ui/card';
 import { useTranslations } from 'next-intl';
+import GoogleMap from '@/components/maps/GoogleMap';
+import KakaoMap from '@/components/maps/KakaoMap';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useState } from 'react';
 
 type Props = {
   venueName: string;
@@ -10,8 +14,10 @@ type Props = {
   lng?: number;
 };
 
-export default function MapCard({ venueName, address }: Props) {
+export default function MapCard({ venueName, address, lat, lng }: Props) {
   const t = useTranslations('WeddingInvite');
+  const canRender = typeof lat === 'number' && typeof lng === 'number';
+  const [value, setValue] = useState<'google' | 'kakao'>('google');
   return (
     <section className="px-4 py-10">
       <div className="text-center">
@@ -24,24 +30,57 @@ export default function MapCard({ venueName, address }: Props) {
       </div>
       <Card className="mx-2 mt-4">
         <CardContent className="p-0">
-          <div className="h-60 w-full bg-zinc-100">
-            <div className="flex h-full items-center justify-center px-3 text-center text-sm text-zinc-500">
-              {t('MAP_PLACEHOLDER')}
+          <Tabs
+            value={value}
+            onValueChange={(v) => setValue(v as 'google' | 'kakao')}
+            className="w-full"
+          >
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="google">{t('MAP_TAB_GOOGLE')}</TabsTrigger>
+              <TabsTrigger value="kakao">{t('MAP_TAB_KAKAO')}</TabsTrigger>
+            </TabsList>
+            <div className="relative">
+              <div
+                role="tabpanel"
+                aria-labelledby="google"
+                className={value === 'google' ? 'block' : 'hidden'}
+              >
+                {canRender ? (
+                  <GoogleMap
+                    lat={lat!}
+                    lng={lng!}
+                    title={venueName}
+                    className="aspect-[4/3] w-full"
+                  />
+                ) : (
+                  <div className="flex h-60 items-center justify-center text-sm text-zinc-500">
+                    {t('MAP_PLACEHOLDER')}
+                  </div>
+                )}
+              </div>
+              <div
+                role="tabpanel"
+                aria-labelledby="kakao"
+                className={value === 'kakao' ? 'block' : 'hidden'}
+              >
+                {canRender ? (
+                  <KakaoMap
+                    lat={lat!}
+                    lng={lng!}
+                    title={venueName}
+                    venueName={venueName}
+                    className="aspect-[4/3] w-full"
+                  />
+                ) : (
+                  <div className="flex h-60 items-center justify-center text-sm text-zinc-500">
+                    {t('MAP_PLACEHOLDER')}
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          </Tabs>
         </CardContent>
       </Card>
-      <div className="mt-3 grid grid-cols-3 gap-2 px-2 text-center text-xs">
-        <a className="rounded-md bg-zinc-100 py-2" href="#" aria-disabled>
-          {t('MAP_LINK_NAVER')}
-        </a>
-        <a className="rounded-md bg-zinc-100 py-2" href="#" aria-disabled>
-          {t('MAP_LINK_KAKAO')}
-        </a>
-        <a className="rounded-md bg-zinc-100 py-2" href="#" aria-disabled>
-          {t('MAP_LINK_TMAP')}
-        </a>
-      </div>
     </section>
   );
 }

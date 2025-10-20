@@ -10,6 +10,7 @@ import {
 } from '@/app/invite/_components';
 import MapCard from '@/app/invite/_components/MapCard';
 import { getTranslations } from 'next-intl/server';
+import { getLocale } from 'next-intl/server';
 import { WEDDING_EVENT } from '@/lib/wedding';
 import { getCookie } from '@/lib/cookies';
 import Image from 'next/image';
@@ -18,6 +19,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function Page() {
   const t = await getTranslations('WeddingInvite');
+  const locale = await getLocale();
   const bodyLines = t('INVITATION_BODY').split('\n');
 
   // Check if user has saved name from previous RSVP
@@ -34,7 +36,7 @@ export default async function Page() {
         coupleA={WEDDING_EVENT.coupleA}
         coupleB={WEDDING_EVENT.coupleB}
         dateISO={WEDDING_EVENT.dateISO}
-        venueName={WEDDING_EVENT.venueName}
+        venueName={WEDDING_EVENT.venueAddress} // changed from venueName to venueAddress for broader location display
       />
       {/* Greeting */}
       <section className="px-6 py-10 text-center">
@@ -57,7 +59,12 @@ export default async function Page() {
 
       <GalleryGrid />
 
-      <MapCard venueName={WEDDING_EVENT.venueName} address={WEDDING_EVENT.venueAddress} />
+      <MapCard
+        venueName={WEDDING_EVENT.venueName}
+        address={WEDDING_EVENT.venueAddress}
+        lat={WEDDING_EVENT.venueLat}
+        lng={WEDDING_EVENT.venueLng}
+      />
 
       <section className="px-6 py-10">
         <p className="text-center text-[10px] tracking-[0.3em] text-zinc-400">{t('INFO_LABEL')}</p>
@@ -80,19 +87,21 @@ export default async function Page() {
         </div>
       </section>
 
-      <section className="px-6 pb-12">
-        <h3 className="mb-4 text-center text-lg font-medium">{t('ACCOUNTS_SECTION_HEADING')}</h3>
-        <AccountAccordion
-          groom={[
-            { bank: 'DNB', number: '1234.56.78901', owner: 'Chris' },
-            { bank: 'Sparebank', number: '2222.33.44444', owner: "Chris's Dad" },
-          ]}
-          bride={[
-            { bank: 'KB', number: '110-123-456789', owner: 'Scarlett' },
-            { bank: 'Shinhan', number: '110-987-654321', owner: "Scarlett's Dad" },
-          ]}
-        />
-      </section>
+      {locale === 'ko' && (
+        <section className="px-6 pb-12">
+          <h3 className="mb-4 text-center text-lg font-medium">{t('ACCOUNTS_SECTION_HEADING')}</h3>
+          <AccountAccordion
+            groom={[
+              { bank: 'DNB', number: '1234.56.78901', owner: 'Chris' },
+              { bank: 'Sparebank', number: '2222.33.44444', owner: "Chris's Dad" },
+            ]}
+            bride={[
+              { bank: 'KB', number: '110-123-456789', owner: 'Scarlett' },
+              { bank: 'Shinhan', number: '110-987-654321', owner: "Scarlett's Dad" },
+            ]}
+          />
+        </section>
+      )}
 
       <figure className="relative">
         <Image
@@ -102,13 +111,11 @@ export default async function Page() {
           height={800}
           className="w-full opacity-90"
         />
-        <figcaption className="absolute inset-0 flex items-center justify-center px-6 text-center text-white drop-shadow">
-          {t('OUTRO_CAPTION')}
-        </figcaption>
+        {/* Removed text overlay figcaption */}
       </figure>
 
       <footer className="bg-zinc-100 py-6 text-center text-xs text-zinc-500">
-        Copyright Chris & Scarlett
+        © 2025 Chris & Scarlett
       </footer>
     </main>
   );

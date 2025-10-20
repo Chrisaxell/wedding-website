@@ -2,18 +2,10 @@
 import { useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 
-// Supported locales & native labels
+// Supported locales & native labels (temporarily reduced to EN + KO)
 const LOCALES: { code: string; label: string }[] = [
   { code: 'en', label: 'English' },
-  { code: 'es', label: 'Español' },
-  { code: 'no', label: 'Norsk' },
-  { code: 'da', label: 'Dansk' },
-  { code: 'pt', label: 'Português' },
-  { code: 'sv', label: 'Svenska' },
   { code: 'ko', label: '한국어' },
-  { code: 'zh', label: '中文' },
-  { code: 'gn', label: "Avañe'ẽ" },
-  { code: 'ar', label: 'العربية' }, // Added Arabic
 ];
 
 export default function LanguageSwitcher() {

@@ -4,52 +4,53 @@ import { useEffect, useRef, useState } from 'react';
 type Props = {
   lat: number;
   lng: number;
-  zoom?: number; // 5–20
   title?: string;
   className?: string;
+  venueName?: string;
 };
 
-export default function GoogleMap({ lat, lng, zoom = 16, title = 'Location', className }: Props) {
+declare global {
+  interface Window {
+    kakao?: any;
+  }
+}
+
+export default function KakaoMap({ lat, lng, title = 'Location', venueName, className }: Props) {
   const ref = useRef<HTMLDivElement | null>(null);
   const [ready, setReady] = useState(false);
-  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+  const appKey = process.env.NEXT_PUBLIC_KAKAO_MAPS_APP_KEY;
 
   useEffect(() => {
-    if (!apiKey) return; // no key -> skip
+    if (!appKey) return;
     if (typeof window === 'undefined') return;
 
-    function init() {
-      // @ts-ignore
-      const google = window.google;
-      if (!google?.maps) return;
-      const center = { lat, lng };
-      const map = new google.maps.Map(ref.current!, {
-        center,
-        zoom,
-        disableDefaultUI: true,
-        gestureHandling: 'greedy',
-        mapTypeControl: false,
-      });
-      new google.maps.Marker({ position: center, map, title });
+    function createMap() {
+      const kakao = window.kakao;
+      if (!kakao?.maps) return;
+      const center = new kakao.maps.LatLng(lat, lng);
+      const map = new kakao.maps.Map(ref.current!, { center, level: 4 }); // level ~ zoom
+      // Remove zoom / other controls (not added by default unless created)
+      const marker = new kakao.maps.Marker({ position: center });
+      marker.setMap(map);
       setReady(true);
     }
 
-    // If script already present just init
-    if (document.getElementById('google-maps-sdk')) {
-      init();
+    if (window.kakao?.maps) {
+      createMap();
       return;
     }
 
     const script = document.createElement('script');
-    script.id = 'google-maps-sdk';
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
+    script.id = 'kakao-maps-sdk';
+    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${appKey}`;
     script.async = true;
-    script.defer = true;
-    script.onload = init;
+    script.onload = () => {
+      window.kakao.maps.load(createMap);
+    };
     document.head.appendChild(script);
-  }, [apiKey, lat, lng, zoom, title]);
+  }, [appKey, lat, lng]);
 
-  if (!apiKey) {
+  if (!appKey) {
     return (
       <div
         className={
@@ -57,7 +58,7 @@ export default function GoogleMap({ lat, lng, zoom = 16, title = 'Location', cla
           'flex aspect-[4/3] w-full items-center justify-center rounded-xl border text-sm text-zinc-500'
         }
       >
-        Google Maps API key missing
+        Kakao Maps app key missing
       </div>
     );
   }

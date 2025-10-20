@@ -19,11 +19,11 @@ export function AddCalendarButton() {
         description: t('CALENDAR_EVENT_DESCRIPTION', {
           coupleA: WEDDING_EVENT.coupleA,
           coupleB: WEDDING_EVENT.coupleB,
-          venue: WEDDING_EVENT.venueName,
+          venue: WEDDING_EVENT.venueAddress, // use address instead of name
         }),
         start,
         end,
-        location: WEDDING_EVENT.venueName,
+        location: WEDDING_EVENT.venueAddress, // changed to address
         latitude: WEDDING_EVENT.venueLat,
         longitude: WEDDING_EVENT.venueLng,
       },

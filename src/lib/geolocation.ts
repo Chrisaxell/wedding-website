@@ -12,34 +12,6 @@ const countryToLanguage: Record<string, string> = {
 
   // Korean
   KR: 'ko',
-
-  // Spanish speaking countries
-  ES: 'es',
-  MX: 'es',
-  AR: 'es',
-  CO: 'es',
-  CL: 'es',
-  PE: 'es',
-  VE: 'es',
-
-  // Portuguese speaking countries
-  BR: 'pt',
-  PT: 'pt',
-
-  // Norwegian/Nordic
-  NO: 'no',
-
-  // Swedish
-  SE: 'sv',
-
-  // Danish
-  DK: 'da',
-
-  // Chinese speaking
-  CN: 'zh',
-  TW: 'zh',
-  HK: 'zh',
-  SG: 'zh',
 };
 
 /**
@@ -60,7 +32,7 @@ export function getLanguageFromHeaders(acceptLanguage?: string): string {
     return code.split('-')[0].toLowerCase();
   });
 
-  const supported = ['en', 'ko', 'es', 'pt', 'no', 'sv', 'da', 'zh', 'gn'];
+  const supported = ['en', 'ko'];
 
   for (const lang of languages) {
     if (supported.includes(lang)) {
