@@ -20,9 +20,6 @@ export function GalleryImage({
 }: GalleryImageProps) {
   const t = useTranslations('WeddingInvite');
 
-  // Extract filename from the src path
-  const fileName = src.split('/').pop() || src;
-
   return (
     <div
       className="group relative w-full cursor-pointer overflow-hidden rounded bg-zinc-100"
@@ -39,9 +36,6 @@ export function GalleryImage({
         priority={index <= 3}
         sizes="(max-width: 768px) 50vw, 33vw"
       />
-      <div className="absolute top-2 left-2 rounded bg-black/50 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
-        {fileName}
-      </div>
     </div>
   );
 }
