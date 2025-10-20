@@ -2,38 +2,68 @@
 
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useCallback, useEffect } from 'react';
+import { DialogTitle } from '@/components/ui/dialog';
 
-const GALLERY_IMAGES = [
-  '/images/gallery photos/2 완-3.jpg',
-  '/images/gallery photos/4 완-3.jpg',
-  '/images/gallery photos/6 완-3.jpg',
-  '/images/gallery photos/8 완-3.jpg',
-  '/images/gallery photos/9완-3.jpg',
-  '/images/gallery photos/11 완-3.jpg',
-  '/images/gallery photos/13 완-3.jpg',
-  '/images/gallery photos/14 완-3.jpg',
-  '/images/gallery photos/15 완-3.jpg',
-  '/images/gallery photos/16 완(볼 제거)-3.jpg',
-  '/images/gallery photos/17 완-3.jpg',
-  '/images/gallery photos/18 완-3.jpg',
-  '/images/gallery photos/20 완-3.jpg',
-  '/images/gallery photos/22 완-3.jpg',
-  '/images/gallery photos/23 완-3.jpg',
-  '/images/gallery photos/21 완-3.jpg',
+// Curated gallery configuration based on user rules
+// Exclusions: 1,3 (not chosen), 5 (dup of 4), 9 (dup of 10), 15 (dup of 14), 16 (hero), 20 (similar to 19), 21 (outro)
+// Included & ordered: 19 (lead), 18, 10, 2, 11, 12, 13, 14, 17, 6, 22, 7, 23, 8, 4
+// Selfies (6,7,8) spread out; horizontals (19,18,2,11,17) interleaved with portraits.
+interface GalleryImage {
+  src: string;
+  orientation: 'portrait' | 'landscape';
+  note?: string; // optional future meta (e.g., "selfie")
+}
+
+const GALLERY: GalleryImage[] = [
+  { src: '/images/gallery photos/20 완-3.jpg', orientation: 'landscape' },
+  { src: '/images/gallery photos/18 완-3.jpg', orientation: 'landscape' },
+  { src: '/images/gallery photos/2 완-3.jpg', orientation: 'landscape' },
+  { src: '/images/gallery photos/11 완-3.jpg', orientation: 'landscape' },
+  { src: '/images/gallery photos/12 완-3.jpg', orientation: 'portrait' },
+  { src: '/images/gallery photos/13 완-3.jpg', orientation: 'portrait' },
+  { src: '/images/gallery photos/15 완-3.jpg', orientation: 'portrait' },
+  { src: '/images/gallery photos/17 완-3.jpg', orientation: 'landscape' },
+  { src: '/images/gallery photos/9완-3.jpg', orientation: 'portrait' },
+  { src: '/images/gallery photos/6 완-3.jpg', orientation: 'portrait', note: 'selfie' },
+  { src: '/images/gallery photos/22 완-3.jpg', orientation: 'portrait' },
+  { src: '/images/gallery photos/7 완-3.jpg', orientation: 'portrait', note: 'selfie' },
+  { src: '/images/gallery photos/23 완-3.jpg', orientation: 'portrait' },
+  { src: '/images/gallery photos/8 완-3.jpg', orientation: 'portrait', note: 'selfie' },
+  { src: '/images/gallery photos/4 완-3.jpg', orientation: 'portrait' },
 ];
 
 export function GalleryGrid() {
   const t = useTranslations('WeddingInvite');
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const total = GALLERY.length;
 
-  // Group images into sets of 3 for the alternating pattern
-  const imageGroups: Array<{ type: 'left' | 'right'; images: string[] }> = [];
-  for (let i = 0; i < GALLERY_IMAGES.length; i += 3) {
-    const isLeftPattern = Math.floor(i / 3) % 2 === 0;
-    imageGroups.push({
-      type: isLeftPattern ? 'left' : 'right',
-      images: GALLERY_IMAGES.slice(i, i + 3),
-    });
-  }
+  const goPrev = useCallback(() => {
+    setOpenIndex((idx) => (idx === null ? null : (idx - 1 + total) % total));
+  }, [total]);
+  const goNext = useCallback(() => {
+    setOpenIndex((idx) => (idx === null ? null : (idx + 1) % total));
+  }, [total]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (openIndex === null) return;
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        goPrev();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        goNext();
+      } else if (e.key === 'Escape') {
+        setOpenIndex(null);
+      }
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [openIndex, goPrev, goNext]);
 
   return (
     <section className="px-4 py-10">
@@ -42,76 +72,81 @@ export function GalleryGrid() {
         <h3 className="text-lg font-medium">{t('GALLERY_HEADING')}</h3>
       </div>
 
-      {/* Gallery with alternating pattern */}
-      <div className="mt-6 space-y-2 px-2">
-        {imageGroups.map((group, groupIndex) => (
-          <div key={groupIndex} className="flex gap-2">
-            {group.type === 'left' ? (
-              <>
-                {/* 2 horizontal images stacked */}
-                <div className="flex flex-1 flex-col gap-2">
-                  {group.images.slice(0, 2).map((src, i) => (
-                    <div key={i} className="overflow-hidden">
-                      <Image
-                        src={src}
-                        alt={t('GALLERY_ALT', { index: groupIndex * 3 + i + 1 })}
-                        width={800}
-                        height={600}
-                        className="aspect-[4/3] w-full object-cover"
-                      />
-                    </div>
-                  ))}
+      <ul className="mt-6 grid grid-cols-2 gap-2 px-2 md:grid-cols-3">
+        {GALLERY.map((img, i) => {
+          const isLandscape = img.orientation === 'landscape';
+          const spanClasses = isLandscape ? 'col-span-2 md:col-span-2' : '';
+          const aspect = isLandscape ? 'aspect-[4/3]' : 'aspect-[3/4]';
+          return (
+            <li
+              key={img.src}
+              className={`relative overflow-hidden rounded bg-zinc-100 ${spanClasses} cursor-pointer`}
+              onClick={() => setOpenIndex(i)}
+            >
+              <Image
+                src={img.src}
+                alt={t('GALLERY_ALT', { index: i + 1 })}
+                width={isLandscape ? 800 : 600}
+                height={isLandscape ? 600 : 800}
+                className={`${aspect} w-full object-cover transition-transform duration-300 hover:scale-[1.03]`}
+                priority={i < 3}
+              />
+            </li>
+          );
+        })}
+      </ul>
+
+      <Dialog open={openIndex !== null} onOpenChange={(o) => !o && setOpenIndex(null)}>
+        {openIndex !== null && (
+          <DialogContent
+            showCloseButton={false}
+            className="flex h-screen w-screen max-w-none items-center justify-center rounded-none border-none bg-black/90 p-0"
+          >
+            <DialogTitle className="sr-only">
+              {t('GALLERY_LABEL')} {openIndex + 1} / {total}
+            </DialogTitle>
+            <div className="relative mx-auto w-full max-w-[430px] px-4">
+              <div className="relative flex h-[82vh] items-center justify-center select-none">
+                <Image
+                  src={GALLERY[openIndex].src}
+                  alt={t('GALLERY_ALT', { index: openIndex + 1 })}
+                  width={900}
+                  height={1200}
+                  className="max-h-full max-w-full object-contain"
+                  priority
+                />
+                {/* Floating control buttons (stable position) */}
+                <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center gap-5">
+                  <button
+                    aria-label="Previous image"
+                    onClick={goPrev}
+                    className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur transition hover:scale-105 hover:bg-black/80"
+                  >
+                    <ChevronLeft className="size-6" />
+                  </button>
+                  <button
+                    aria-label="Close"
+                    onClick={() => setOpenIndex(null)}
+                    className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur transition hover:scale-105 hover:bg-black/80"
+                  >
+                    <X className="size-5" />
+                  </button>
+                  <button
+                    aria-label="Next image"
+                    onClick={goNext}
+                    className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur transition hover:scale-105 hover:bg-black/80"
+                  >
+                    <ChevronRight className="size-6" />
+                  </button>
                 </div>
-                {/* 1 portrait image */}
-                {group.images[2] && (
-                  <div className="flex flex-1 items-center">
-                    <div className="w-full overflow-hidden">
-                      <Image
-                        src={group.images[2]}
-                        alt={t('GALLERY_ALT', { index: groupIndex * 3 + 3 })}
-                        width={600}
-                        height={800}
-                        className="aspect-[3/4] w-full object-cover"
-                      />
-                    </div>
-                  </div>
-                )}
-              </>
-            ) : (
-              <>
-                {/* 1 portrait image */}
-                {group.images[0] && (
-                  <div className="flex flex-1 items-center">
-                    <div className="w-full overflow-hidden">
-                      <Image
-                        src={group.images[0]}
-                        alt={t('GALLERY_ALT', { index: groupIndex * 3 + 1 })}
-                        width={600}
-                        height={800}
-                        className="aspect-[3/4] w-full object-cover"
-                      />
-                    </div>
-                  </div>
-                )}
-                {/* 2 horizontal images stacked */}
-                <div className="flex flex-1 flex-col gap-2">
-                  {group.images.slice(1, 3).map((src, i) => (
-                    <div key={i} className="overflow-hidden">
-                      <Image
-                        src={src}
-                        alt={t('GALLERY_ALT', { index: groupIndex * 3 + i + 2 })}
-                        width={800}
-                        height={600}
-                        className="aspect-[4/3] w-full object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
-        ))}
-      </div>
+              </div>
+              <div className="mt-3 mb-2 text-center text-[11px] tracking-wide text-white/60">
+                {openIndex + 1} / {total}
+              </div>
+            </div>
+          </DialogContent>
+        )}
+      </Dialog>
     </section>
   );
 }

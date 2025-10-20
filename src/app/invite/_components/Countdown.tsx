@@ -2,6 +2,7 @@
 
 import { Card, CardContent } from '@/components/ui/card';
 import { useEffect, useState } from 'react';
+import { AddCalendarButton } from './AddCalendarButton';
 
 function getParts(targetISO: string) {
   const target = new Date(targetISO).getTime();
@@ -31,6 +32,19 @@ export function Countdown({
   showPlural = true,
 }: CountdownProps) {
   const [t, setT] = useState(() => getParts(dateISO));
+  // Pre-format date header (weekday, date, time)
+  const dateObj = new Date(dateISO);
+  const weekday = dateObj.toLocaleDateString(undefined, { weekday: 'long' });
+  const datePart = dateObj.toLocaleDateString(undefined, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+  const timePart = dateObj.toLocaleTimeString(undefined, {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
 
   useEffect(() => {
     const id = setInterval(() => setT(getParts(dateISO)), 1000);
@@ -41,9 +55,12 @@ export function Countdown({
   const daysLeft = Math.max(0, Math.round((new Date(dateISO).getTime() - Date.now()) / 86400000));
 
   return (
-    <section className="px-6 pt-8 pb-10">
+    <section className="px-6 pt-8 pb-6">
       <Card className="bg-zinc-50">
         <CardContent className="p-6">
+          <div className="mb-4 text-center text-sm font-medium tracking-wide text-zinc-600">
+            {weekday}, {datePart} • {timePart}
+          </div>
           <div className="flex justify-center">
             <div className="flex items-stretch justify-center gap-4">
               {(() => {
@@ -69,6 +86,9 @@ export function Countdown({
             </div>
           </div>
           <p className="mt-4 text-center text-sm text-zinc-600">Wedding {daysLeft} days left!</p>
+          <div className="mt-6">
+            <AddCalendarButton />
+          </div>
         </CardContent>
       </Card>
     </section>
