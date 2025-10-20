@@ -42,7 +42,7 @@ interface ScrollRevealProps {
  */
 export function ScrollReveal({
   children,
-  threshold = 0.15,
+  threshold = 0.2,
   translateY = 30,
   duration = 600,
   className = '',

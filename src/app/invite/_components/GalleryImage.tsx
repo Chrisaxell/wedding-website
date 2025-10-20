@@ -1,0 +1,47 @@
+import Image from 'next/image';
+import { useTranslations } from 'next-intl';
+
+type GalleryImageProps = {
+  src: string;
+  index: number;
+  isLarge?: boolean;
+  isLandscape?: boolean;
+  onClick: () => void;
+  aspectRatio?: string; // e.g., "4/3", "16/9", or "auto" for natural
+  objectPosition?: string; // e.g., "top", "center", "bottom", "50% 20%"
+};
+
+export function GalleryImage({
+  src,
+  index,
+  onClick,
+  aspectRatio = 'auto',
+  objectPosition = 'center',
+}: GalleryImageProps) {
+  const t = useTranslations('WeddingInvite');
+
+  // Extract filename from the src path
+  const fileName = src.split('/').pop() || src;
+
+  return (
+    <div
+      className="group relative w-full cursor-pointer overflow-hidden rounded bg-zinc-100"
+      onClick={onClick}
+      style={{ aspectRatio: aspectRatio, minHeight: aspectRatio === 'auto' ? '200px' : undefined }}
+    >
+      <Image
+        src={src}
+        alt={t('GALLERY_ALT', { index })}
+        fill
+        unoptimized
+        className="object-cover transition-transform duration-300 hover:scale-[1.03]"
+        style={{ objectPosition }}
+        priority={index <= 3}
+        sizes="(max-width: 768px) 50vw, 33vw"
+      />
+      <div className="absolute top-2 left-2 rounded bg-black/50 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
+        {fileName}
+      </div>
+    </div>
+  );
+}

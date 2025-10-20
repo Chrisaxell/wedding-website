@@ -7,9 +7,9 @@ import { XIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { useCallback, useEffect } from 'react';
 
 export interface GalleryImage {
-  name: string;
   src: string;
-  orientation: 'portrait' | 'landscape';
+  aspectRatio?: string;
+  objectPosition?: string; // e.g., "top", "center", "bottom", "50% 20%"
   note?: string;
 }
 

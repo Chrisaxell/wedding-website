@@ -24,21 +24,21 @@ export default async function Page() {
 
   // Check if user has saved name from previous RSVP
   const savedGuestName = await getCookie('guest_name');
-
-  // Check if user has seen RSVP dialog before
   const hasSeenRsvp = (await getCookie('rsvp_seen')) === 'true';
 
   return (
-    <main className="mx-auto w-full max-w-[430px] space-y-6 bg-white">
+    <main className="mx-auto w-full max-w-[430px] bg-white">
       <TopControls />
       <InviteHero
         heroImage={WEDDING_EVENT.heroImage}
         coupleA={WEDDING_EVENT.coupleA}
         coupleB={WEDDING_EVENT.coupleB}
         dateISO={WEDDING_EVENT.dateISO}
-        venueName={WEDDING_EVENT.venueAddress} // changed from venueName to venueAddress for broader location display
+        venueName={WEDDING_EVENT.venueAddress}
+        className={'pt-10'}
       />
-      <ScrollReveal>
+
+      <ScrollReveal threshold={1} className={'pt-5'}>
         <section className="px-6 py-10 text-center">
           <p className="text-xs tracking-[0.3em] text-zinc-400">{t('INVITATION_LABEL')}</p>
           <h2 className="mt-1 text-lg font-medium text-zinc-700">{t('INVITATION_HEADING')}</h2>
@@ -52,13 +52,15 @@ export default async function Page() {
         </section>
       </ScrollReveal>
 
-      <ScrollReveal>
+      <ScrollReveal threshold={0.9}>
         <Countdown dateISO={WEDDING_EVENT.dateISO} />
       </ScrollReveal>
-      <ScrollReveal>
+
+      <ScrollReveal threshold={0.2}>
         <GalleryGrid />
       </ScrollReveal>
-      <ScrollReveal>
+
+      <ScrollReveal threshold={0.3}>
         <MapCard
           venueName={WEDDING_EVENT.venueName}
           address={WEDDING_EVENT.venueAddress}
@@ -67,7 +69,7 @@ export default async function Page() {
         />
       </ScrollReveal>
 
-      <ScrollReveal>
+      <ScrollReveal threshold={0.5}>
         <section className="px-6 py-10">
           <p className="text-center text-[10px] tracking-[0.3em] text-zinc-400">
             {t('INFO_LABEL')}
@@ -77,7 +79,7 @@ export default async function Page() {
         </section>
       </ScrollReveal>
 
-      <ScrollReveal>
+      <ScrollReveal threshold={0.5}>
         <section className="px-6 py-10">
           <div className="rounded-xl border bg-zinc-50 p-6">
             <h3 className="text-center text-lg font-medium text-zinc-700">
@@ -95,7 +97,7 @@ export default async function Page() {
       </ScrollReveal>
 
       {locale === 'ko' && (
-        <ScrollReveal>
+        <ScrollReveal threshold={0.5}>
           <section className="px-6 pb-12">
             <h3 className="mb-4 text-center text-lg font-medium">
               {t('ACCOUNTS_SECTION_HEADING')}
@@ -114,7 +116,7 @@ export default async function Page() {
         </ScrollReveal>
       )}
 
-      <ScrollReveal>
+      <ScrollReveal threshold={0.5}>
         <figure className="relative">
           <Image
             src={WEDDING_EVENT.outroImage}
@@ -125,15 +127,9 @@ export default async function Page() {
           />
           {/* Removed text overlay figcaption */}
         </figure>
-        <footer className="bg-zinc-100 py-6 text-center text-xs text-zinc-500">
-          © 2025 Chris & Scarlett
-        </footer>
       </ScrollReveal>
-      <ScrollReveal>
-        <footer className="bg-zinc-100 py-6 text-center text-xs text-zinc-500">
-          © 2025 Chris & Scarlett
-        </footer>
-      </ScrollReveal>
+
+      <footer className="py-6 text-center text-xs text-zinc-500">© 2025 Chris & Scarlett</footer>
     </main>
   );
 }
