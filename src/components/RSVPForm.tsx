@@ -50,6 +50,15 @@ export default function RSVPForm({ inviteId }: { inviteId?: string }) {
           className="rounded border px-2 py-1"
         />
       </label>
+      <label className="grid gap-1 text-sm">
+        Dietary restrictions / allergies
+        <input
+          name="dietaryRestrictions"
+          placeholder="vegetarian, gluten-free, nut allergy"
+          className="rounded border px-2 py-1"
+          maxLength={500}
+        />
+      </label>
       <div className="flex items-center gap-2 text-sm">
         <input id="plusOne" name="plusOne" type="checkbox" value="true" className="h-4 w-4" />
         <label htmlFor="plusOne">Bringing a +1</label>

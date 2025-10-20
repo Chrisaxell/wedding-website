@@ -17,14 +17,13 @@ export function InviteHero({ heroImage, coupleA, coupleB, dateISO, venueName }: 
   const locale = useLocale();
   const date = new Date(dateISO);
   const yyyy = date.getFullYear();
-  const dayNumber = date.getDate(); // unpadded
+  const dayNumber = date.getDate();
+  const monthNumber = date.getMonth() + 1;
   const weekdayLocalized = new Intl.DateTimeFormat(locale, { weekday: 'long' })
     .format(date)
     .toUpperCase();
 
-  // Numeric-only date for first display
-  const numericDate = `${dayNumber.toString().padStart(2, '0')} ${(date.getMonth() + 1).toString().padStart(2, '0')}  ${yyyy} `;
-  // Localized month/day/year string for second line with time
+  const numericDate = `${String(dayNumber).padStart(2, '0')} ${String(monthNumber).padStart(2, '0')} ${yyyy}`;
   const monthDateString = new Intl.DateTimeFormat(locale, {
     year: 'numeric',
     month: 'long',
@@ -34,15 +33,17 @@ export function InviteHero({ heroImage, coupleA, coupleB, dateISO, venueName }: 
 
   return (
     <section className="relative">
-      <div className="space-y-4 p-6 pt-8 pb-4 text-center">
-        <div className="mt-2 font-sans text-2xl leading-tight text-zinc-700">{numericDate}</div>
-        <div className="font-serif text-xs leading-tight tracking-[0.3em] text-zinc-400">
+      <div className="px-6 pt-8 pb-4 text-center">
+        <div className="text-[10px] tracking-[0.3em] text-zinc-400">{t('WEDDING_DAY')}</div>
+        <div className="mt-2 text-2xl leading-tight text-zinc-700">{numericDate}</div>
+        <div className="text-xs leading-tight tracking-[0.3em] text-zinc-400">
           {weekdayLocalized}
         </div>
       </div>
 
       <div className="px-6">
-        <div className="overflow-hidden rounded-xl shadow">
+        <div className="overflow-hidden shadow">
+          {/* removed rounded-xl for sharp corners */}
           <Image src={heroImage} alt="wedding" width={1200} height={1600} className="w-full" />
         </div>
       </div>

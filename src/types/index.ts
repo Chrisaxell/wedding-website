@@ -19,4 +19,5 @@ export type RSVP = {
   email?: string | null;
   phone?: string | null;
   createdAt?: string;
+  dietaryRestrictions?: string | null;
 };

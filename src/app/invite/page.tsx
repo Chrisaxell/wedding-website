@@ -4,10 +4,10 @@ import {
   GalleryGrid,
   InfoTabs,
   InviteHero,
-  RsvpDialog,
+  RsvpDialog, // Import RsvpDialog
   AddCalendarButton, // Import AddCalendarButton
+  TopControls, // Import TopControls
 } from '@/app/invite/_components';
-import LanguageSwitcher from '@/app/invite/_components/LanguageSwitcher';
 import MapCard from '@/app/invite/_components/MapCard';
 import { getTranslations } from 'next-intl/server';
 import { WEDDING_EVENT } from '@/lib/wedding';
@@ -19,7 +19,6 @@ export const dynamic = 'force-dynamic';
 export default async function Page() {
   const t = await getTranslations('WeddingInvite');
   const bodyLines = t('INVITATION_BODY').split('\n');
-  const year = new Date().getFullYear();
 
   // Check if user has saved name from previous RSVP
   const savedGuestName = await getCookie('guest_name');
@@ -28,7 +27,8 @@ export default async function Page() {
   const hasSeenRsvp = (await getCookie('rsvp_seen')) === 'true';
 
   return (
-    <main className="mx-auto w-full max-w-[430px] bg-white text-zinc-700 shadow-sm">
+    <main className="relative mx-auto w-full max-w-[430px] bg-white text-zinc-700 shadow-sm">
+      <TopControls />
       <InviteHero
         heroImage={WEDDING_EVENT.heroImage}
         coupleA={WEDDING_EVENT.coupleA}
@@ -36,7 +36,6 @@ export default async function Page() {
         dateISO={WEDDING_EVENT.dateISO}
         venueName={WEDDING_EVENT.venueName}
       />
-      <LanguageSwitcher />
       {/* Greeting */}
       <section className="px-6 py-10 text-center">
         <p className="text-xs tracking-[0.3em] text-zinc-400">{t('INVITATION_LABEL')}</p>
@@ -72,6 +71,9 @@ export default async function Page() {
             {t('RSVP_SECTION_HEADING')}
           </h3>
           <p className="mt-2 text-center text-sm text-zinc-500">{t('RSVP_SECTION_SUB')}</p>
+          <p className="mt-1 text-center text-xs font-medium text-zinc-600">
+            Please respond before 28th of January.
+          </p>
           <div className="mt-4 flex justify-center">
             <RsvpDialog guestName={savedGuestName} autoOpen={!hasSeenRsvp} />
           </div>
@@ -106,11 +108,7 @@ export default async function Page() {
       </figure>
 
       <footer className="bg-zinc-100 py-6 text-center text-xs text-zinc-500">
-        {t('FOOTER_COPYRIGHT', {
-          year,
-          coupleA: WEDDING_EVENT.coupleA,
-          coupleB: WEDDING_EVENT.coupleB,
-        })}
+        Copyright Chris & Scarlett
       </footer>
     </main>
   );

@@ -24,6 +24,7 @@ export function RsvpDialog({ guestName, autoOpen = false }: Props) {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [plusOne, setPlusOne] = useState(false);
+  const [dietaryRestrictions, setDietaryRestrictions] = useState('');
   const [status, setStatus] = useState<'yes' | 'no' | 'maybe'>('yes');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -48,6 +49,7 @@ export function RsvpDialog({ guestName, autoOpen = false }: Props) {
       fd.set('phone', phone);
       fd.set('plusOne', String(plusOne));
       fd.set('status', status);
+      fd.set('dietaryRestrictions', dietaryRestrictions);
       const res = await submitRSVP(fd);
       if (!res.ok) {
         setError(res.error ?? 'Error');
@@ -157,6 +159,20 @@ export function RsvpDialog({ guestName, autoOpen = false }: Props) {
                 onChange={(e) => setPhone(e.target.value)}
               />
             </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="dietary">Dietary restrictions / allergies</Label>
+              <Input
+                id="dietary"
+                placeholder="e.g. vegetarian, gluten-free, nut allergy"
+                value={dietaryRestrictions}
+                onChange={(e) => setDietaryRestrictions(e.target.value)}
+              />
+              <p className="text-[10px] text-zinc-500">Optional – helps us plan the meal.</p>
+            </div>
+            <p className="text-xs font-medium text-zinc-600">
+              Please respond before 28th of January.
+            </p>
 
             <p className="text-xs text-zinc-500">{t('RSVP_CONTACT_INFO')}</p>
 

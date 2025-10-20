@@ -11,6 +11,7 @@ export async function submitRSVP(formData: FormData) {
   const email = String(formData.get('email') ?? '').trim();
   const phone = String(formData.get('phone') ?? '').trim();
   const plusOne = formData.get('plusOne') === 'true';
+  const dietaryRestrictions = String(formData.get('dietaryRestrictions') ?? '').trim();
   const statusRaw = String(formData.get('status') ?? '').trim();
   const inviteIdRaw = String(formData.get('inviteId') ?? '').trim();
   const inviteId = inviteIdRaw || null;
@@ -30,6 +31,10 @@ export async function submitRSVP(formData: FormData) {
   }
   const status = statusParse.data; // 'yes' | 'no' | 'maybe'
 
+  if (dietaryRestrictions.length > 500) {
+    return { ok: false as const, error: 'Dietary restrictions text too long (max 500 chars)' };
+  }
+
   try {
     // Use unchecked create to allow direct inviteId assignment
     const data: Prisma.RsvpUncheckedCreateInput = {
@@ -39,6 +44,7 @@ export async function submitRSVP(formData: FormData) {
       plusOne,
       status,
       inviteId, // optional
+      dietaryRestrictions: dietaryRestrictions || null,
       createdAt: undefined, // let DB default handle
       id: undefined, // auto uuid
     };
@@ -48,6 +54,9 @@ export async function submitRSVP(formData: FormData) {
     await setCookie('guest_name', name);
     await setCookie('rsvp_status', status);
     await setCookie('rsvp_plus_one', plusOne ? 'true' : 'false');
+    await setCookie('rsvp_email', email || '');
+    await setCookie('rsvp_phone', phone || '');
+    await setCookie('rsvp_dietary', dietaryRestrictions || '');
 
     const historyCount = await prisma.rsvp.count({ where: { name } });
 

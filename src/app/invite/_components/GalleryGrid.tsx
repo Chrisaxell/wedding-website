@@ -51,7 +51,7 @@ export function GalleryGrid() {
                 {/* 2 horizontal images stacked */}
                 <div className="flex flex-1 flex-col gap-2">
                   {group.images.slice(0, 2).map((src, i) => (
-                    <div key={i} className="overflow-hidden rounded-md">
+                    <div key={i} className="overflow-hidden">
                       <Image
                         src={src}
                         alt={t('GALLERY_ALT', { index: groupIndex * 3 + i + 1 })}
@@ -65,7 +65,7 @@ export function GalleryGrid() {
                 {/* 1 portrait image */}
                 {group.images[2] && (
                   <div className="flex flex-1 items-center">
-                    <div className="w-full overflow-hidden rounded-md">
+                    <div className="w-full overflow-hidden">
                       <Image
                         src={group.images[2]}
                         alt={t('GALLERY_ALT', { index: groupIndex * 3 + 3 })}
@@ -82,7 +82,7 @@ export function GalleryGrid() {
                 {/* 1 portrait image */}
                 {group.images[0] && (
                   <div className="flex flex-1 items-center">
-                    <div className="w-full overflow-hidden rounded-md">
+                    <div className="w-full overflow-hidden">
                       <Image
                         src={group.images[0]}
                         alt={t('GALLERY_ALT', { index: groupIndex * 3 + 1 })}
@@ -96,7 +96,7 @@ export function GalleryGrid() {
                 {/* 2 horizontal images stacked */}
                 <div className="flex flex-1 flex-col gap-2">
                   {group.images.slice(1, 3).map((src, i) => (
-                    <div key={i} className="overflow-hidden rounded-md">
+                    <div key={i} className="overflow-hidden">
                       <Image
                         src={src}
                         alt={t('GALLERY_ALT', { index: groupIndex * 3 + i + 2 })}
