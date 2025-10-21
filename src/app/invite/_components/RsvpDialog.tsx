@@ -21,6 +21,7 @@ type Props = { guestName?: string; autoOpen?: boolean };
 
 export function RsvpDialog({ guestName, autoOpen = false }: Props) {
   const [name, setName] = useState(guestName ?? '');
+  const [numberOfPeople, setNumberOfPeople] = useState(1);
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [plusOne, setPlusOne] = useState(false);
@@ -45,6 +46,7 @@ export function RsvpDialog({ guestName, autoOpen = false }: Props) {
     try {
       const fd = new FormData();
       fd.set('name', name);
+      fd.set('numberOfPeople', String(numberOfPeople));
       fd.set('email', email);
       fd.set('phone', phone);
       fd.set('plusOne', String(plusOne));
@@ -106,7 +108,7 @@ export function RsvpDialog({ guestName, autoOpen = false }: Props) {
       <DialogTrigger asChild>
         <Button className="px-6">{t('RSVP_OPEN_BUTTON')}</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-md">
         <DialogHeader>
           <DialogTitle>
             {showCalendarPrompt ? t('RSVP_SUCCESS_TITLE') : t('RSVP_DIALOG_TITLE')}
@@ -127,7 +129,7 @@ export function RsvpDialog({ guestName, autoOpen = false }: Props) {
             </div>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-4 pb-4">
             <div className="space-y-2">
               <Label htmlFor="name">{t('RSVP_NAME_LABEL')}</Label>
               <Input
@@ -136,6 +138,19 @@ export function RsvpDialog({ guestName, autoOpen = false }: Props) {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="numberOfPeople">Number of People</Label>
+              <Input
+                id="numberOfPeople"
+                type="number"
+                min="1"
+                max="10"
+                value={numberOfPeople}
+                onChange={(e) => setNumberOfPeople(Math.max(1, parseInt(e.target.value) || 1))}
+              />
+              <p className="text-[10px] text-zinc-500">Including yourself</p>
             </div>
 
             <div className="space-y-2">
@@ -162,11 +177,13 @@ export function RsvpDialog({ guestName, autoOpen = false }: Props) {
 
             <div className="space-y-2">
               <Label htmlFor="dietary">Dietary restrictions / allergies</Label>
-              <Input
+              <textarea
                 id="dietary"
                 placeholder="e.g. vegetarian, gluten-free, nut allergy"
                 value={dietaryRestrictions}
                 onChange={(e) => setDietaryRestrictions(e.target.value)}
+                rows={3}
+                className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex min-h-[80px] w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
               />
               <p className="text-[10px] text-zinc-500">Optional – helps us plan the meal.</p>
             </div>
@@ -202,6 +219,7 @@ export function RsvpDialog({ guestName, autoOpen = false }: Props) {
                   return (
                     <Button
                       key={s}
+                      type="button"
                       variant={status === s ? 'default' : 'outline'}
                       onClick={() => setStatus(s)}
                       className="flex-1"
