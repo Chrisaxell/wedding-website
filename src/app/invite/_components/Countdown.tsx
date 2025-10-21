@@ -31,7 +31,9 @@ export function Countdown({
   padTime = true,
   showPlural = true,
 }: CountdownProps) {
-  const [t, setT] = useState(() => getParts(dateISO));
+  const [mounted, setMounted] = useState(false);
+  const [t, setT] = useState({ days: 0, hours: 0, mins: 0, secs: 0 });
+
   // Pre-format date header (weekday, date, time) in Korea timezone
   const dateObj = new Date(dateISO);
   const weekday = dateObj.toLocaleDateString('en-US', { weekday: 'long', timeZone: 'Asia/Seoul' });
@@ -41,14 +43,19 @@ export function Countdown({
     day: 'numeric',
     timeZone: 'Asia/Seoul',
   });
-  const timePart = dateObj.toLocaleTimeString('en-US', {
+
+  // Manually format time to ensure 24-hour format in Korea timezone
+  const formatter = new Intl.DateTimeFormat('en-GB', {
     hour: '2-digit',
     minute: '2-digit',
     hour12: false,
     timeZone: 'Asia/Seoul',
   });
+  const timePart = formatter.format(dateObj);
 
   useEffect(() => {
+    setMounted(true);
+    setT(getParts(dateISO));
     const id = setInterval(() => setT(getParts(dateISO)), 1000);
     return () => clearInterval(id);
   }, [dateISO]);
@@ -58,29 +65,29 @@ export function Countdown({
       <Card className="bg-zinc-50">
         <CardContent className="p-6">
           <div className="mb-4 text-center text-sm font-medium tracking-wide text-zinc-600">
-            {weekday} {timePart}, {datePart}
+            {weekday}, {datePart} • {timePart}
           </div>
           <div className="flex justify-center">
             <div className="flex items-stretch justify-center gap-4">
               {(() => {
                 const daysStr = padDays ? t.days.toString().padStart(2, '0') : t.days.toString();
                 const dayLabel = showPlural ? (t.days === 1 ? 'Day' : 'Days') : 'Day';
-                return <TimeBlock label={dayLabel} value={daysStr} />;
+                return <TimeBlock label={dayLabel} value={daysStr} mounted={mounted} />;
               })()}
               {(() => {
                 const hoursStr = padTime ? t.hours.toString().padStart(2, '0') : t.hours.toString();
                 const hourLabel = showPlural ? (t.hours === 1 ? 'Hour' : 'Hours') : 'Hour';
-                return <TimeBlock label={hourLabel} value={hoursStr} />;
+                return <TimeBlock label={hourLabel} value={hoursStr} mounted={mounted} />;
               })()}
               {(() => {
                 const minsStr = padTime ? t.mins.toString().padStart(2, '0') : t.mins.toString();
                 const minLabel = showPlural ? (t.mins === 1 ? 'Min' : 'Mins') : 'Min';
-                return <TimeBlock label={minLabel} value={minsStr} />;
+                return <TimeBlock label={minLabel} value={minsStr} mounted={mounted} />;
               })()}
               {(() => {
                 const secsStr = padTime ? t.secs.toString().padStart(2, '0') : t.secs.toString();
                 const secLabel = showPlural ? (t.secs === 1 ? 'Sec' : 'Secs') : 'Sec';
-                return <TimeBlock label={secLabel} value={secsStr} />;
+                return <TimeBlock label={secLabel} value={secsStr} mounted={mounted} />;
               })()}
             </div>
           </div>
@@ -93,11 +100,11 @@ export function Countdown({
   );
 }
 
-function TimeBlock({ label, value }: { label: string; value: string }) {
+function TimeBlock({ label, value, mounted }: { label: string; value: string; mounted: boolean }) {
   return (
     <div className="flex min-w-[58px] flex-col items-center justify-center rounded-md border border-zinc-200 bg-white px-2 py-2 font-sans shadow-sm">
       <span className="flex h-8 items-center text-2xl leading-none font-semibold lining-nums tabular-nums">
-        {value}
+        {mounted ? value : '00'}
       </span>
       <span className="mt-1 text-[9px] tracking-wide text-zinc-500 uppercase">{label}</span>
     </div>
