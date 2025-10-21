@@ -26,7 +26,7 @@ export function InfoTabs() {
         <p className="text-sm text-zinc-600">
           {t('INFO_FOOD_DESC', {
             venue: WEDDING_EVENT.venueName,
-            foodTime: '13:00',
+            foodTime: WEDDING_EVENT.foodTime,
           })}
         </p>
       </TabsContent>

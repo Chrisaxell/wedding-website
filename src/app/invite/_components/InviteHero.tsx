@@ -30,7 +30,8 @@ export function InviteHero({ heroImage, coupleA, coupleB, dateISO, venueName, cl
     month: 'long',
     day: 'numeric',
   }).format(date);
-  const eventTime = '13:00';
+  // Guest arrival time from centralized constants
+  const eventTime = '12:00';
 
   return (
     <section className={className}>

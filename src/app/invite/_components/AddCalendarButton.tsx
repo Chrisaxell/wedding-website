@@ -9,7 +9,7 @@ export function AddCalendarButton() {
   const t = useTranslations('WeddingInvite');
   function handleClick() {
     const start = new Date(WEDDING_EVENT.dateISO);
-    const end = new Date(WEDDING_EVENT.endDateISO || start.getTime() + 2 * 60 * 60 * 1000);
+    const end = new Date(WEDDING_EVENT.endDateISO);
     downloadICSFile(
       {
         title: t('CALENDAR_EVENT_TITLE', {
