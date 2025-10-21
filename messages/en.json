@@ -6,9 +6,9 @@
   "WeddingInvite": {
     "WEDDING_DAY": "WEDDING DAY",
     "DATE_LINE": "{year}.{month}.{day} • {venue}",
-    "INVITATION_LABEL": "INVITATION",
-    "INVITATION_HEADING": "We invite our cherished guests",
-    "INVITATION_BODY": "A gentle breeze carries the scent of love.\nTwo hearts become partners for life.\nThe ceremony will be held outdoors on the lawn.\nA tent will be set up in case of rain.",
+    "INVITATION_LABEL": "We'd love for you to join us",
+    "INVITATION_HEADING": "We'd love for you to join us",
+    "INVITATION_BODY": "After all we've shared and built together,\nwe're ready to begin the next chapter.",
     "COUNTDOWN_LABEL": "D-DAY",
     "COUNTDOWN_DAYS": "days",
     "COUNTDOWN_H": "h",

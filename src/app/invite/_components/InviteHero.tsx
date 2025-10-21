@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import { useTranslations, useLocale } from 'next-intl';
-import { cn } from '@/lib/utils';
 
 type Props = {
   heroImage: string;

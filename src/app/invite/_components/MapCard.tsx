@@ -25,7 +25,6 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
   const locale = useLocale();
   const canRender = typeof lat === 'number' && typeof lng === 'number';
 
-  const [mounted, setMounted] = useState(false);
   const [value, setValue] = useState<'google' | 'kakao'>('google');
 
   // Calculate locale-dependent values
@@ -35,7 +34,6 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
 
   // Set default tab after mount to avoid hydration mismatch
   useEffect(() => {
-    setMounted(true);
     setValue(isKorean ? 'kakao' : 'google');
   }, [isKorean]);
 
@@ -55,12 +53,6 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
   const venueNaverLink =
     lat && lng
       ? `https://map.naver.com/p/directions/-/${lng},${lat},${encodeURIComponent(venueName)},PLACE_POI/-/transit`
-      : '#';
-
-  // Kakao Map location for taxi (just shows the venue location)
-  const venueKakaoMapLink =
-    lat && lng
-      ? `https://map.kakao.com/link/map/${encodeURIComponent(venueName)},${lat},${lng}`
       : '#';
 
   return (

@@ -49,7 +49,6 @@ export default async function Page() {
 
         <ScrollReveal threshold={1} className={'pt-5'}>
           <section className="px-6 py-10 text-center">
-            <p className="text-xs tracking-[0.3em] text-zinc-400">{t('INVITATION_LABEL')}</p>
             <h2 className="mt-1 text-lg font-medium text-zinc-700">{t('INVITATION_HEADING')}</h2>
             <p className="mt-4 leading-7">
               {bodyLines.map((line, i) => (
@@ -96,7 +95,7 @@ export default async function Page() {
           <section className="px-6 py-10">
             <div className="text-center">
               <p className="text-[10px] tracking-[0.3em] text-zinc-400">RSVP</p>
-              <h3 className="text-lg font-medium">Répondez s'il vous plaît</h3>
+              <h3 className="text-lg font-medium">Répondez s&apos;il vous plaît</h3>
             </div>
             <div className="mt-6 rounded-xl border bg-zinc-50 p-6">
               <p className="text-center text-sm text-zinc-500">{t('RSVP_SECTION_SUB')}</p>
