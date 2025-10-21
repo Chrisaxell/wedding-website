@@ -32,18 +32,20 @@ export function Countdown({
   showPlural = true,
 }: CountdownProps) {
   const [t, setT] = useState(() => getParts(dateISO));
-  // Pre-format date header (weekday, date, time)
+  // Pre-format date header (weekday, date, time) in Korea timezone
   const dateObj = new Date(dateISO);
-  const weekday = dateObj.toLocaleDateString(undefined, { weekday: 'long' });
-  const datePart = dateObj.toLocaleDateString(undefined, {
+  const weekday = dateObj.toLocaleDateString('en-US', { weekday: 'long', timeZone: 'Asia/Seoul' });
+  const datePart = dateObj.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
+    timeZone: 'Asia/Seoul',
   });
-  const timePart = dateObj.toLocaleTimeString(undefined, {
+  const timePart = dateObj.toLocaleTimeString('en-US', {
     hour: '2-digit',
     minute: '2-digit',
     hour12: false,
+    timeZone: 'Asia/Seoul',
   });
 
   useEffect(() => {
@@ -51,15 +53,12 @@ export function Countdown({
     return () => clearInterval(id);
   }, [dateISO]);
 
-  // Closest whole days remaining (rounded to nearest day)
-  const daysLeft = Math.max(0, Math.round((new Date(dateISO).getTime() - Date.now()) / 86400000));
-
   return (
     <section className="px-6 pt-8 pb-6">
       <Card className="bg-zinc-50">
         <CardContent className="p-6">
           <div className="mb-4 text-center text-sm font-medium tracking-wide text-zinc-600">
-            {weekday}, {datePart} • {timePart}
+            {weekday} {timePart}, {datePart}
           </div>
           <div className="flex justify-center">
             <div className="flex items-stretch justify-center gap-4">
@@ -85,7 +84,6 @@ export function Countdown({
               })()}
             </div>
           </div>
-          <p className="mt-4 text-center text-sm text-zinc-600">Wedding {daysLeft} days left!</p>
           <div className="mt-6">
             <AddCalendarButton />
           </div>
