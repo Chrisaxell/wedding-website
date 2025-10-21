@@ -43,15 +43,16 @@
     "CONTACT_HEADING": "Kontaktieren Sie uns",
     "CONTACT_DESC": "Zögern Sie nicht, uns zu kontaktieren, wenn Sie Fragen haben!",
     "CONTACT_BRIDE_NAME": "\"Scarlett\" Jeong Hee Hong",
-    "CONTACT_BRIDE_PHONE": "+82 10-XXXX-XXXX",
+    "CONTACT_BRIDE_PHONE": "+82-10-4370-7289",
     "INFO_LABEL": "INFORMATION",
     "INFO_HEADING": "Hochzeitsinformationen und Hinweise",
+    "INFO_ARRIVAL_NOTICE": "Please arrive by 12:00. Seating is assigned, so kindly find your name on the seating chart upon arrival.",
     "INFO_TAB_DRESSCODE": "Kleiderordnung",
     "INFO_TAB_FOOD": "Essen",
     "INFO_TAB_PARKING": "Parken",
-    "INFO_DRESSCODE_DESC": "Die Hochzeit findet im Freien statt, also kleiden Sie sich dem Wetter entsprechend. Die Kleiderordnung ist traditionelle koreanische Kleidung oder formelle Hochzeitskleidung.",
+    "INFO_DRESSCODE_DESC": "Die Hochzeit findet im Freien statt, also kleiden Sie sich dem Wetter entsprechend. Die Kleiderordnung ist traditionelle koreanische Kleidung oder formelle Hochzeitskleidung. Please wear shoes suitable for grass (low heels recommended).",
     "INFO_DRESSCODE_LINK": "Mehr über traditionelle koreanische Kleidungsmöglichkeiten erfahren →",
-    "INFO_FOOD_DESC": "Essen wird ab {foodTime} in {venue} serviert, wo die Zeremonie stattfindet. Vegetarische Option auf Anfrage verfügbar (bitte im RSVP erwähnen).",
+    "INFO_FOOD_DESC": "Welcome drinks will be served from 12:00 at the welcome board. A buffet catering will begin at 13:30. Essen wird ab {foodTime} in {venue} serviert, wo die Zeremonie stattfindet. Vegetarische Option auf Anfrage verfügbar (bitte im RSVP erwähnen).",
     "INFO_PARKING_DESC": "Parkplätze stehen auf den offenen Flächen um das Hanok zur Verfügung.",
     "RSVP_SECTION_HEADING": "RSVP",
     "RSVP_SECTION_SUB": "Lassen Sie uns wissen, ob Sie kommen.",
@@ -101,4 +102,3 @@
     "RSVP_HISTORY_PLUS_ONE_NO": "Nein"
   }
 }
-

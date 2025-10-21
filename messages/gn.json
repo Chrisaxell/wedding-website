@@ -43,15 +43,15 @@
     "CONTACT_HEADING": "Eñe'ẽ orendive",
     "CONTACT_DESC": "Eñe'ẽ orendive oĩrõ mba'e reporanduse!",
     "CONTACT_BRIDE_NAME": "\"Scarlett\" Jeong Hee Hong",
-    "CONTACT_BRIDE_PHONE": "+82 10-XXXX-XXXX",
+    "CONTACT_BRIDE_PHONE": "+82-10-4370-7289",
     "INFO_LABEL": "MARANDU",
     "INFO_HEADING": "Ñe'ẽmosaráirã Marandu ha Jehaipy",
     "INFO_TAB_DRESSCODE": "Mba'éichapa Ñemongueta",
     "INFO_TAB_FOOD": "Tembi'u",
     "INFO_TAB_PARKING": "Estacionamiento",
-    "INFO_DRESSCODE_DESC": "Ñemosaráirã ojejapo okapegua, upévare eñemongueta tesakã ára rehegua. Código de vestimenta ha'e ao coreano tradicional térã ao formal ñemosaráirã rehegua.",
-    "INFO_DRESSCODE_LINK": "Eikuaave mba'éichapa ao coreano tradicional →",
-    "INFO_FOOD_DESC": "Tembi'u oñeme'ẽta {foodTime}-gui {venue}-pe, ojejapohápe ceremonia. Opción vegetariana ojeguereko ojejerure ramo (ehai RSVP-pe).",
+    "INFO_ARRIVAL_NOTICE": "Please arrive by 12:00. Seating is assigned, so kindly find your name on the seating chart upon arrival.",
+    "INFO_DRESSCODE_DESC": "Ñemosaráirã ojejapo okapegua, upévare eñemongueta tesakã ára rehegua. Código de vestimenta ha'e ao coreano tradicional térã ao formal ñemosaráirã rehegua. Please wear shoes suitable for grass (low heels recommended).",
+    "INFO_FOOD_DESC": "Welcome drinks will be served from 12:00 at the welcome board. A buffet catering will begin at 13:30. Tembi'u oñeme'ẽta {foodTime}-gui {venue}-pe, ojejapohápe ceremonia. Opción vegetariana ojeguereko ojejerure ramo (ehai RSVP-pe).",
     "INFO_PARKING_DESC": "Estacionamiento ojeguereko tenda jereguápe hanok jerére.",
     "RSVP_SECTION_HEADING": "RSVP",
     "RSVP_SECTION_SUB": "Emombe'u orendive reúta piko.",
@@ -101,4 +101,3 @@
     "RSVP_HISTORY_PLUS_ONE_NO": "Nahániri"
   }
 }
-

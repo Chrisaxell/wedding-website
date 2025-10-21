@@ -43,15 +43,15 @@
     "CONTACT_HEADING": "Contacta'ns",
     "CONTACT_DESC": "No dubteu a contactar-nos si hi ha alguna cosa que us pregunteu!",
     "CONTACT_BRIDE_NAME": "\"Scarlett\" Jeong Hee Hong",
-    "CONTACT_BRIDE_PHONE": "+82 10-XXXX-XXXX",
+    "CONTACT_BRIDE_PHONE": "+82-10-4370-7289",
     "INFO_LABEL": "INFORMACIÓ",
     "INFO_HEADING": "Informació i Notes del Casament",
     "INFO_TAB_DRESSCODE": "Codi de Vestimenta",
     "INFO_TAB_FOOD": "Menjar",
     "INFO_TAB_PARKING": "Aparcament",
-    "INFO_DRESSCODE_DESC": "El casament se celebrarà a l'aire lliure, així que vestiu-vos adequadament per al clima. El codi de vestimenta és vestit tradicional coreà o vestimenta formal de casament.",
-    "INFO_DRESSCODE_LINK": "Aprèn més sobre opcions de roba tradicional coreana →",
-    "INFO_FOOD_DESC": "El menjar es servirà des de {foodTime} a {venue}, on té lloc la cerimònia. Opció vegetariana disponible sota petició (si us plau, esmenteu-ho al RSVP).",
+    "INFO_ARRIVAL_NOTICE": "Please arrive by 12:00. Seating is assigned, so kindly find your name on the seating chart upon arrival.",
+    "INFO_DRESSCODE_DESC": "El casament se celebrarà a l'aire lliure, així que vesteix-te adequadament per al clima. El codi de vestimenta és vestit tradicional coreà o vestimenta formal de casament. Please wear shoes suitable for grass (low heels recommended).",
+    "INFO_FOOD_DESC": "Welcome drinks will be served from 12:00 at the welcome board. A buffet catering will begin at 13:30. Food will be served from {foodTime} at {venue}. Vegetarian option available upon request (please mention in RSVP).",
     "INFO_PARKING_DESC": "Hi ha aparcament disponible als espais oberts al voltant del hanok.",
     "RSVP_SECTION_HEADING": "RSVP",
     "RSVP_SECTION_SUB": "Fes-nos saber si vindràs.",
@@ -101,4 +101,3 @@
     "RSVP_HISTORY_PLUS_ONE_NO": "No"
   }
 }
-

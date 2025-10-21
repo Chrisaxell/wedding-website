@@ -83,6 +83,8 @@ export default async function Page() {
               {t('INFO_LABEL')}
             </p>
             <h3 className="mb-6 text-center text-lg font-medium">{t('INFO_HEADING')}</h3>
+            {/* Arrival notice */}
+            <p className="mb-4 text-center text-sm text-zinc-600">{t('INFO_ARRIVAL_NOTICE')}</p>
             <InfoTabs />
           </section>
         </ScrollReveal>

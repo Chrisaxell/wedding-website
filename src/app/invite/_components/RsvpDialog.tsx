@@ -21,7 +21,8 @@ type Props = { guestName?: string; autoOpen?: boolean };
 
 export function RsvpDialog({ guestName, autoOpen = false }: Props) {
   const [name, setName] = useState(guestName ?? '');
-  const [numberOfPeople, setNumberOfPeople] = useState(1);
+  // store as string so input can be cleared while typing
+  const [numberOfPeople, setNumberOfPeople] = useState('1');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [plusOne, setPlusOne] = useState(false);
@@ -46,7 +47,10 @@ export function RsvpDialog({ guestName, autoOpen = false }: Props) {
     try {
       const fd = new FormData();
       fd.set('name', name);
-      fd.set('numberOfPeople', String(numberOfPeople));
+      // default to 1 if input is empty or invalid
+      const num = parseInt(numberOfPeople, 10);
+      const finalNum = Number.isFinite(num) && num >= 1 ? num : 1;
+      fd.set('numberOfPeople', String(finalNum));
       fd.set('email', email);
       fd.set('phone', phone);
       fd.set('plusOne', String(plusOne));
@@ -148,7 +152,7 @@ export function RsvpDialog({ guestName, autoOpen = false }: Props) {
                 min="1"
                 max="10"
                 value={numberOfPeople}
-                onChange={(e) => setNumberOfPeople(Math.max(1, parseInt(e.target.value) || 1))}
+                onChange={(e) => setNumberOfPeople(e.target.value)}
               />
               <p className="text-[10px] text-zinc-500">Including yourself</p>
             </div>

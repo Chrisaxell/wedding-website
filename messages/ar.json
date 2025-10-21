@@ -43,15 +43,16 @@
     "CONTACT_HEADING": "اتصل بنا",
     "CONTACT_DESC": "لا تتردد في الاتصال بنا إذا كان هناك شيء تتساءل عنه!",
     "CONTACT_BRIDE_NAME": "\"سكارليت\" جيونغ هي هونغ",
-    "CONTACT_BRIDE_PHONE": "+82 10-XXXX-XXXX",
+    "CONTACT_BRIDE_PHONE": "+82-10-4370-7289",
     "INFO_LABEL": "معلومات",
     "INFO_HEADING": "معلومات وملاحظات الزفاف",
+    "INFO_ARRIVAL_NOTICE": "Please arrive by 12:00. Seating is assigned, so kindly find your name on the seating chart upon arrival.",
     "INFO_TAB_DRESSCODE": "قواعد اللباس",
     "INFO_TAB_FOOD": "الطعام",
     "INFO_TAB_PARKING": "موقف السيارات",
-    "INFO_DRESSCODE_DESC": "سيقام الزفاف في الهواء الطلق، لذا يرجى ارتداء ملابس مناسبة للطقس. قواعد اللباس هي الزي الكوري التقليدي أو الملابس الرسمية للزفاف.",
+    "INFO_DRESSCODE_DESC": "سيقام الزفاف في الهواء الطلق، لذا يرجى ارتداء ملابس مناسبة للطقس. قواعد اللباس هي الزي الكوري التقليدي أو الملابس الرسمية للزفاف. Please wear shoes suitable for grass (low heels recommended).",
     "INFO_DRESSCODE_LINK": "تعلم المزيد عن خيارات الملابس الكورية التقليدية ←",
-    "INFO_FOOD_DESC": "سيتم تقديم الطعام من {foodTime} في {venue}، حيث تقام الحفل. خيار نباتي متاح عند الطلب (يرجى ذكر ذلك في RSVP).",
+    "INFO_FOOD_DESC": "Welcome drinks will be served from 12:00 at the welcome board. A buffet catering will begin at 13:30. سيبدأ تقديم الطعام من {foodTime} في {venue}. خيار نباتي متاح عند الطلب (يرجى ذكر ذلك في RSVP).",
     "INFO_PARKING_DESC": "موقف السيارات متاح في المساحات المفتوحة حول الهانوك.",
     "RSVP_SECTION_HEADING": "RSVP",
     "RSVP_SECTION_SUB": "أخبرنا إذا كنت قادماً.",
@@ -101,4 +102,3 @@
     "RSVP_HISTORY_PLUS_ONE_NO": "لا"
   }
 }
-

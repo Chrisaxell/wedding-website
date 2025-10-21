@@ -43,7 +43,7 @@ export function ContactInfo() {
           <CardTitle>JeongHee Hong</CardTitle>
           <CardDescription>
             <Link
-              href="tel:+821012345678"
+              href="tel:+82-10-4370-7289"
               className="flex items-center gap-2 text-xs text-zinc-600 transition-colors hover:text-zinc-900"
             >
               <Phone className="h-3.5 w-3.5" />
