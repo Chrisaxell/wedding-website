@@ -6,6 +6,7 @@ import {
   InviteHero,
   RsvpDialog, // Import RsvpDialog
   TopControls, // Import TopControls
+  ContactInfo, // Import ContactInfo
 } from '@/app/invite/_components';
 import MapCard from '@/app/invite/_components/MapCard';
 import { getTranslations } from 'next-intl/server';
@@ -77,6 +78,10 @@ export default async function Page() {
           <h3 className="mb-6 text-center text-lg font-medium">{t('INFO_HEADING')}</h3>
           <InfoTabs />
         </section>
+      </ScrollReveal>
+
+      <ScrollReveal threshold={0.5}>
+        <ContactInfo />
       </ScrollReveal>
 
       <ScrollReveal threshold={0.5}>

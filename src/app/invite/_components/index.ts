@@ -7,3 +7,4 @@ export * from './GalleryGrid';
 export * from './AccountAccordion';
 export * from './AddCalendarButton';
 export * from './TopControls';
+export * from './ContactInfo';
