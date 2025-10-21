@@ -59,10 +59,7 @@ export default function RSVPForm({ inviteId }: { inviteId?: string }) {
           maxLength={500}
         />
       </label>
-      <div className="flex items-center gap-2 text-sm">
-        <input id="plusOne" name="plusOne" type="checkbox" value="true" className="h-4 w-4" />
-        <label htmlFor="plusOne">Bringing a +1</label>
-      </div>
+      <div className="flex items-center gap-2 text-sm"></div>
       <fieldset className="grid gap-2 text-sm">
         <legend className="font-medium">Attendance</legend>
         <div className="flex gap-2">

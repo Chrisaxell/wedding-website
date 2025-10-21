@@ -10,7 +10,11 @@ export async function submitRSVP(formData: FormData) {
   const name = String(formData.get('name') ?? '').trim();
   const email = String(formData.get('email') ?? '').trim();
   const phone = String(formData.get('phone') ?? '').trim();
-  const plusOne = formData.get('plusOne') === 'true';
+  // numberOfPeople now determines whether a guest brings a +1
+  const numberOfPeopleRaw = String(formData.get('numberOfPeople') ?? '1').trim();
+  const parsedNum = parseInt(numberOfPeopleRaw, 10);
+  const numberOfPeople = Number.isFinite(parsedNum) && parsedNum >= 1 ? parsedNum : 1;
+  const plusOne = numberOfPeople > 1;
   const dietaryRestrictions = String(formData.get('dietaryRestrictions') ?? '').trim();
   const statusRaw = String(formData.get('status') ?? '').trim();
   const inviteIdRaw = String(formData.get('inviteId') ?? '').trim();
