@@ -22,7 +22,7 @@ export function GalleryImage({
 
   return (
     <div
-      className="group relative w-full cursor-pointer overflow-hidden rounded bg-zinc-100"
+      className="group relative w-full flex-shrink-0 cursor-pointer overflow-hidden rounded bg-zinc-100"
       onClick={onClick}
       style={{ aspectRatio: aspectRatio, minHeight: aspectRatio === 'auto' ? '200px' : undefined }}
     >

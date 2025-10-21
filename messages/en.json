@@ -17,6 +17,7 @@
     "GALLERY_LABEL": "GALLERY",
     "GALLERY_HEADING": "Gallery",
     "GALLERY_ALT": "gallery {index}",
+    "GALLERY_SHOW_MORE": "Show More",
     "LOCATION_LABEL": "LOCATION",
     "LOCATION_HEADING": "Directions",
     "MAP_PLACEHOLDER": "Map goes here (Kakao/Naver)",

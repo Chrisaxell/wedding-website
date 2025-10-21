@@ -14,6 +14,7 @@
     "GALLERY_LABEL": "GALLERY",
     "GALLERY_HEADING": "갤러리",
     "GALLERY_ALT": "갤러리 {index}",
+    "GALLERY_SHOW_MORE": "더보기",
     "LOCATION_LABEL": "LOCATION",
     "LOCATION_HEADING": "오시는 길",
     "MAP_PLACEHOLDER": "지도가 표시됩니다 (Kakao/Naver)",
