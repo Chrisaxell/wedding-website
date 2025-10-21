@@ -44,7 +44,7 @@ export function InviteHero({ heroImage, coupleA, coupleB, dateISO, venueName, cl
       </div>
 
       <div className="px-6">
-        <Image src={heroImage} alt="wedding" width={1000} height={16000} />
+        <Image src={heroImage} alt="wedding" width={1000} height={1600} />
       </div>
 
       <div className="mt-5 text-center">
