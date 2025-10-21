@@ -9,6 +9,9 @@ const countryToLanguage: Record<string, string> = {
   AU: 'en',
   NZ: 'en',
   IE: 'en',
+  IN: 'en',
+  SG: 'en',
+  ZA: 'en',
 
   // Korean
   KR: 'ko',
@@ -21,13 +24,27 @@ const countryToLanguage: Record<string, string> = {
   CL: 'es',
   PE: 'es',
   VE: 'es',
+  EC: 'es',
+  GT: 'es',
+  CU: 'es',
+  BO: 'es',
+  DO: 'es',
+  HN: 'es',
+  PY: 'es',
+  SV: 'es',
+  NI: 'es',
+  CR: 'es',
+  PA: 'es',
+  UY: 'es',
 
   // Portuguese speaking countries
-  BR: 'pt',
   PT: 'pt',
+  BR: 'pt',
+  AO: 'pt',
+  MZ: 'pt',
 
-  // Norwegian/Nordic
-  NO: 'no',
+  // Catalan
+  AD: 'ca', // Andorra
 
   // Swedish
   SE: 'sv',
@@ -35,11 +52,42 @@ const countryToLanguage: Record<string, string> = {
   // Danish
   DK: 'da',
 
-  // Chinese speaking
+  // Norwegian
+  NO: 'nb',
+
+  // Arabic speaking countries
+  SA: 'ar',
+  EG: 'ar',
+  AE: 'ar',
+  IQ: 'ar',
+  MA: 'ar',
+  DZ: 'ar',
+  SD: 'ar',
+  SY: 'ar',
+  YE: 'ar',
+  JO: 'ar',
+  TN: 'ar',
+  LY: 'ar',
+  LB: 'ar',
+  OM: 'ar',
+  KW: 'ar',
+  QA: 'ar',
+  BH: 'ar',
+
+  // German
+  DE: 'de',
+  AT: 'de',
+  CH: 'de',
+  LI: 'de',
+
+  // Chinese
   CN: 'zh',
   TW: 'zh',
   HK: 'zh',
-  SG: 'zh',
+  MO: 'zh',
+
+  // Guarani (Paraguay also uses Spanish, but including for completeness)
+  // PY: 'gn', // Commented out since Spanish is more common
 };
 
 /**
@@ -60,7 +108,7 @@ export function getLanguageFromHeaders(acceptLanguage?: string): string {
     return code.split('-')[0].toLowerCase();
   });
 
-  const supported = ['en', 'ko', 'es', 'pt', 'no', 'sv', 'da', 'zh', 'gn'];
+  const supported = ['en', 'ko', 'es', 'pt', 'ca', 'sv', 'da', 'nb', 'ar', 'de', 'zh', 'gn'];
 
   for (const lang of languages) {
     if (supported.includes(lang)) {

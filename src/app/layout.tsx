@@ -2,6 +2,7 @@ import React from 'react';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getLocale } from 'next-intl/server';
 import { Noto_Serif } from 'next/font/google';
+import type { Metadata } from 'next';
 import './globals.css';
 
 const notoSerif = Noto_Serif({
@@ -10,6 +11,14 @@ const notoSerif = Noto_Serif({
   display: 'swap',
   variable: '--font-noto-serif',
 });
+
+export const metadata: Metadata = {
+  title: 'Christian & JeongHee - Wedding Invitation',
+  description: 'Join us as we celebrate our wedding on February 8th, 2025',
+  icons: {
+    icon: '/wedding-rings.svg',
+  },
+};
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const messages = await getMessages();

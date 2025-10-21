@@ -6,14 +6,16 @@ import { useRouter } from 'next/navigation';
 const LOCALES: { code: string; label: string }[] = [
   { code: 'en', label: 'English' },
   { code: 'es', label: 'Español' },
-  { code: 'no', label: 'Norsk' },
-  { code: 'da', label: 'Dansk' },
   { code: 'pt', label: 'Português' },
+  { code: 'ca', label: 'Català' },
   { code: 'sv', label: 'Svenska' },
+  { code: 'da', label: 'Dansk' },
+  { code: 'nb', label: 'Norsk' },
   { code: 'ko', label: '한국어' },
+  { code: 'ar', label: 'العربية' },
+  { code: 'de', label: 'Deutsch' },
   { code: 'zh', label: '中文' },
-  { code: 'gn', label: "Avañe'ẽ" },
-  { code: 'ar', label: 'العربية' }, // Added Arabic
+  { code: 'gn', label: 'Guaraní' },
 ];
 
 export default function LanguageSwitcher() {

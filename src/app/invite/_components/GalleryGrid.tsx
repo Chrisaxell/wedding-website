@@ -1,39 +1,49 @@
 'use client';
 
-import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import { GalleryDialog, type GalleryImage as GalleryImageType } from './GalleryDialog';
+import { GalleryImage } from './GalleryImage';
+import { Button } from '@/components/ui/button';
 
-const GALLERY_IMAGES = [
-  '/images/gallery photos/2 완-3.jpg',
-  '/images/gallery photos/4 완-3.jpg',
-  '/images/gallery photos/6 완-3.jpg',
-  '/images/gallery photos/8 완-3.jpg',
-  '/images/gallery photos/9완-3.jpg',
-  '/images/gallery photos/11 완-3.jpg',
-  '/images/gallery photos/13 완-3.jpg',
-  '/images/gallery photos/14 완-3.jpg',
-  '/images/gallery photos/15 완-3.jpg',
-  '/images/gallery photos/16 완(볼 제거)-3.jpg',
-  '/images/gallery photos/17 완-3.jpg',
-  '/images/gallery photos/18 완-3.jpg',
-  '/images/gallery photos/20 완-3.jpg',
-  '/images/gallery photos/22 완-3.jpg',
-  '/images/gallery photos/23 완-3.jpg',
-  '/images/gallery photos/21 완-3.jpg',
+const GALLERY: GalleryImageType[] = [
+  { src: '/images/gallery photos/11 완-3.jpg', aspectRatio: '3/2' },
+  { src: '/images/gallery photos/15 완-3.jpg', aspectRatio: '5/5', objectPosition: 'bottom' },
+  { src: '/images/gallery photos/17 완-3.jpg', aspectRatio: '3/2' },
+  { src: '/images/gallery photos/20 완-3.jpg', aspectRatio: '3/2' },
+  { src: '/images/gallery photos/7 완-3.jpg', aspectRatio: '2/3', note: 'selfie' },
+  { src: '/images/gallery photos/18 완-3.jpg', aspectRatio: '3/2' },
+  { src: '/images/gallery photos/2 완-3.jpg', aspectRatio: '3/2' },
+  { src: '/images/gallery photos/22 완-3.jpg', aspectRatio: '2/3' },
+  { src: '/images/gallery photos/8 완-3.jpg', aspectRatio: '2/3', note: 'selfie' },
+  { src: '/images/gallery photos/23 완-3.jpg', aspectRatio: '2/3' },
+  { src: '/images/gallery photos/12 완-3.jpg', aspectRatio: '2/3' },
+  { src: '/images/gallery photos/9완-3.jpg', aspectRatio: '2/3' },
+  { src: '/images/gallery photos/4 완-3.jpg', aspectRatio: '5/5', objectPosition: 'bottom' },
+  { src: '/images/gallery photos/13 완-3.jpg', aspectRatio: '2/3' },
+  { src: '/images/gallery photos/6 완-3.jpg', aspectRatio: '2/3', note: 'selfie' },
+  { src: '/images/gallery photos/PXL_20250628_110855147.RAW-01.COVER.jpg', aspectRatio: '3/2' },
 ];
+
+const INITIAL_ITEMS_PER_COLUMN_LEFT = 3; // Left column shows 3 images with 3rd cut off
+const INITIAL_ITEMS_PER_COLUMN_RIGHT = 2; // Right column shows only 2 images
 
 export function GalleryGrid() {
   const t = useTranslations('WeddingInvite');
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
 
-  // Group images into sets of 3 for the alternating pattern
-  const imageGroups: Array<{ type: 'left' | 'right'; images: string[] }> = [];
-  for (let i = 0; i < GALLERY_IMAGES.length; i += 3) {
-    const isLeftPattern = Math.floor(i / 3) % 2 === 0;
-    imageGroups.push({
-      type: isLeftPattern ? 'left' : 'right',
-      images: GALLERY_IMAGES.slice(i, i + 3),
-    });
-  }
+  // Alternate images between columns (odd indices in left, even indices in right)
+  const leftColumn = GALLERY.filter((_, idx) => idx % 2 === 0);
+  const rightColumn = GALLERY.filter((_, idx) => idx % 2 === 1);
+
+  // Limit displayed images when not expanded
+  const displayLeftColumn = isExpanded
+    ? leftColumn
+    : leftColumn.slice(0, INITIAL_ITEMS_PER_COLUMN_LEFT);
+  const displayRightColumn = isExpanded
+    ? rightColumn
+    : rightColumn.slice(0, INITIAL_ITEMS_PER_COLUMN_RIGHT);
 
   return (
     <section className="px-4 py-10">
@@ -42,76 +52,70 @@ export function GalleryGrid() {
         <h3 className="text-lg font-medium">{t('GALLERY_HEADING')}</h3>
       </div>
 
-      {/* Gallery with alternating pattern */}
-      <div className="mt-6 space-y-2 px-2">
-        {imageGroups.map((group, groupIndex) => (
-          <div key={groupIndex} className="flex gap-2">
-            {group.type === 'left' ? (
-              <>
-                {/* 2 horizontal images stacked */}
-                <div className="flex flex-1 flex-col gap-2">
-                  {group.images.slice(0, 2).map((src, i) => (
-                    <div key={i} className="overflow-hidden rounded-md">
-                      <Image
-                        src={src}
-                        alt={t('GALLERY_ALT', { index: groupIndex * 3 + i + 1 })}
-                        width={800}
-                        height={600}
-                        className="aspect-[4/3] w-full object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
-                {/* 1 portrait image */}
-                {group.images[2] && (
-                  <div className="flex flex-1 items-center">
-                    <div className="w-full overflow-hidden rounded-md">
-                      <Image
-                        src={group.images[2]}
-                        alt={t('GALLERY_ALT', { index: groupIndex * 3 + 3 })}
-                        width={600}
-                        height={800}
-                        className="aspect-[3/4] w-full object-cover"
-                      />
-                    </div>
-                  </div>
-                )}
-              </>
-            ) : (
-              <>
-                {/* 1 portrait image */}
-                {group.images[0] && (
-                  <div className="flex flex-1 items-center">
-                    <div className="w-full overflow-hidden rounded-md">
-                      <Image
-                        src={group.images[0]}
-                        alt={t('GALLERY_ALT', { index: groupIndex * 3 + 1 })}
-                        width={600}
-                        height={800}
-                        className="aspect-[3/4] w-full object-cover"
-                      />
-                    </div>
-                  </div>
-                )}
-                {/* 2 horizontal images stacked */}
-                <div className="flex flex-1 flex-col gap-2">
-                  {group.images.slice(1, 3).map((src, i) => (
-                    <div key={i} className="overflow-hidden rounded-md">
-                      <Image
-                        src={src}
-                        alt={t('GALLERY_ALT', { index: groupIndex * 3 + i + 2 })}
-                        width={800}
-                        height={600}
-                        className="aspect-[4/3] w-full object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
+      <div className="relative mt-6">
+        <div className="grid grid-cols-2 gap-2 px-2">
+          {/* Left Column - shows 2 full images + barely top of 3rd portrait */}
+          <div
+            className="flex flex-col gap-2"
+            style={!isExpanded ? { maxHeight: '300px', overflow: 'hidden' } : undefined}
+          >
+            {displayLeftColumn.map((image, idx) => {
+              const originalIndex = idx * 2;
+              return (
+                <GalleryImage
+                  key={image.src}
+                  src={image.src}
+                  index={originalIndex + 1}
+                  onClick={() => setOpenIndex(originalIndex)}
+                  aspectRatio={image.aspectRatio}
+                  objectPosition={image.objectPosition}
+                />
+              );
+            })}
           </div>
-        ))}
+
+          {/* Right Column - shows only 2 full images */}
+          <div
+            className="flex flex-col gap-2"
+            style={!isExpanded ? { maxHeight: '300px', overflow: 'hidden' } : undefined}
+          >
+            {displayRightColumn.map((image, idx) => {
+              const originalIndex = idx * 2 + 1;
+              return (
+                <GalleryImage
+                  key={image.src}
+                  src={image.src}
+                  index={originalIndex + 1}
+                  onClick={() => setOpenIndex(originalIndex)}
+                  aspectRatio={image.aspectRatio}
+                  objectPosition={image.objectPosition}
+                />
+              );
+            })}
+          </div>
+        </div>
+
+        {/* More aggressive but shorter fade overlay when not expanded */}
+        {!isExpanded && (
+          <div className="pointer-events-none absolute right-0 bottom-0 left-0 h-24 bg-gradient-to-t from-white to-transparent" />
+        )}
       </div>
+
+      {/* Show More Button */}
+      {!isExpanded && (
+        <div className="mt-6 flex justify-center">
+          <Button onClick={() => setIsExpanded(true)} variant="outline" className="px-8">
+            {t('GALLERY_SHOW_MORE')}
+          </Button>
+        </div>
+      )}
+
+      <GalleryDialog
+        gallery={GALLERY}
+        openIndex={openIndex}
+        onOpenChange={(open: boolean) => !open && setOpenIndex(null)}
+        onNavigate={setOpenIndex}
+      />
     </section>
   );
 }

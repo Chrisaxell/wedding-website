@@ -10,41 +10,40 @@ type Props = {
   dateISO: string; // e.g. "2026-03-29T13:30:00+09:00"
   weekday?: string; // Deprecated in favor of locale formatting
   venueName: string;
+  className?: string;
 };
 
-export function InviteHero({ heroImage, coupleA, coupleB, dateISO, venueName }: Props) {
+export function InviteHero({ heroImage, coupleA, coupleB, dateISO, venueName, className }: Props) {
   const t = useTranslations('WeddingInvite');
   const locale = useLocale();
   const date = new Date(dateISO);
   const yyyy = date.getFullYear();
-  const mm = `${date.getMonth() + 1}`.padStart(2, '0');
-  const dd = `${date.getDate()}`.padStart(2, '0');
+  const dayNumber = date.getDate();
+  const monthNumber = date.getMonth() + 1;
   const weekdayLocalized = new Intl.DateTimeFormat(locale, { weekday: 'long' })
     .format(date)
     .toUpperCase();
 
+  const numericDate = `${String(dayNumber).padStart(2, '0')}-${String(monthNumber).padStart(2, '0')}-${yyyy}`;
+  const monthDateString = new Intl.DateTimeFormat(locale, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
+  const eventTime = '13:00';
+
   return (
-    <section className="relative">
+    <section className={className}>
       <div className="px-6 pt-8 pb-4 text-center">
-        <div className="font-serif text-[10px] tracking-[0.3em] text-zinc-400">
-          {t('WEDDING_DAY')}
-        </div>
-        <div className="mt-2 font-serif text-2xl leading-tight text-zinc-700">
-          <span className="mr-2">{dd}</span>
-          <span className="mr-2">|</span>
-          <span className="mr-2">{mm}</span>
-          <span className="mr-2">|</span>
-          <span>{yyyy}</span>
-        </div>
-        <div className="font-serif text-xs leading-tight tracking-[0.3em] text-zinc-400">
+        <div className="text-[10px] tracking-[0.3em] text-zinc-400">{t('WEDDING_DAY')}</div>
+        <div className="mt-2 text-2xl leading-tight text-zinc-700">{numericDate}</div>
+        <div className="text-xs leading-tight tracking-[0.3em] text-zinc-400">
           {weekdayLocalized}
         </div>
       </div>
 
       <div className="px-6">
-        <div className="overflow-hidden rounded-xl shadow">
-          <Image src={heroImage} alt="wedding" width={1200} height={1600} className="w-full" />
-        </div>
+        <Image src={heroImage} alt="wedding" width={1000} height={1600} />
       </div>
 
       <div className="mt-5 text-center">
@@ -54,8 +53,9 @@ export function InviteHero({ heroImage, coupleA, coupleB, dateISO, venueName }: 
           <span>{coupleB}</span>
         </div>
         <div className="mt-1 text-sm">
-          {t('DATE_LINE', { year: yyyy, month: mm, day: dd, venue: venueName })}
+          {eventTime} • {monthDateString}
         </div>
+        <div className="mt-1 text-sm">{venueName}</div>
       </div>
     </section>
   );

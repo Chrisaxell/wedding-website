@@ -4,8 +4,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        serif: ['Noto Serif', 'serif'],
-        sans: ['Noto Serif', 'serif'], // fallback for any sans usage
+        serif: ['var(--font-noto-serif)', 'Noto Serif', 'serif'],
+        sans: ['var(--font-noto-sans)', 'Noto Sans', 'sans-serif'],
       },
     },
   },
