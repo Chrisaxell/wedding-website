@@ -22,7 +22,6 @@ export default async function AdminPage() {
       id: true,
       name: true,
       status: true,
-      plusOne: true,
       email: true,
       phone: true,
       createdAt: true,
@@ -54,9 +53,6 @@ export default async function AdminPage() {
                     </span>
                     <span>
                       Status: <strong>{rsvp.status}</strong>
-                    </span>
-                    <span>
-                      +1: <strong>{rsvp.plusOne ? 'Yes' : 'No'}</strong>
                     </span>
                     <span style={{ color: '#666' }}>Contact: {contact}</span>
                   </div>

@@ -15,7 +15,6 @@ export type RSVP = {
   id?: string;
   name: string;
   status: 'yes' | 'no' | 'maybe';
-  plusOne: boolean;
   email?: string | null;
   phone?: string | null;
   createdAt?: string;
