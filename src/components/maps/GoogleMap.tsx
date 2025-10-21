@@ -19,7 +19,7 @@ export default function GoogleMap({ lat, lng, zoom = 16, title = 'Location', cla
     if (typeof window === 'undefined') return;
 
     function init() {
-      // @ts-ignore
+      // @ts-expect-error - Google Maps API is loaded dynamically
       const google = window.google;
       if (!google?.maps) return;
       const center = { lat, lng };

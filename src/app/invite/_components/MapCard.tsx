@@ -95,8 +95,6 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
                   <KakaoMap
                     lat={lat!}
                     lng={lng!}
-                    title={venueName}
-                    venueName={venueName}
                     zoom={kakaoZoom}
                     className="aspect-[4/3] w-full"
                   />

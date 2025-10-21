@@ -4,30 +4,28 @@ import { useEffect, useRef, useState } from 'react';
 type Props = {
   lat: number;
   lng: number;
-  title?: string;
   className?: string;
-  venueName?: string;
   zoom?: number; // Kakao uses "level" where higher = more zoomed out
 };
 
 declare global {
   interface Window {
-    kakao?: any;
+    kakao?: {
+      maps: {
+        LatLng: new (lat: number, lng: number) => unknown;
+        Map: new (container: HTMLElement, options: unknown) => unknown;
+        Marker: new (options: unknown) => { setMap: (map: unknown) => void };
+        load: (callback: () => void) => void;
+      };
+    };
   }
 }
 
-export default function KakaoMap({
-  lat,
-  lng,
-  title = 'Location',
-  venueName,
-  className,
-  zoom = 4,
-}: Props) {
+export default function KakaoMap({ lat, lng, className, zoom = 4 }: Props) {
   const ref = useRef<HTMLDivElement | null>(null);
   const [ready, setReady] = useState(false);
   const [error, setError] = useState(false);
-  const mapInstanceRef = useRef<any>(null);
+  const mapInstanceRef = useRef<unknown>(null);
   const appKey = process.env.NEXT_PUBLIC_KAKAO_JS_KEY;
 
   useEffect(() => {
