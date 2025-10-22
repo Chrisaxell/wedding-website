@@ -19,7 +19,6 @@ export function RsvpDialog({ guestName, autoOpen = false }: Props) {
     const [numberOfPeople, setNumberOfPeople] = useState('1');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
-    const [plusOne, setPlusOne] = useState(false);
     const [dietaryRestrictions, setDietaryRestrictions] = useState('');
     const [status, setStatus] = useState<'yes' | 'no' | 'maybe'>('yes');
     const [loading, setLoading] = useState(false);
@@ -47,7 +46,6 @@ export function RsvpDialog({ guestName, autoOpen = false }: Props) {
             fd.set('numberOfPeople', String(finalNum));
             fd.set('email', email);
             fd.set('phone', phone);
-            fd.set('plusOne', String(plusOne));
             fd.set('status', status);
             fd.set('dietaryRestrictions', dietaryRestrictions);
             const res = await submitRSVP(fd);
@@ -186,19 +184,6 @@ export function RsvpDialog({ guestName, autoOpen = false }: Props) {
                         <p className="text-xs font-medium text-zinc-600">Please respond before 28th of January.</p>
 
                         <p className="text-xs text-zinc-500">{t('RSVP_CONTACT_INFO')}</p>
-
-                        <div className="flex items-center gap-2">
-                            <input
-                                id="plusOne"
-                                type="checkbox"
-                                checked={plusOne}
-                                onChange={(e) => setPlusOne(e.target.checked)}
-                                className="h-4 w-4 rounded border-gray-300"
-                            />
-                            <Label htmlFor="plusOne" className="cursor-pointer font-normal">
-                                {t('RSVP_PLUS_ONE_LABEL')}
-                            </Label>
-                        </div>
 
                         <div className="space-y-2">
                             <Label>{t('RSVP_ATTENDANCE_LABEL')}</Label>
