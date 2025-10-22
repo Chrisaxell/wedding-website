@@ -11,6 +11,7 @@ import {
 import MapCard from '@/app/invite/_components/MapCard';
 import { getTranslations } from 'next-intl/server';
 import { getLocale } from 'next-intl/server';
+import { GALLERY } from '@/lib/gallery';
 import { WEDDING_EVENT } from '@/lib/wedding';
 import { getCookie } from '@/lib/cookies';
 import Image from 'next/image';
@@ -29,12 +30,10 @@ export default async function Page() {
 
   return (
     <>
-      {/* Preload gallery images */}
-      <link rel="preload" as="image" href="/images/gallery photos/11 완-3.jpg" />
-      <link rel="preload" as="image" href="/images/gallery photos/15 완-3.jpg" />
-      <link rel="preload" as="image" href="/images/gallery photos/17 완-3.jpg" />
-      <link rel="preload" as="image" href="/images/gallery photos/20 완-3.jpg" />
-      <link rel="preload" as="image" href="/images/gallery photos/7 완-3.jpg" />
+      {/* Preload all gallery images (server-side link preload) */}
+      {GALLERY.map((img) => (
+        <link key={img.src} rel="preload" as="image" href={img.src} />
+      ))}
 
       <main className="mx-auto w-full max-w-[430px] bg-white">
         <TopControls />

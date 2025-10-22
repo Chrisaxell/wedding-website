@@ -1,29 +1,16 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
-import { GalleryDialog, type GalleryImage as GalleryImageType } from './GalleryDialog';
+import { useState, useEffect } from 'react';
+import { GalleryDialog } from './GalleryDialog';
 import { GalleryImage } from './GalleryImage';
 import { Button } from '@/components/ui/button';
+import { GALLERY } from '@/lib/gallery';
 
-const GALLERY: GalleryImageType[] = [
-  { src: '/images/gallery photos/11 완-3.jpg', aspectRatio: '3/2' },
-  { src: '/images/gallery photos/15 완-3.jpg', aspectRatio: '5/5', objectPosition: 'bottom' },
-  { src: '/images/gallery photos/17 완-3.jpg', aspectRatio: '3/2' },
-  { src: '/images/gallery photos/20 완-3.jpg', aspectRatio: '3/2' },
-  { src: '/images/gallery photos/7 완-3.jpg', aspectRatio: '2/3', note: 'selfie' },
-  { src: '/images/gallery photos/18 완-3.jpg', aspectRatio: '3/2' },
-  { src: '/images/gallery photos/2 완-3.jpg', aspectRatio: '3/2' },
-  { src: '/images/gallery photos/22 완-3.jpg', aspectRatio: '2/3' },
-  { src: '/images/gallery photos/8 완-3.jpg', aspectRatio: '2/3', note: 'selfie' },
-  { src: '/images/gallery photos/23 완-3.jpg', aspectRatio: '2/3' },
-  { src: '/images/gallery photos/12 완-3.jpg', aspectRatio: '2/3' },
-  { src: '/images/gallery photos/9완-3.jpg', aspectRatio: '2/3' },
-  { src: '/images/gallery photos/4 완-3.jpg', aspectRatio: '5/5', objectPosition: 'bottom' },
-  { src: '/images/gallery photos/13 완-3.jpg', aspectRatio: '2/3' },
-  { src: '/images/gallery photos/6 완-3.jpg', aspectRatio: '2/3', note: 'selfie' },
-  { src: '/images/gallery photos/PXL_20250628_110855147.RAW-01.COVER.jpg', aspectRatio: '3/2' },
-];
+// Note: gallery data is centralized in src/lib/gallery.ts
+
+// Preload gallery images on the client so expanding the gallery / opening dialog is instant
+// We use a lightweight Image() prefetch which leverages the browser cache.
 
 const INITIAL_ITEMS_PER_COLUMN_LEFT = 3; // Left column shows 3 images with 3rd cut off
 const INITIAL_ITEMS_PER_COLUMN_RIGHT = 2; // Right column shows only 2 images
@@ -32,6 +19,14 @@ export function GalleryGrid() {
   const t = useTranslations('WeddingInvite');
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    GALLERY.forEach((img) => {
+      const i = new Image();
+      i.src = img.src;
+    });
+  }, []);
 
   // Alternate images between columns (odd indices in left, even indices in right)
   const leftColumn = GALLERY.filter((_, idx) => idx % 2 === 0);
