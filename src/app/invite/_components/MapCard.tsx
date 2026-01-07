@@ -1,11 +1,11 @@
 'use client';
 
-import { useTranslations, useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import GoogleMap from '@/components/maps/GoogleMap';
 import KakaoMap from '@/components/maps/KakaoMap';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 type Props = {
@@ -33,10 +33,9 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
     }, [isKorean]);
 
     // Kakao Map links
-    // Yangsan Station coordinates: 35.3394, 128.9921
-    const yangsanStationKakaoLink = 'https://map.kakao.com/link/to/양산역,35.3394,128.9921';
-    const yangsanStationNaverLink =
-        'https://map.naver.com/p/directions/-/14133887.169213826,4208233.114070937,양산역,PLACE_POI/-/transit';
+    // Jeungsan Station coordinates: 35.3122, 129.0347
+    const jeungsanStationKakaoLink = 'https://place.map.kakao.com/PSS240';
+    const jeungsanStationNaverLink = 'https://naver.me/xVAJTMJh ';
 
     // Kakao Map navigation to venue
     const venueKakaoNaviLink =
@@ -81,7 +80,13 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
                             </div>
                             <div className={value === 'kakao' ? 'block' : 'hidden'}>
                                 {canRender ? (
-                                    <KakaoMap lat={lat!} lng={lng!} zoom={kakaoZoom} className="aspect-[4/3] w-full" />
+                                    <KakaoMap
+                                        lat={lat!}
+                                        lng={lng!}
+                                        zoom={kakaoZoom}
+                                        title={venueName}
+                                        className="aspect-[4/3] w-full"
+                                    />
                                 ) : (
                                     <div className="flex aspect-[4/3] items-center justify-center text-sm text-zinc-500">
                                         {t('MAP_PLACEHOLDER')}
@@ -110,7 +115,7 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
                                 <div className="space-y-2">
                                     <div>
                                         <Link
-                                            href={yangsanStationKakaoLink}
+                                            href={jeungsanStationKakaoLink}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="text-zinc-900 underline hover:text-zinc-700"
@@ -120,7 +125,7 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
                                     </div>
                                     <div>
                                         <Link
-                                            href={yangsanStationNaverLink}
+                                            href={jeungsanStationNaverLink}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="text-zinc-900 underline hover:text-zinc-700"
@@ -138,7 +143,13 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
                                 {t('TRANSPORT_DRIVING_TITLE')}
                             </AccordionTrigger>
                             <AccordionContent className="text-sm text-zinc-600">
-                                <p className="mb-3">{t('TRANSPORT_DRIVING_DESC')}</p>
+                                {t('TRANSPORT_DRIVING_DESC')
+                                    .split('\n')
+                                    .map((text) => (
+                                        <p key={text} className="mb-3">
+                                            {text}
+                                        </p>
+                                    ))}
                                 <div className="space-y-2">
                                     <div>
                                         <Link

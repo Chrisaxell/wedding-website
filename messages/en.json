@@ -27,9 +27,9 @@
         "MAP_TAB_GOOGLE": "Google Map",
         "MAP_TAB_KAKAO": "Kakao Map",
         "TRANSPORT_PUBLIC_TITLE": "Public Transport",
-        "TRANSPORT_PUBLIC_DESC": "We will provide a shuttle bus from Yangsan Station. Please take public transport to Yangsan Station, and our shuttle bus will take you to and back from the venue.",
-        "TRANSPORT_PUBLIC_LINK": "View Yangsan Station on Kakao Map →",
-        "TRANSPORT_PUBLIC_NAVER": "Naver Map",
+        "TRANSPORT_PUBLIC_DESC": "We will provide a shuttle bus from Jeungsan Station. Please take Busan Metro Line 2 to Jeungsan Station, and our shuttle bus will take you to and back from the venue.",
+        "TRANSPORT_PUBLIC_LINK": "View Jeungsan Station on Kakao Map →",
+        "TRANSPORT_PUBLIC_NAVER": "View Jeungsan Station on Naver Map →",
         "TRANSPORT_DRIVING_TITLE": "Driving",
         "TRANSPORT_DRIVING_DESC": "If you're driving, use the links below to get directions to the venue.",
         "TRANSPORT_DRIVING_LINK": "Get directions via Kakao Map →",
@@ -75,6 +75,11 @@
         "RSVP_SUCCESS_MESSAGE": "Your RSVP has been successfully submitted. We're so excited to celebrate with you!",
         "RSVP_CALENDAR_PROMPT": "Would you like to add our wedding to your calendar?",
         "RSVP_SKIP_CALENDAR": "Maybe Later",
+        "RSVP_NUMBER_OF_PEOPLE_LABEL": "Number of people",
+        "RSVP_NUMBER_OF_PEOPLE_HINT": "including yourself",
+        "RSVP_DIETARY_LABEL": "Dietary restrictions / allergies",
+        "RSVP_DIETARY_PLACEHOLDER": "e.g. vegetarian, gluten-free, nut allergy",
+        "RSVP_DEADLINE": "Please respond by 28 January.",
         "ACCOUNTS_SECTION_HEADING": "Gift Contributions",
         "ACCOUNTS_GROOM_TITLE": "Groom's Accounts",
         "ACCOUNTS_BRIDE_TITLE": "Bride's Accounts",
@@ -99,6 +104,8 @@
         "RSVP_HISTORY_ITEM_CONTACT": "Contact: {contact}",
         "RSVP_HISTORY_ITEM_DATE": "Submitted: {date}",
         "RSVP_HISTORY_PLUS_ONE_YES": "Yes",
-        "RSVP_HISTORY_PLUS_ONE_NO": "No"
+        "RSVP_HISTORY_PLUS_ONE_NO": "No",
+        "VENUE_NAME": "Hanok Hwaje",
+        "NATIVE_NAMES": "홍정희 ||| 크리스티안 악셀"
     }
 }

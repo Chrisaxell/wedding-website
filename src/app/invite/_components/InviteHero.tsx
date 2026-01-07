@@ -49,6 +49,27 @@ export function InviteHero({ heroImage, coupleA, coupleB, dateISO, venueName, cl
                     <span className="h-4 w-px bg-black/60" />
                     <span>{coupleB}</span>
                 </div>
+                {/* Always show native names (from NATIVE_NAMES) for all locales; fall back to BRIDE_NATIVE_NAME / GROOM_NATIVE_NAME */}
+                {(() => {
+                    const native = t('NATIVE_NAMES');
+                    // If the translation returns the key itself when missing, fallback
+                    const isFallback = !native || native === 'NATIVE_NAMES';
+                    if (!isFallback) {
+                        // Render exactly as provided (including the ||| separators)
+                        return <div className="mt-1 text-sm text-zinc-500">{native}</div>;
+                    }
+                    // Fallback to separate keys
+                    const bride = t('BRIDE_NATIVE_NAME');
+                    const groom = t('GROOM_NATIVE_NAME');
+                    if (bride && groom && bride !== 'BRIDE_NATIVE_NAME' && groom !== 'GROOM_NATIVE_NAME') {
+                        return (
+                            <div className="mt-1 text-sm text-zinc-500">
+                                {bride} {' ||| '} {groom}
+                            </div>
+                        );
+                    }
+                    return null;
+                })()}
                 <div className="mt-1 text-sm">
                     {eventTime} • {monthDateString}
                 </div>
