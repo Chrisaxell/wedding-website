@@ -28,6 +28,9 @@ export default async function Page() {
     const savedGuestName = await getCookie('guest_name');
     const hasSeenRsvp = (await getCookie('rsvp_seen')) === 'true';
 
+    // Locale-aware venue address: use translated address for Korean locale
+    const venueAddressLocalized = locale === 'ko' ? t('VENUE_ADDRESS') : WEDDING_EVENT.venueAddress;
+
     return (
         <>
             {/* Preload all gallery images (server-side link preload) */}
@@ -42,7 +45,7 @@ export default async function Page() {
                     coupleA={WEDDING_EVENT.coupleA}
                     coupleB={WEDDING_EVENT.coupleB}
                     dateISO={WEDDING_EVENT.dateISO}
-                    venueName={WEDDING_EVENT.venueAddress}
+                    venueName={t('VENUE_NAME')}
                     className={'pt-8'}
                 />
 
@@ -69,8 +72,8 @@ export default async function Page() {
 
                 <ScrollReveal threshold={0.3}>
                     <MapCard
-                        venueName={WEDDING_EVENT.venueName}
-                        address={WEDDING_EVENT.venueAddress}
+                        venueName={t('VENUE_NAME')}
+                        address={venueAddressLocalized}
                         lat={WEDDING_EVENT.venueLat}
                         lng={WEDDING_EVENT.venueLng}
                     />
@@ -94,13 +97,13 @@ export default async function Page() {
                     <section className="px-6 py-10">
                         <div className="text-center">
                             <p className="text-[10px] tracking-[0.3em] text-zinc-400">RSVP</p>
-                            <h3 className="text-lg font-medium">Répondez s&apos;il vous plaît</h3>
+                            <h3 className="text-lg font-medium">
+                                {locale === 'ko' ? t('RSVP_SECTION_HEADING') : "Répondez s\'il vous plaît"}
+                            </h3>
                         </div>
                         <div className="mt-6 rounded-xl border bg-zinc-50 p-6">
                             <p className="text-center text-sm text-zinc-500">{t('RSVP_SECTION_SUB')}</p>
-                            <p className="mt-1 text-center text-xs font-medium text-zinc-600">
-                                Please respond before 28th of January.
-                            </p>
+                            <p className="mt-1 text-center text-xs font-medium text-zinc-600">{t('RSVP_DEADLINE')}</p>
                             <div className="mt-4 flex justify-center">
                                 <RsvpDialog guestName={savedGuestName} autoOpen={!hasSeenRsvp} />
                             </div>
