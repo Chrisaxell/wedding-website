@@ -4,7 +4,7 @@ import {
     GalleryGrid,
     InfoTabs,
     InviteHero,
-    RsvpDialog, // Import RsvpDialog
+    RsvpSection, // Import RsvpSection
     TopControls, // Import TopControls
     ContactInfo, // Import ContactInfo
 } from '@/app/invite/_components';
@@ -101,9 +101,7 @@ export default async function Page() {
                             <p className="mt-1 text-center text-xs font-medium text-zinc-600">
                                 Please respond before 28th of January.
                             </p>
-                            <div className="mt-4 flex justify-center">
-                                <RsvpDialog guestName={savedGuestName} autoOpen={!hasSeenRsvp} />
-                            </div>
+                            <RsvpSection guestName={savedGuestName} hasSeenRsvp={hasSeenRsvp} />
                         </div>
                     </section>
                 </ScrollReveal>
@@ -113,13 +111,35 @@ export default async function Page() {
                         <section className="px-6 pb-12">
                             <h3 className="mb-4 text-center text-lg font-medium">{t('ACCOUNTS_SECTION_HEADING')}</h3>
                             <AccountAccordion
-                                groom={[
-                                    { bank: 'DNB', number: '1234.56.78901', owner: 'Chris' },
-                                    { bank: 'Sparebank', number: '2222.33.44444', owner: "Chris's Dad" },
+                                brideGroom={[
+                                    { bank: '우리은행', number: '1002554754103', owner: 'Bride & Groom' },
+                                    {
+                                        bank: 'IBAN',
+                                        number: 'NO88 1224 1832 919',
+                                        owner: 'Bride & Groom (BIC/SWIFT: DNBANOKKXXX)',
+                                    },
                                 ]}
-                                bride={[
-                                    { bank: 'KB', number: '110-123-456789', owner: 'Scarlett' },
-                                    { bank: 'Shinhan', number: '110-987-654321', owner: "Scarlett's Dad" },
+                                brideParents={[
+                                    { bank: '부산은행', number: '108120269320', owner: '강분례 (Mother of Bride)' },
+                                    { bank: '새마을금고', number: '3827101037806', owner: '홍제완 (Father of Bride)' },
+                                ]}
+                            />
+                        </section>
+                    </ScrollReveal>
+                )}
+
+                {locale !== 'ko' && (
+                    <ScrollReveal threshold={0.5}>
+                        <section className="px-6 pb-12">
+                            <h3 className="mb-4 text-center text-lg font-medium">{t('ACCOUNTS_SECTION_HEADING')}</h3>
+                            <AccountAccordion
+                                brideGroom={[
+                                    { bank: 'Woori Bank', number: '1002554754103', owner: 'Bride & Groom' },
+                                    {
+                                        bank: 'IBAN',
+                                        number: 'NO88 1224 1832 919',
+                                        owner: 'Bride & Groom (BIC/SWIFT: DNBANOKKXXX)',
+                                    },
                                 ]}
                             />
                         </section>

@@ -49,6 +49,7 @@ export function InviteHero({ heroImage, coupleA, coupleB, dateISO, venueName, cl
                     <span className="h-4 w-px bg-black/60" />
                     <span>{coupleB}</span>
                 </div>
+                <div className="mt-1 text-sm text-zinc-600">홍정희 | 크리스티안 악셀</div>
                 <div className="mt-1 text-sm">
                     {eventTime} • {monthDateString}
                 </div>

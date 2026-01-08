@@ -3,6 +3,7 @@ export * from './InfoTabs';
 export * from './Countdown';
 export * from './InviteHero';
 export * from './RsvpDialog';
+export * from './RsvpSection';
 export * from './GalleryGrid';
 export * from './AccountAccordion';
 export * from './AddCalendarButton';

@@ -11,9 +11,9 @@ import { submitRSVP } from '@/actions/rsvp';
 import { downloadICSFile } from '@/lib/ics';
 import { WEDDING_EVENT } from '@/lib/wedding';
 
-type Props = { guestName?: string; autoOpen?: boolean };
+type Props = { guestName?: string; open?: boolean; onOpenChange?: (open: boolean) => void };
 
-export function RsvpDialog({ guestName, autoOpen = false }: Props) {
+export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Props) {
     const [name, setName] = useState(guestName ?? '');
     // store as string so input can be cleared while typing
     const [numberOfPeople, setNumberOfPeople] = useState('1');
@@ -23,16 +23,18 @@ export function RsvpDialog({ guestName, autoOpen = false }: Props) {
     const [status, setStatus] = useState<'yes' | 'no' | 'maybe'>('yes');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [open, setOpen] = useState(false);
+    const [internalOpen, setInternalOpen] = useState(false);
     const [showCalendarPrompt, setShowCalendarPrompt] = useState(false);
     const t = useTranslations('WeddingInvite');
 
-    useEffect(() => {
-        if (autoOpen) {
-            const timer = setTimeout(() => setOpen(true), 500);
-            return () => clearTimeout(timer);
+    const open = controlledOpen !== undefined ? controlledOpen : internalOpen;
+    const setOpen = (value: boolean) => {
+        if (onOpenChange) {
+            onOpenChange(value);
+        } else {
+            setInternalOpen(value);
         }
-    }, [autoOpen]);
+    };
 
     async function submit() {
         setLoading(true);
@@ -212,6 +214,9 @@ export function RsvpDialog({ guestName, autoOpen = false }: Props) {
 
                         <Button onClick={submit} className="w-full" disabled={loading || !name || (!email && !phone)}>
                             {loading ? '...' : t('RSVP_SUBMIT')}
+                            <Button onClick={() => setOpen(false)} variant="ghost" className="w-full">
+                                {t('RSVP_ANSWER_LATER')}
+                            </Button>
                         </Button>
 
                         {error && <p className="text-xs text-red-600">{error}</p>}

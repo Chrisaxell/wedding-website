@@ -62,8 +62,8 @@
         "RSVP_SUBMIT": "보내기",
         "RSVP_ALERT": "감사합니다! (모의) 저장되었습니다.",
         "ACCOUNTS_SECTION_HEADING": "마음 전하실 곳",
-        "ACCOUNTS_GROOM_TITLE": "신랑측 계좌번호",
-        "ACCOUNTS_BRIDE_TITLE": "신부측 계좌번호",
+        "ACCOUNTS_BRIDE_GROOM_TITLE": "신랑 & 신부",
+        "ACCOUNTS_BRIDE_PARENTS_TITLE": "신부 부모님",
         "ACCOUNTS_COPY": "복사",
         "OUTRO_CAPTION": "응원해주신 모든 분들께 감사드리며 행복하게 잘 살겠습니다.",
         "FOOTER_COPYRIGHT": "© {year} {coupleA} & {coupleB}",
@@ -97,6 +97,7 @@
         "RSVP_SUCCESS_TITLE": "감사합니다!",
         "RSVP_SUCCESS_MESSAGE": "RSVP가 성공적으로 제출되었습니다. 함께 축하할 날을 기다리고 있어요!",
         "RSVP_CALENDAR_PROMPT": "캘린더에 결혼식을 추가하시겠어요?",
-        "RSVP_SKIP_CALENDAR": "나중에"
+        "RSVP_SKIP_CALENDAR": "나중에",
+        "RSVP_ANSWER_LATER": "나중에 답변하기"
     }
 }
