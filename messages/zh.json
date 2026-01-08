@@ -99,6 +99,7 @@
         "RSVP_HISTORY_ITEM_CONTACT": "联系方式：{contact}",
         "RSVP_HISTORY_ITEM_DATE": "提交时间：{date}",
         "RSVP_HISTORY_PLUS_ONE_YES": "是",
-        "RSVP_HISTORY_PLUS_ONE_NO": "否"
+        "RSVP_HISTORY_PLUS_ONE_NO": "否",
+        "NATIVE_NAMES": "홍정희 ||| 크리스티안 악셀"
     }
 }

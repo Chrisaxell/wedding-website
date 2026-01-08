@@ -6,6 +6,7 @@ type Props = {
     lng: number;
     className?: string;
     zoom?: number; // Kakao uses "level" where higher = more zoomed out
+    title?: string;
 };
 
 declare global {
@@ -15,13 +16,20 @@ declare global {
                 LatLng: new (lat: number, lng: number) => unknown;
                 Map: new (container: HTMLElement, options: unknown) => unknown;
                 Marker: new (options: unknown) => { setMap: (map: unknown) => void };
+                InfoWindow: new (options: { content?: string; removable?: boolean }) => {
+                    open: (map: unknown, marker?: unknown) => void;
+                    close?: () => void;
+                };
+                event: {
+                    addListener: (target: unknown, eventName: string, handler: (...args: unknown[]) => void) => void;
+                };
                 load: (callback: () => void) => void;
             };
         };
     }
 }
 
-export default function KakaoMap({ lat, lng, className, zoom = 4 }: Props) {
+export default function KakaoMap({ lat, lng, className, zoom = 4, title }: Props) {
     const ref = useRef<HTMLDivElement | null>(null);
     const [ready, setReady] = useState(false);
     const [error, setError] = useState(false);
@@ -68,6 +76,25 @@ export default function KakaoMap({ lat, lng, className, zoom = 4 }: Props) {
                     position: markerPosition,
                 });
                 marker.setMap(map);
+
+                // If a title is provided, show an info window above the marker
+                if (typeof title === 'string' && title.trim()) {
+                    try {
+                        const infowindow = new kakao.maps.InfoWindow({
+                            content: `<div style="padding:6px 8px;font-size:12px">${title}</div>`,
+                            removable: false,
+                        });
+                        infowindow.open(map, marker);
+
+                        // Optional: open/close on marker click
+                        kakao.maps.event.addListener(marker, 'click', () => {
+                            infowindow.open(map, marker);
+                        });
+                    } catch (err) {
+                        // ignore if InfoWindow API differs; still fine without title
+                        console.warn('Kakao InfoWindow error', err);
+                    }
+                }
 
                 setReady(true);
                 setError(false);
@@ -124,7 +151,7 @@ export default function KakaoMap({ lat, lng, className, zoom = 4 }: Props) {
                 mapInstanceRef.current = null;
             }
         };
-    }, [appKey, lat, lng, zoom]);
+    }, [appKey, lat, lng, zoom, title]);
 
     if (!appKey || error) {
         return (

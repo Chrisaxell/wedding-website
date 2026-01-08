@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useState, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { submitRSVP } from '@/actions/rsvp';
 import { downloadICSFile } from '@/lib/ics';
 import { WEDDING_EVENT } from '@/lib/wedding';
@@ -26,6 +26,7 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
     const [internalOpen, setInternalOpen] = useState(false);
     const [showCalendarPrompt, setShowCalendarPrompt] = useState(false);
     const t = useTranslations('WeddingInvite');
+    const locale = useLocale();
 
     const open = controlledOpen !== undefined ? controlledOpen : internalOpen;
     const setOpen = (value: boolean) => {
@@ -108,7 +109,13 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
             </DialogTrigger>
             <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-md">
                 <DialogHeader>
-                    <DialogTitle>{showCalendarPrompt ? t('RSVP_SUCCESS_TITLE') : t('RSVP_DIALOG_TITLE')}</DialogTitle>
+                    <DialogTitle>
+                        {showCalendarPrompt
+                            ? t('RSVP_SUCCESS_TITLE')
+                            : locale === 'ko'
+                              ? t('RSVP_SECTION_HEADING')
+                              : t('RSVP_DIALOG_TITLE')}
+                    </DialogTitle>
                 </DialogHeader>
 
                 {showCalendarPrompt ? (
@@ -137,16 +144,15 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="numberOfPeople">Number of People</Label>
+                            <Label htmlFor="numberOfPeople">{t('RSVP_NUMBER_OF_PEOPLE_LABEL')}</Label>
                             <Input
                                 id="numberOfPeople"
                                 type="number"
-                                min="1"
-                                max="10"
+                                min={1}
                                 value={numberOfPeople}
                                 onChange={(e) => setNumberOfPeople(e.target.value)}
                             />
-                            <p className="text-[10px] text-zinc-500">Including yourself</p>
+                            <span className="text-xs text-zinc-500">{t('RSVP_NUMBER_OF_PEOPLE_HINT')}</span>
                         </div>
 
                         <div className="space-y-2">
@@ -172,18 +178,17 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="dietary">Dietary restrictions / allergies</Label>
+                            <Label htmlFor="dietary">{t('RSVP_DIETARY_LABEL')}</Label>
                             <textarea
                                 id="dietary"
-                                placeholder="e.g. vegetarian, gluten-free, nut allergy"
+                                placeholder={t('RSVP_DIETARY_PLACEHOLDER')}
                                 value={dietaryRestrictions}
                                 onChange={(e) => setDietaryRestrictions(e.target.value)}
                                 rows={3}
                                 className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex min-h-[80px] w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                             />
-                            <p className="text-[10px] text-zinc-500">Optional – helps us plan the meal.</p>
                         </div>
-                        <p className="text-xs font-medium text-zinc-600">Please respond before 28th of January.</p>
+                        <p className="text-xs font-medium text-zinc-600">{t('RSVP_DEADLINE')}</p>
 
                         <p className="text-xs text-zinc-500">{t('RSVP_CONTACT_INFO')}</p>
 
