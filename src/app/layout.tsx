@@ -5,6 +5,7 @@ import { Noto_Serif } from 'next/font/google';
 import type { Metadata } from 'next';
 import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
+import { AnalyticsTracker } from '@/components/AnalyticsTracker';
 
 const notoSerif = Noto_Serif({
     subsets: ['latin'],
@@ -47,8 +48,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                     locale={locale}
                     timeZone={Intl.DateTimeFormat().resolvedOptions().timeZone}
                 >
+                    <AnalyticsTracker />
                     {children}
-                    <Analytics />
                 </NextIntlClientProvider>
                 <Analytics />
             </body>

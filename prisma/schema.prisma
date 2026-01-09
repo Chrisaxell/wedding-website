@@ -47,3 +47,21 @@ model Rsvp {
 
   @@index([inviteId])
 }
+
+// Track anonymous visitors by geolocation
+model Visitor {
+  id            String   @id @default(uuid())
+  city          String?
+  country       String?
+  countryRegion String?
+  region        String?
+  latitude      String?
+  longitude     String?
+  language      String?
+  page          String?
+  userAgent     String?
+  createdAt     DateTime @default(now())
+
+  @@index([country])
+  @@index([createdAt])
+}

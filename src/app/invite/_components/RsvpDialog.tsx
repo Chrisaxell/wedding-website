@@ -10,6 +10,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { submitRSVP } from '@/actions/rsvp';
 import { downloadICSFile } from '@/lib/ics';
 import { WEDDING_EVENT } from '@/lib/wedding';
+import { trackEvent } from '@/components/AnalyticsTracker';
 
 type Props = { guestName?: string; open?: boolean; onOpenChange?: (open: boolean) => void };
 
@@ -59,6 +60,17 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
             // Set cookies on client side for immediate feedback
             document.cookie = `rsvp_seen=true; path=/; max-age=${60 * 60 * 24 * 365}`;
             document.cookie = `guest_name=${encodeURIComponent(name)}; path=/; max-age=${60 * 60 * 24 * 365}`;
+            // Track RSVP submission
+            trackEvent('rsvp_submitted', {
+                guest_name: name,
+                status: status,
+                has_plus_one: finalNum > 1,
+                number_of_people: finalNum,
+                has_dietary_restrictions: !!dietaryRestrictions,
+                provided_email: !!email,
+                provided_phone: !!phone,
+            });
+
 
             // Show calendar prompt after successful submission
             setShowCalendarPrompt(true);
@@ -81,6 +93,9 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
                 coupleA: WEDDING_EVENT.coupleA,
                 coupleB: WEDDING_EVENT.coupleB,
                 venue: WEDDING_EVENT.venueName,
+        trackEvent('calendar_downloaded', {
+            guest_name: name,
+        });
             }),
             start,
             end,
