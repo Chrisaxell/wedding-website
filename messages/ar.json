@@ -35,7 +35,7 @@
         "MAP_LINK_KAKAO": "Kakao Navi",
         "MAP_LINK_TMAP": "T Map",
         "TRANSPORT_PUBLIC_TITLE": "النقل العام",
-        "TRANSPORT_PUBLIC_DESC": "سنوفر حافلة من محطة جيونجسان (خط مترو بوسان 2) تغادر الساعة 12:00. سيتم الإعلان عن موقع الصعود الدقيق لاحقاً وقد يتغير حسب الظروف.",
+        "TRANSPORT_PUBLIC_DESC": "سنوفر حافلة من محطة جيونجسان تغادر الساعة 12:00. سيتم الإعلان عن موقع الصعود الدقيق لاحقاً وقد يتغير حسب الظروف.",
         "TRANSPORT_PUBLIC_LINK": "عرض محطة جيونجسان على Kakao Map ←",
         "TRANSPORT_PUBLIC_NAVER": "عرض محطة جيونجسان على Naver Map ←",
         "TRANSPORT_PUBLIC_GOOGLE": "عرض محطة جيونجسان على Google Maps ←",

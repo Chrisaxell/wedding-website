@@ -35,7 +35,7 @@
         "MAP_LINK_KAKAO": "Kakao 导航",
         "MAP_LINK_TMAP": "T Map",
         "TRANSPORT_PUBLIC_TITLE": "公共交通",
-        "TRANSPORT_PUBLIC_DESC": "我们将提供从增山站（釜山地铁2号线）出发的班车，12:00发车。具体上车地点将稍后公布，可能会根据情况变化。",
+        "TRANSPORT_PUBLIC_DESC": "我们将提供从增山站出发的班车，12:00发车。具体上车地点将稍后公布，可能会根据情况变化。",
         "TRANSPORT_PUBLIC_LINK": "在 Kakao Map 上查看增山站 →",
         "TRANSPORT_PUBLIC_NAVER": "在 Naver Map 上查看增山站 →",
         "TRANSPORT_PUBLIC_GOOGLE": "在 Google Maps 上查看增山站 →",

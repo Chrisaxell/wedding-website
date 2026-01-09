@@ -10,7 +10,7 @@
 2. **Only work in English (`messages/en.json`)** by default
 3. **Wait for explicit instruction** before updating other languages (es, pt, de, sv, da, nb, ar, ca, zh, gn)
 4. **Base all translation on english except korean** (es, pt, de, sv, da, nb, ar, ca, zh, gn)
-5When adding new translation keys:
+5. When adding new translation keys:
    - Add to English first
    - Wait for user to request other language updates
    - DO NOT automatically update all languages
