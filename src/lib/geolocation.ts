@@ -1,3 +1,4 @@
+import { geolocation } from '@vercel/functions';
 /**
  * Map country codes to supported languages
  */
@@ -119,6 +120,8 @@ export function getLanguageFromHeaders(acceptLanguage?: string): string {
 
     // Sort by quality score (highest first)
     languagePreferences.sort((a, b) => b.quality - a.quality);
+
+    const k = geolocation;
 
     const supported = ['en', 'ko', 'es', 'pt', 'ca', 'sv', 'da', 'nb', 'ar', 'de', 'zh', 'gn'];
 

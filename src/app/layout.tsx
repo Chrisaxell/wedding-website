@@ -4,6 +4,7 @@ import { getMessages, getLocale } from 'next-intl/server';
 import { Noto_Serif } from 'next/font/google';
 import type { Metadata } from 'next';
 import './globals.css';
+import { Analytics } from '@vercel/analytics/react';
 
 const notoSerif = Noto_Serif({
     subsets: ['latin'],
@@ -24,7 +25,22 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     const messages = await getMessages();
     const locale = await getLocale();
     return (
-        <html lang={locale}>
+        <html lang={locale} className="scroll-smooth">
+            <head>
+                <style
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                        body { 
+                            opacity: 0;
+                            animation: fadeIn 0.3s ease-in forwards;
+                        }
+                        @keyframes fadeIn {
+                            to { opacity: 1; }
+                        }
+                    `,
+                    }}
+                />
+            </head>
             <body className={notoSerif.variable} style={{ backgroundColor: '#333333' }}>
                 <NextIntlClientProvider
                     messages={messages}
@@ -33,6 +49,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 >
                     {children}
                 </NextIntlClientProvider>
+                <Analytics />
             </body>
         </html>
     );
