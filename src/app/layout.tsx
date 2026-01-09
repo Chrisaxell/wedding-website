@@ -48,6 +48,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                     timeZone={Intl.DateTimeFormat().resolvedOptions().timeZone}
                 >
                     {children}
+                    <Analytics />
                 </NextIntlClientProvider>
                 <Analytics />
             </body>
