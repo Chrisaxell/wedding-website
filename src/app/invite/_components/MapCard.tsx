@@ -37,6 +37,7 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
     // Jeungsan Station coordinates: 35.3122, 129.0347
     const jeungsanStationKakaoLink = 'https://place.map.kakao.com/PSS240';
     const jeungsanStationNaverLink = 'https://naver.me/xVAJTMJh ';
+    const jeungsanStationGoogleLink = 'https://maps.app.goo.gl/r9MrYyKBFVrQBxQk7';
 
     // Kakao Map navigation to venue
     const venueKakaoNaviLink =
@@ -51,7 +52,7 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
     return (
         <section className="px-4 py-10">
             <div className="text-center">
-                <p className="text-[10px] tracking-[0.3em] text-zinc-400">{t('LOCATION_LABEL')}</p>
+                <p className="text-[10px] tracking-[0.3em] text-zinc-400">LOCATION</p>
                 <h3 className="text-lg font-medium">{t('LOCATION_HEADING')}</h3>
             </div>
             <div className="mt-4 text-center">
@@ -134,6 +135,18 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
                                             {t('TRANSPORT_PUBLIC_NAVER')}
                                         </Link>
                                     </div>
+                                    {!isKorean && (
+                                        <div>
+                                            <Link
+                                                href={jeungsanStationGoogleLink}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-zinc-900 underline hover:text-zinc-700"
+                                            >
+                                                {t('TRANSPORT_PUBLIC_GOOGLE')}
+                                            </Link>
+                                        </div>
+                                    )}
                                 </div>
                                 <p className="mt-3 text-xs text-zinc-500">{t('TRANSPORT_NOTE')}</p>
                             </AccordionContent>
@@ -186,7 +199,7 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
                                 <AccordionContent className="text-sm text-zinc-600">
                                     <p className="mb-3">{t('TRANSPORT_TAXI_DESC')}</p>
                                     <Link
-                                        href="https://taxi.kakao.com"
+                                        href="https://kride.kakaomobility.com/"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="text-zinc-900 underline hover:text-zinc-700"

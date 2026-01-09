@@ -10,6 +10,7 @@ export function AddCalendarButton() {
     function handleClick() {
         const start = new Date(WEDDING_EVENT.dateISO);
         const end = new Date(WEDDING_EVENT.endDateISO);
+        const venueLocation = t('VENUE_LOCATION');
         downloadICSFile(
             {
                 title: t('CALENDAR_EVENT_TITLE', {
@@ -19,11 +20,11 @@ export function AddCalendarButton() {
                 description: t('CALENDAR_EVENT_DESCRIPTION', {
                     coupleA: WEDDING_EVENT.coupleA,
                     coupleB: WEDDING_EVENT.coupleB,
-                    venue: WEDDING_EVENT.venueAddress, // use address instead of name
+                    venue: venueLocation,
                 }),
                 start,
                 end,
-                location: WEDDING_EVENT.venueAddress, // changed to address
+                location: venueLocation,
                 latitude: WEDDING_EVENT.venueLat,
                 longitude: WEDDING_EVENT.venueLng,
             },

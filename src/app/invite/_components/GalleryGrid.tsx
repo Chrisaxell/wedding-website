@@ -39,7 +39,7 @@ export function GalleryGrid() {
     return (
         <section className="px-4 py-10">
             <div className="text-center">
-                <p className="text-[10px] tracking-[0.3em] text-zinc-400">{t('GALLERY_LABEL')}</p>
+                <p className="text-[10px] tracking-[0.3em] text-zinc-400">GALLERY</p>
                 <h3 className="text-lg font-medium">{t('GALLERY_HEADING')}</h3>
             </div>
 
