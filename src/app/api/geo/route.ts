@@ -11,14 +11,9 @@ export function GET(request: Request) {
     // 1. Country-based geolocation
     // 2. Accept-Language header
     // 3. Default to Korean
-    let suggestedLanguage = 'ko';
-
-    if (country) {
-        suggestedLanguage = getLanguageFromCountry(country);
-    } else {
-        const acceptLanguage = request.headers.get('accept-language') || undefined;
-        suggestedLanguage = getLanguageFromHeaders(acceptLanguage);
-    }
+    const suggestedLanguage = country
+        ? getLanguageFromCountry(country)
+        : getLanguageFromHeaders(request.headers.get('accept-language') || undefined);
 
     // Return comprehensive geolocation info as JSON
     return Response.json({
