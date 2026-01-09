@@ -28,17 +28,14 @@ export function middleware(req: NextRequest) {
             (pathname.startsWith('/wedding-invite') || pathname.startsWith('/invite') || pathname === '/invite');
 
         if (shouldSetLocale) {
-            let detectedLanguage = 'ko'; // Default to Korean
-
-            // Priority 1: Vercel geolocation header (country code)
-            const country = req.headers.get('x-vercel-ip-country') || req.geo?.country;
-            if (country) {
-                detectedLanguage = getLanguageFromCountry(country);
-            } else {
-                // Priority 2: Accept-Language header
-                const acceptLanguage = req.headers.get('accept-language') || undefined;
-                detectedLanguage = getLanguageFromHeaders(acceptLanguage);
-            }
+            // Detect language with priority:
+            // 1. Vercel geolocation header (country code)
+            // 2. Accept-Language header
+            // 3. Default to Korean
+            const country = req.headers.get('x-vercel-ip-country');
+            const detectedLanguage = country
+                ? getLanguageFromCountry(country)
+                : getLanguageFromHeaders(req.headers.get('accept-language') || undefined);
 
             response.cookies.set('locale', detectedLanguage, {
                 maxAge: 60 * 60 * 24 * 365, // 1 year
