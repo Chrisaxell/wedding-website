@@ -32,11 +32,11 @@
         "MAP_TAB_GOOGLE": "Google Map",
         "MAP_TAB_KAKAO": "Kakao Map",
         "TRANSPORT_PUBLIC_TITLE": "Public Transport",
-        "TRANSPORT_PUBLIC_DESC": "We will provide a shuttle bus from Jeungsan Station. Please take Busan Metro Line 2 to Jeungsan Station, and our shuttle bus will take you to and back from the venue.",
+        "TRANSPORT_PUBLIC_DESC": "We will provide a shuttle bus from Jeungsan Station (Busan Metro Line 2) departing at 12:00. The exact boarding location (exit) will be announced later and may change depending on circumstances.",
         "TRANSPORT_PUBLIC_LINK": "View Jeungsan Station on Kakao Map →",
         "TRANSPORT_PUBLIC_NAVER": "View Jeungsan Station on Naver Map →",
         "TRANSPORT_DRIVING_TITLE": "Driving",
-        "TRANSPORT_DRIVING_DESC": "If you're driving, use the links below to get directions to the venue.",
+        "TRANSPORT_DRIVING_DESC": "If you're driving, you can use the Kakao Map link below for directions to the wedding venue. Navigation address: 631-2 Hwaje-ri, Wondong-myeon, Yangsan-si, Gyeongsangnam-do",
         "TRANSPORT_DRIVING_LINK": "Get directions via Kakao Map →",
         "TRANSPORT_DRIVING_NAVER": "Naver Map",
         "TRANSPORT_DRIVING_PARKING": "Parking is available in the open spaces around the hanok.",
@@ -57,7 +57,7 @@
         "INFO_TAB_PARKING": "Parking",
         "INFO_DRESSCODE_DESC": "The wedding will be held outdoors, so please dress appropriately for the weather. The dress code is traditional Korean outfit or formal wedding attire. Please wear shoes suitable for grass (low heels recommended).",
         "INFO_DRESSCODE_LINK": "Learn more about traditional Korean clothing options →",
-        "INFO_FOOD_DESC": "Welcome drinks will be served from 12:00 at the welcome board. A buffet catering will begin at {foodTime} at {venue}. Vegetarian option available upon request (please mention in RSVP).",
+        "INFO_FOOD_DESC": "Welcome drinks will be served from 12:00 at the venue entrance. A buffet catering will begin at 13:30 after the ceremony at the same location, Hanok Hwaje. Vegetarian option or allergy menus are available upon advance request. Please mention in your RSVP.",
         "INFO_PARKING_DESC": "Parking is available in the open spaces around the hanok.",
         "RSVP_SECTION_HEADING": "RSVP",
         "RSVP_SECTION_SUB": "Let us know if you're coming.",
@@ -114,6 +114,9 @@
         "RSVP_HISTORY_PLUS_ONE_YES": "Yes",
         "RSVP_HISTORY_PLUS_ONE_NO": "No",
         "VENUE_NAME": "Hanok Hwaje",
+        "VENUE_ADDRESS": "34-2, Gamtobong-gil, Wondong-myeon, Yangsan-si, Gyeongsangnam-do",
+        "BRIDE_NATIVE_NAME": "홍정희",
+        "GROOM_NATIVE_NAME": "크리스티안 악셀",
         "NATIVE_NAMES": "홍정희 ||| 크리스티안 악셀"
     }
 }
