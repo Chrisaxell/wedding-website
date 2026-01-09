@@ -53,8 +53,8 @@ function DialogContent({
                     className,
                 )}
                 onCloseAutoFocus={(e) => {
+                    // Prevent focus from returning to trigger button which causes scroll
                     e.preventDefault();
-                    window.scrollTo({ top: 0, behavior: 'instant' });
                 }}
                 {...props}
             >

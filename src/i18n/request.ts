@@ -22,7 +22,7 @@ async function loadMessages(locale: string) {
         zh: () => import('../../messages/zh.json'),
         gn: () => import('../../messages/gn.json'),
     };
-    const load = loaders[locale as keyof typeof loaders] || loaders.en;
+    const load = loaders[locale as keyof typeof loaders] || loaders.ko;
     const mod = await load();
     return (mod.default as Record<string, unknown>) || (mod as Record<string, unknown>);
 }
@@ -31,10 +31,10 @@ const supportedLocales = ['en', 'ko', 'es', 'pt', 'ca', 'sv', 'da', 'nb', 'ar', 
 
 export default getRequestConfig(async () => {
     const store = await cookies();
-    let locale = store.get('locale')?.value || 'en';
+    let locale = store.get('locale')?.value || 'ko';
     // Clamp to supported locales
     if (!supportedLocales.includes(locale)) {
-        locale = 'en';
+        locale = 'ko';
     }
     const messages = await loadMessages(locale);
     return { locale, messages };

@@ -57,11 +57,10 @@ export default function KakaoMap({ lat, lng, className, zoom = 4, title }: Props
                     mapInstanceRef.current = null;
                 }
 
-                const center = new kakao.maps.LatLng(lat, lng);
                 const mapContainer = ref.current;
-
                 if (!mapContainer) return;
 
+                const center = new kakao.maps.LatLng(lat, lng);
                 const mapOption = {
                     center: center,
                     level: zoom, // zoom level
@@ -77,24 +76,7 @@ export default function KakaoMap({ lat, lng, className, zoom = 4, title }: Props
                 });
                 marker.setMap(map);
 
-                // If a title is provided, show an info window above the marker
-                if (typeof title === 'string' && title.trim()) {
-                    try {
-                        const infowindow = new kakao.maps.InfoWindow({
-                            content: `<div style="padding:6px 8px;font-size:12px">${title}</div>`,
-                            removable: false,
-                        });
-                        infowindow.open(map, marker);
-
-                        // Optional: open/close on marker click
-                        kakao.maps.event.addListener(marker, 'click', () => {
-                            infowindow.open(map, marker);
-                        });
-                    } catch (err) {
-                        // ignore if InfoWindow API differs; still fine without title
-                        console.warn('Kakao InfoWindow error', err);
-                    }
-                }
+                // Removed InfoWindow - no label needed
 
                 setReady(true);
                 setError(false);
@@ -106,9 +88,15 @@ export default function KakaoMap({ lat, lng, className, zoom = 4, title }: Props
 
         // Check if Kakao Maps is already loaded
         if (window.kakao?.maps) {
-            // Small delay to ensure DOM is ready
-            const timeoutId = setTimeout(createMap, 100);
-            return () => clearTimeout(timeoutId);
+            // Use kakao.maps.load to ensure API is fully ready
+            if (typeof window.kakao.maps.load === 'function') {
+                window.kakao.maps.load(createMap);
+            } else {
+                // Fallback if already loaded
+                const timeoutId = setTimeout(createMap, 100);
+                return () => clearTimeout(timeoutId);
+            }
+            return;
         }
 
         // Check if script is already being loaded
@@ -118,7 +106,11 @@ export default function KakaoMap({ lat, lng, className, zoom = 4, title }: Props
             const checkInterval = setInterval(() => {
                 if (window.kakao?.maps) {
                     clearInterval(checkInterval);
-                    createMap();
+                    if (typeof window.kakao.maps.load === 'function') {
+                        window.kakao.maps.load(createMap);
+                    } else {
+                        createMap();
+                    }
                 }
             }, 100);
 
