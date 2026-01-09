@@ -40,10 +40,28 @@ model Rsvp {
   name                String
   email               String?
   phone               String?
-  plusOne             Boolean    @default(false)
+  numberOfPeople      Int        @default(1)
   status              RsvpStatus
   createdAt           DateTime   @default(now())
   dietaryRestrictions String? // added optional dietary restrictions / allergies field
 
   @@index([inviteId])
+}
+
+// Track anonymous visitors by geolocation
+model Visitor {
+  id            String   @id @default(uuid())
+  city          String?
+  country       String?
+  countryRegion String?
+  region        String?
+  latitude      String?
+  longitude     String?
+  language      String?
+  page          String?
+  userAgent     String?
+  createdAt     DateTime @default(now())
+
+  @@index([country])
+  @@index([createdAt])
 }
