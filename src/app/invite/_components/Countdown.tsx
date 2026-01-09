@@ -3,6 +3,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { useEffect, useState } from 'react';
 import { AddCalendarButton } from './AddCalendarButton';
+import { useTranslations } from 'next-intl';
 
 function getParts(targetISO: string) {
     const target = new Date(targetISO).getTime();
@@ -20,33 +21,14 @@ function getParts(targetISO: string) {
 
 export interface CountdownProps {
     dateISO: string;
-    padDays?: boolean; // whether to zero-pad the days value
-    padTime?: boolean; // whether to zero-pad hours/mins/secs
-    showPlural?: boolean; // whether to pluralize unit labels
+    padDays?: boolean;
+    padTime?: boolean;
 }
 
-export function Countdown({ dateISO, padDays = true, padTime = true, showPlural = true }: CountdownProps) {
+export function Countdown({ dateISO, padDays = true, padTime = true }: CountdownProps) {
     const [mounted, setMounted] = useState(false);
     const [t, setT] = useState({ days: 0, hours: 0, mins: 0, secs: 0 });
-
-    // Pre-format date header (weekday, date, time) in Korea timezone
-    const dateObj = new Date(dateISO);
-    const weekday = dateObj.toLocaleDateString('en-US', { weekday: 'long', timeZone: 'Asia/Seoul' });
-    const datePart = dateObj.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        timeZone: 'Asia/Seoul',
-    });
-
-    // Manually format time to ensure 24-hour format in Korea timezone
-    const formatter = new Intl.DateTimeFormat('en-GB', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-        timeZone: 'Asia/Seoul',
-    });
-    const timePart = formatter.format(dateObj);
+    const translate = useTranslations('WeddingInvite');
 
     useEffect(() => {
         setMounted(true);
@@ -59,35 +41,37 @@ export function Countdown({ dateISO, padDays = true, padTime = true, showPlural 
         <section className="px-6 pt-8 pb-6">
             <Card className="bg-zinc-50">
                 <CardContent className="p-6">
-                    <div className="mb-4 text-center text-sm font-medium tracking-wide text-zinc-600">
-                        {weekday}, {datePart} • {timePart}
+                    <div className="mb-4 text-center text-base font-medium text-zinc-700">
+                        {translate('COUNTDOWN_HEADER', { days: t.days })}
                     </div>
                     <div className="flex justify-center">
-                        <div className="flex items-stretch justify-center gap-4">
-                            {(() => {
-                                const daysStr = padDays ? t.days.toString().padStart(2, '0') : t.days.toString();
-                                const dayLabel = showPlural ? (t.days === 1 ? 'Day' : 'Days') : 'Day';
-                                return <TimeBlock label={dayLabel} value={daysStr} mounted={mounted} />;
-                            })()}
-                            {(() => {
-                                const hoursStr = padTime ? t.hours.toString().padStart(2, '0') : t.hours.toString();
-                                const hourLabel = showPlural ? (t.hours === 1 ? 'Hour' : 'Hours') : 'Hour';
-                                return <TimeBlock label={hourLabel} value={hoursStr} mounted={mounted} />;
-                            })()}
-                            {(() => {
-                                const minsStr = padTime ? t.mins.toString().padStart(2, '0') : t.mins.toString();
-                                const minLabel = showPlural ? (t.mins === 1 ? 'Min' : 'Mins') : 'Min';
-                                return <TimeBlock label={minLabel} value={minsStr} mounted={mounted} />;
-                            })()}
-                            {(() => {
-                                const secsStr = padTime ? t.secs.toString().padStart(2, '0') : t.secs.toString();
-                                const secLabel = showPlural ? (t.secs === 1 ? 'Sec' : 'Secs') : 'Sec';
-                                return <TimeBlock label={secLabel} value={secsStr} mounted={mounted} />;
-                            })()}
+                        <div className="flex items-stretch justify-center gap-2">
+                            <TimeBlock
+                                label={translate('COUNTDOWN_DAYS_LABEL')}
+                                value={padDays ? t.days.toString().padStart(2, '0') : t.days.toString()}
+                                mounted={mounted}
+                            />
+                            <TimeBlock
+                                label={translate('COUNTDOWN_HOURS_LABEL')}
+                                value={padTime ? t.hours.toString().padStart(2, '0') : t.hours.toString()}
+                                mounted={mounted}
+                            />
+                            <TimeBlock
+                                label={translate('COUNTDOWN_MINS_LABEL')}
+                                value={padTime ? t.mins.toString().padStart(2, '0') : t.mins.toString()}
+                                mounted={mounted}
+                            />
+                            <TimeBlock
+                                label={translate('COUNTDOWN_SECS_LABEL')}
+                                value={padTime ? t.secs.toString().padStart(2, '0') : t.secs.toString()}
+                                mounted={mounted}
+                            />
                         </div>
                     </div>
-                    <div className="mt-6">
-                        <AddCalendarButton />
+                    <div className="mt-4 flex justify-center">
+                        <div className="w-[250px]">
+                            <AddCalendarButton />
+                        </div>
                     </div>
                 </CardContent>
             </Card>

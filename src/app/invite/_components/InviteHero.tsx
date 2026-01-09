@@ -23,13 +23,35 @@ export function InviteHero({ heroImage, coupleA, coupleB, dateISO, venueName, cl
     const weekdayLocalized = new Intl.DateTimeFormat(locale, { weekday: 'long' }).format(date).toUpperCase();
 
     const numericDate = `${String(dayNumber).padStart(2, '0')}-${String(monthNumber).padStart(2, '0')}-${yyyy}`;
-    const monthDateString = new Intl.DateTimeFormat(locale, {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-    }).format(date);
-    // Guest arrival time from centralized constants
-    const eventTime = '12:00';
+
+    // Format date and time based on locale
+    let dateTimeString;
+    if (locale === 'ko') {
+        // Korean format: 2026년 3월 28일 토요일 오후 12시
+        const weekdayKo = new Intl.DateTimeFormat('ko', { weekday: 'long', timeZone: 'Asia/Seoul' }).format(date);
+
+        // Get hour in Korea timezone
+        const koreaHour = parseInt(
+            new Intl.DateTimeFormat('en-US', {
+                hour: 'numeric',
+                hour12: false,
+                timeZone: 'Asia/Seoul',
+            }).format(date),
+        );
+
+        const period = koreaHour >= 12 ? '오후' : '오전';
+        const displayHour = koreaHour === 0 ? 12 : koreaHour > 12 ? koreaHour - 12 : koreaHour;
+        dateTimeString = `${yyyy}년 ${monthNumber}월 ${dayNumber}일 ${weekdayKo} ${period} ${displayHour}시`;
+    } else {
+        // Other locales: use standard formatting
+        const monthDateString = new Intl.DateTimeFormat(locale, {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        }).format(date);
+        const eventTime = '12:00';
+        dateTimeString = `${eventTime} • ${monthDateString}`;
+    }
 
     return (
         <section className={className}>
@@ -44,15 +66,13 @@ export function InviteHero({ heroImage, coupleA, coupleB, dateISO, venueName, cl
             </div>
 
             <div className="mt-5 text-center">
-                <div className="inline-flex items-center gap-4 text-lg text-black">
+                <div className="inline-flex items-center gap-2 text-lg text-black">
                     <span>{coupleA}</span>
-                    <span className="h-4 w-px bg-black/60" />
+                    <span>•</span>
                     <span>{coupleB}</span>
                 </div>
-                <div className="mt-1 text-sm text-zinc-600">홍정희 | 크리스티안 악셀</div>
-                <div className="mt-1 text-sm">
-                    {eventTime} • {monthDateString}
-                </div>
+                <div className="mt-1 text-sm text-zinc-600">신부 홍정희 • 신랑 크리스티안 악셀</div>
+                <div className="mt-1 text-sm">{dateTimeString}</div>
                 <div className="mt-1 text-sm">{venueName}</div>
             </div>
         </section>

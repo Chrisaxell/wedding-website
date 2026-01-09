@@ -20,7 +20,7 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
     const locale = useLocale();
     const canRender = typeof lat === 'number' && typeof lng === 'number';
 
-    const [value, setValue] = useState<'google' | 'kakao'>('google');
+    const [value, setValue] = useState<'google' | 'kakao'>('kakao');
 
     // Calculate locale-dependent values
     const isKorean = locale === 'ko';
@@ -28,9 +28,10 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
     const kakaoZoom = isKorean ? 7 : 11;
 
     // Set default tab after mount to avoid hydration mismatch
+    // Default to Kakao Maps to avoid Google Maps billing issues
     useEffect(() => {
-        setValue(isKorean ? 'kakao' : 'google');
-    }, [isKorean]);
+        setValue('kakao');
+    }, []);
 
     // Kakao Map links
     // Jeungsan Station coordinates: 35.3122, 129.0347
@@ -176,22 +177,25 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
                             </AccordionContent>
                         </AccordionItem>
 
-                        <AccordionItem value="taxi">
-                            <AccordionTrigger className="text-sm font-medium">
-                                {t('TRANSPORT_TAXI_TITLE')}
-                            </AccordionTrigger>
-                            <AccordionContent className="text-sm text-zinc-600">
-                                <p className="mb-3">{t('TRANSPORT_TAXI_DESC')}</p>
-                                <Link
-                                    href="https://taxi.kakao.com"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-zinc-900 underline hover:text-zinc-700"
-                                >
-                                    {t('TRANSPORT_TAXI_LINK')}
-                                </Link>
-                            </AccordionContent>
-                        </AccordionItem>
+                        {/* Hide taxi section for Korean locale */}
+                        {isKorean !== true && (
+                            <AccordionItem value="taxi">
+                                <AccordionTrigger className="text-sm font-medium">
+                                    {t('TRANSPORT_TAXI_TITLE')}
+                                </AccordionTrigger>
+                                <AccordionContent className="text-sm text-zinc-600">
+                                    <p className="mb-3">{t('TRANSPORT_TAXI_DESC')}</p>
+                                    <Link
+                                        href="https://taxi.kakao.com"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-zinc-900 underline hover:text-zinc-700"
+                                    >
+                                        {t('TRANSPORT_TAXI_LINK')}
+                                    </Link>
+                                </AccordionContent>
+                            </AccordionItem>
+                        )}
                     </Accordion>
                 </div>
             </div>

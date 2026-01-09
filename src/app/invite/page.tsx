@@ -102,7 +102,9 @@ export default async function Page() {
                             </h3>
                         </div>
                         <div className="mt-6 rounded-xl border bg-zinc-50 p-6">
-                            <p className="text-center text-sm text-zinc-500">{t('RSVP_SECTION_SUB')}</p>
+                            <p className="text-center text-sm whitespace-pre-line text-zinc-500">
+                                {t('RSVP_SECTION_SUB')}
+                            </p>
                             <p className="mt-1 text-center text-xs font-medium text-zinc-600">{t('RSVP_DEADLINE')}</p>
                             <RsvpSection guestName={savedGuestName} hasSeenRsvp={hasSeenRsvp} />
                         </div>
@@ -112,21 +114,26 @@ export default async function Page() {
                 {locale === 'ko' && (
                     <ScrollReveal threshold={0.5}>
                         <section className="px-6 pb-12">
-                            <h3 className="mb-4 text-center text-lg font-medium">{t('ACCOUNTS_SECTION_HEADING')}</h3>
-                            <AccountAccordion
-                                brideGroom={[
-                                    { bank: '우리은행', number: '1002554754103', owner: 'Bride & Groom' },
-                                    {
-                                        bank: 'IBAN',
-                                        number: 'NO88 1224 1832 919',
-                                        owner: 'Bride & Groom (BIC/SWIFT: DNBANOKKXXX)',
-                                    },
-                                ]}
-                                brideParents={[
-                                    { bank: '부산은행', number: '108120269320', owner: '강분례 (Mother of Bride)' },
-                                    { bank: '새마을금고', number: '3827101037806', owner: '홍제완 (Father of Bride)' },
-                                ]}
-                            />
+                            <div className="text-center">
+                                <p className="text-[10px] tracking-[0.3em] text-zinc-400">{t('ACCOUNTS_LABEL')}</p>
+                                <h3 className="text-lg font-medium">{t('ACCOUNTS_SECTION_HEADING')}</h3>
+                            </div>
+                            <div className="mt-6">
+                                <AccountAccordion
+                                    brideGroomAccounts={[
+                                        { bank: '한국 우리', number: '1002554754103', owner: '홍정희' },
+                                        {
+                                            bank: '노르웨이 IBAN',
+                                            number: 'NO88 1224 1832 919',
+                                            owner: 'JEONGHEE HONG\nBIC SWIFT DNBANOKKXXX',
+                                        },
+                                    ]}
+                                    brideParentsAccounts={[
+                                        { bank: '부산', number: '108120269320', owner: '강분례' },
+                                        { bank: '새마을', number: '3827101037806', owner: '홍제완' },
+                                    ]}
+                                />
+                            </div>
                         </section>
                     </ScrollReveal>
                 )}
@@ -134,17 +141,23 @@ export default async function Page() {
                 {locale !== 'ko' && (
                     <ScrollReveal threshold={0.5}>
                         <section className="px-6 pb-12">
-                            <h3 className="mb-4 text-center text-lg font-medium">{t('ACCOUNTS_SECTION_HEADING')}</h3>
-                            <AccountAccordion
-                                brideGroom={[
-                                    { bank: 'Woori Bank', number: '1002554754103', owner: 'Bride & Groom' },
-                                    {
-                                        bank: 'IBAN',
-                                        number: 'NO88 1224 1832 919',
-                                        owner: 'Bride & Groom (BIC/SWIFT: DNBANOKKXXX)',
-                                    },
-                                ]}
-                            />
+                            <div className="text-center">
+                                <p className="text-[10px] tracking-[0.3em] text-zinc-400">{t('ACCOUNTS_LABEL')}</p>
+                                <h3 className="text-lg font-medium">{t('ACCOUNTS_SECTION_HEADING')}</h3>
+                            </div>
+                            <div className="mt-6">
+                                <AccountAccordion
+                                    brideGroomAccounts={[
+                                        { bank: 'Korea Woori', number: '1002554754103', owner: 'JEONGHEE HONG' },
+                                        {
+                                            bank: 'Norway IBAN',
+                                            number: 'NO88 1224 1832 919',
+                                            owner: 'JEONGHEE HONG\nBIC SWIFT DNBANOKKXXX',
+                                        },
+                                    ]}
+                                    brideParentsAccounts={[]}
+                                />
+                            </div>
                         </section>
                     </ScrollReveal>
                 )}

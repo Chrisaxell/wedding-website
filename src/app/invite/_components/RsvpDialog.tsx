@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { submitRSVP } from '@/actions/rsvp';
 import { downloadICSFile } from '@/lib/ics';
@@ -219,9 +219,10 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
 
                         <Button onClick={submit} className="w-full" disabled={loading || !name || (!email && !phone)}>
                             {loading ? '...' : t('RSVP_SUBMIT')}
-                            <Button onClick={() => setOpen(false)} variant="ghost" className="w-full">
-                                {t('RSVP_ANSWER_LATER')}
-                            </Button>
+                        </Button>
+
+                        <Button onClick={() => setOpen(false)} variant="outline" className="w-full">
+                            {t('RSVP_ANSWER_LATER')}
                         </Button>
 
                         {error && <p className="text-xs text-red-600">{error}</p>}
