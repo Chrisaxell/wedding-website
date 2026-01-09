@@ -40,7 +40,7 @@ model Rsvp {
   name                String
   email               String?
   phone               String?
-  plusOne             Boolean    @default(false)
+  numberOfPeople      Int        @default(1)
   status              RsvpStatus
   createdAt           DateTime   @default(now())
   dietaryRestrictions String? // added optional dietary restrictions / allergies field

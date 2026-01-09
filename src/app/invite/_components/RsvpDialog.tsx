@@ -5,18 +5,21 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { submitRSVP } from '@/actions/rsvp';
 import { downloadICSFile } from '@/lib/ics';
 import { WEDDING_EVENT } from '@/lib/wedding';
 import { trackEvent } from '@/components/AnalyticsTracker';
 
-type Props = { guestName?: string; open?: boolean; onOpenChange?: (open: boolean) => void };
+type Props = {
+    guestName?: string;
+    open?: boolean;
+    onOpenChange?: (open: boolean) => void;
+};
 
 export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Props) {
     const [name, setName] = useState(guestName ?? '');
-    // store as string so input can be cleared while typing
     const [numberOfPeople, setNumberOfPeople] = useState('1');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
@@ -26,6 +29,10 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
     const [error, setError] = useState<string | null>(null);
     const [internalOpen, setInternalOpen] = useState(false);
     const [showCalendarPrompt, setShowCalendarPrompt] = useState(false);
+    const [existingRsvp, setExistingRsvp] = useState<{ name: string; status: string } | null>(null);
+    const [showUpdateConfirmation, setShowUpdateConfirmation] = useState(false);
+    const [emailCheckTimeout, setEmailCheckTimeout] = useState<NodeJS.Timeout | null>(null);
+    const [checkingEmail, setCheckingEmail] = useState(false);
     const t = useTranslations('WeddingInvite');
     const locale = useLocale();
 
@@ -37,6 +44,85 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
             setInternalOpen(value);
         }
     };
+
+    // Check if email already has an RSVP (debounced)
+    useEffect(() => {
+        if (emailCheckTimeout) {
+            clearTimeout(emailCheckTimeout);
+        }
+
+        if (!email || !email.includes('@')) {
+            setExistingRsvp(null);
+            setShowUpdateConfirmation(false);
+            setCheckingEmail(false);
+            return;
+        }
+
+        setCheckingEmail(true);
+        const timeout = setTimeout(async () => {
+            try {
+                const response = await fetch('/api/rsvp/check-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email }),
+                });
+                const data = await response.json();
+
+                if (data.exists) {
+                    setExistingRsvp({ name: data.name, status: data.status });
+                    setShowUpdateConfirmation(true);
+
+                    // Track identified user by email
+                    trackEvent('existing_rsvp_detected', {
+                        guest_name: data.name,
+                        email: email,
+                    });
+
+                    // Update analytics tracking with email-based name
+                    document.cookie = `guest_name=${encodeURIComponent(data.name)}; path=/; max-age=${60 * 60 * 24 * 365}`;
+                    document.cookie = `guest_email=${encodeURIComponent(email)}; path=/; max-age=${60 * 60 * 24 * 365}`;
+                } else {
+                    setExistingRsvp(null);
+                    setShowUpdateConfirmation(false);
+                }
+            } catch (error) {
+                console.error('Failed to check email:', error);
+            } finally {
+                setCheckingEmail(false);
+            }
+        }, 500);
+
+        setEmailCheckTimeout(timeout);
+
+        return () => {
+            if (timeout) clearTimeout(timeout);
+        };
+    }, [email]);
+
+    function handleUpdateConfirmation(shouldUpdate: boolean) {
+        if (!shouldUpdate) {
+            // User doesn't want to update, close the dialog
+            setOpen(false);
+            setShowUpdateConfirmation(false);
+            setExistingRsvp(null);
+            setEmail('');
+            setName(guestName ?? '');
+            trackEvent('rsvp_update_declined', {
+                guest_name: existingRsvp?.name || 'unknown',
+                email: email,
+            });
+        } else {
+            // User wants to update, dismiss confirmation and allow form editing
+            setShowUpdateConfirmation(false);
+            if (existingRsvp) {
+                setName(existingRsvp.name);
+            }
+            trackEvent('rsvp_update_confirmed', {
+                guest_name: existingRsvp?.name || 'unknown',
+                email: email,
+            });
+        }
+    }
 
     async function submit() {
         setLoading(true);
@@ -60,17 +146,19 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
             // Set cookies on client side for immediate feedback
             document.cookie = `rsvp_seen=true; path=/; max-age=${60 * 60 * 24 * 365}`;
             document.cookie = `guest_name=${encodeURIComponent(name)}; path=/; max-age=${60 * 60 * 24 * 365}`;
+            if (email) {
+                document.cookie = `guest_email=${encodeURIComponent(email)}; path=/; max-age=${60 * 60 * 24 * 365}`;
+            }
             // Track RSVP submission
             trackEvent('rsvp_submitted', {
                 guest_name: name,
+                email: email || 'not_provided',
                 status: status,
-                has_plus_one: finalNum > 1,
                 number_of_people: finalNum,
                 has_dietary_restrictions: !!dietaryRestrictions,
                 provided_email: !!email,
                 provided_phone: !!phone,
             });
-
 
             // Show calendar prompt after successful submission
             setShowCalendarPrompt(true);
@@ -93,9 +181,6 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
                 coupleA: WEDDING_EVENT.coupleA,
                 coupleB: WEDDING_EVENT.coupleB,
                 venue: WEDDING_EVENT.venueName,
-        trackEvent('calendar_downloaded', {
-            guest_name: name,
-        });
             }),
             start,
             end,
@@ -104,6 +189,9 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
             longitude: WEDDING_EVENT.venueLng,
         };
         downloadICSFile(event, t('CALENDAR_FILE_NAME'));
+        trackEvent('calendar_downloaded', {
+            guest_name: name,
+        });
     }
 
     function handleCalendarDownload() {
@@ -147,7 +235,33 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
                         </div>
                     </div>
                 ) : (
-                    <div className="space-y-4 pb-4">
+                    <div className="relative space-y-4 pb-4">
+                        {/* Nested overlay for update confirmation */}
+                        {showUpdateConfirmation && existingRsvp && (
+                            <div className="absolute inset-0 z-50 flex items-center justify-center rounded-lg bg-white/95 p-6 backdrop-blur-sm">
+                                <div className="w-full max-w-sm space-y-4">
+                                    <div className="text-center">
+                                        <p className="text-sm font-medium text-zinc-700">
+                                            {t('RSVP_EXISTING_FOUND', { name: existingRsvp.name })}
+                                        </p>
+                                        <p className="mt-2 text-sm text-zinc-500">{t('RSVP_UPDATE_QUESTION')}</p>
+                                    </div>
+                                    <div className="flex flex-col gap-2">
+                                        <Button onClick={() => handleUpdateConfirmation(true)} className="w-full">
+                                            {t('RSVP_UPDATE_YES')}
+                                        </Button>
+                                        <Button
+                                            onClick={() => handleUpdateConfirmation(false)}
+                                            variant="outline"
+                                            className="w-full"
+                                        >
+                                            {t('RSVP_UPDATE_NO')}
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
                         <div className="space-y-2">
                             <Label htmlFor="name">{t('RSVP_NAME_LABEL')}</Label>
                             <Input
@@ -172,13 +286,20 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
 
                         <div className="space-y-2">
                             <Label htmlFor="email">{t('RSVP_EMAIL_LABEL')}</Label>
-                            <Input
-                                id="email"
-                                type="email"
-                                placeholder={t('RSVP_EMAIL_PLACEHOLDER')}
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
+                            <div className="relative">
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    placeholder={t('RSVP_EMAIL_PLACEHOLDER')}
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                                {checkingEmail && (
+                                    <div className="absolute top-1/2 right-3 -translate-y-1/2">
+                                        <div className="h-4 w-4 animate-spin rounded-full border-2 border-zinc-300 border-t-zinc-600"></div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
 
                         <div className="space-y-2">

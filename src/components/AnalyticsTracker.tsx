@@ -19,6 +19,21 @@ function getGuestNameFromCookie(): string | null {
     return null;
 }
 
+// Helper function to get guest email from cookie
+function getGuestEmailFromCookie(): string | null {
+    if (typeof document === 'undefined') return null;
+
+    const cookies = document.cookie.split(';');
+    const guestEmailCookie = cookies.find((cookie) => cookie.trim().startsWith('guest_email='));
+
+    if (guestEmailCookie) {
+        const guestEmail = decodeURIComponent(guestEmailCookie.split('=')[1]);
+        return guestEmail && guestEmail.trim() ? guestEmail : null;
+    }
+
+    return null;
+}
+
 // Helper function to track visitor geolocation
 async function trackVisitorGeo(page: string) {
     try {
@@ -54,10 +69,12 @@ async function trackVisitorGeo(page: string) {
 // Export this function so other components can use it
 export function trackEvent(eventName: string, properties?: Record<string, unknown>) {
     const guestName = getGuestNameFromCookie();
+    const guestEmail = getGuestEmailFromCookie();
 
     track(eventName, {
         ...properties,
         guest_name: guestName || 'anonymous',
+        guest_email: guestEmail || 'not_provided',
         timestamp: new Date().toISOString(),
     });
 }
@@ -68,18 +85,21 @@ export function AnalyticsTracker() {
 
     useEffect(() => {
         const guestName = getGuestNameFromCookie();
+        const guestEmail = getGuestEmailFromCookie();
 
         // Track page view with guest identification
         track('page_view', {
             guest_name: guestName || 'anonymous',
+            guest_email: guestEmail || 'not_provided',
             page: pathname,
             timestamp: new Date().toISOString(),
         });
 
-        // If user has an RSVP name, track them as identified
-        if (guestName) {
+        // If user has an RSVP name or email, track them as identified
+        if (guestName || guestEmail) {
             track('identified_user', {
-                guest_name: guestName,
+                guest_name: guestName || 'unknown',
+                guest_email: guestEmail || 'not_provided',
                 page: pathname,
             });
         }

@@ -11,11 +11,10 @@ export async function submitRSVP(formData: FormData) {
     const name = String(formData.get('name') ?? '').trim();
     const email = String(formData.get('email') ?? '').trim();
     const phone = String(formData.get('phone') ?? '').trim();
-    // numberOfPeople now determines whether a guest brings a +1
+    // numberOfPeople stores the actual count of people attending
     const numberOfPeopleRaw = String(formData.get('numberOfPeople') ?? '1').trim();
     const parsedNum = parseInt(numberOfPeopleRaw, 10);
     const numberOfPeople = Number.isFinite(parsedNum) && parsedNum >= 1 ? parsedNum : 1;
-    const plusOne = numberOfPeople > 1;
     const dietaryRestrictions = String(formData.get('dietaryRestrictions') ?? '').trim();
     const statusRaw = String(formData.get('status') ?? '').trim();
     const inviteIdRaw = String(formData.get('inviteId') ?? '').trim();
@@ -46,7 +45,7 @@ export async function submitRSVP(formData: FormData) {
             name,
             email: email || null,
             phone: phone || null,
-            plusOne,
+            numberOfPeople,
             status,
             inviteId, // optional
             dietaryRestrictions: dietaryRestrictions || null,
@@ -58,7 +57,7 @@ export async function submitRSVP(formData: FormData) {
 
         await setCookie('guest_name', name);
         await setCookie('rsvp_status', status);
-        await setCookie('rsvp_plus_one', plusOne ? 'true' : 'false');
+        await setCookie('rsvp_number_of_people', String(numberOfPeople));
         await setCookie('rsvp_email', email || '');
         await setCookie('rsvp_phone', phone || '');
         await setCookie('rsvp_dietary', dietaryRestrictions || '');

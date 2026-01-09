@@ -17,7 +17,7 @@ export async function GET(req: Request) {
                 id: true,
                 createdAt: true,
                 status: true,
-                plusOne: true,
+                numberOfPeople: true,
                 email: true,
                 phone: true,
             },
