@@ -60,7 +60,7 @@ export function GalleryDialog({ gallery, openIndex, onOpenChange, onNavigate }: 
                     className="flex h-screen w-screen max-w-none items-center justify-center rounded-none border-none bg-black/90 p-0"
                 >
                     <DialogTitle className="sr-only">
-                        {t('GALLERY_LABEL')} {openIndex + 1} / {total}
+                        GALLERY {openIndex + 1} / {total}
                     </DialogTitle>
                     <div className="relative mx-auto w-full max-w-[430px] px-4">
                         <div className="relative flex h-[82vh] items-center justify-center select-none">

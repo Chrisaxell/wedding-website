@@ -18,7 +18,7 @@
         "COUNTDOWN_DAYS_LABEL": "أيام",
         "COUNTDOWN_HOURS_LABEL": "ساعات",
         "COUNTDOWN_MINS_LABEL": "دقائق",
-        "COUNTDOWN_SECS_LABEL": "ثواني",
+        "COUNTDOWN_SEC_LABEL": "ثواني",
         "GALLERY_LABEL": "المعرض",
         "GALLERY_HEADING": "المعرض",
         "GALLERY_ALT": "معرض {index}",

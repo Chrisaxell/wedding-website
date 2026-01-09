@@ -18,7 +18,7 @@
         "COUNTDOWN_DAYS_LABEL": "dies",
         "COUNTDOWN_HOURS_LABEL": "hores",
         "COUNTDOWN_MINS_LABEL": "min",
-        "COUNTDOWN_SECS_LABEL": "seg",
+        "COUNTDOWN_SEC_LABEL": "seg",
         "GALLERY_LABEL": "GALERIA",
         "GALLERY_HEADING": "Galeria",
         "GALLERY_ALT": "galeria {index}",

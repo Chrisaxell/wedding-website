@@ -22,36 +22,26 @@ export function InviteHero({ heroImage, coupleA, coupleB, dateISO, venueName, cl
     const monthNumber = date.getMonth() + 1;
     const weekdayLocalized = new Intl.DateTimeFormat(locale, { weekday: 'long' }).format(date).toUpperCase();
 
-    const numericDate = `${String(dayNumber).padStart(2, '0')}-${String(monthNumber).padStart(2, '0')}-${yyyy}`;
+    const numericDate = `${String(dayNumber).padStart(2, '0')}. ${String(monthNumber).padStart(2, '0')}. ${yyyy}`;
 
-    // Format date and time based on locale
-    let dateTimeString;
-    if (locale === 'ko') {
-        // Korean format: 2026년 3월 28일 토요일 오후 12시
-        const weekdayKo = new Intl.DateTimeFormat('ko', { weekday: 'long', timeZone: 'Asia/Seoul' }).format(date);
-
-        // Get hour in Korea timezone
-        const koreaHour = parseInt(
-            new Intl.DateTimeFormat('en-US', {
-                hour: 'numeric',
-                hour12: false,
-                timeZone: 'Asia/Seoul',
-            }).format(date),
-        );
-
-        const period = koreaHour >= 12 ? '오후' : '오전';
-        const displayHour = koreaHour === 0 ? 12 : koreaHour > 12 ? koreaHour - 12 : koreaHour;
-        dateTimeString = `${yyyy}년 ${monthNumber}월 ${dayNumber}일 ${weekdayKo} ${period} ${displayHour}시`;
-    } else {
-        // Other locales: use standard formatting
-        const monthDateString = new Intl.DateTimeFormat(locale, {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-        }).format(date);
-        const eventTime = '12:00';
-        dateTimeString = `${eventTime} • ${monthDateString}`;
-    }
+    // Format date and time: Korean format vs simple format for all others
+    const dateTimeString =
+        locale === 'ko'
+            ? // Korean format: 2026년 2월 8일 토요일 오후 12시
+              new Intl.DateTimeFormat('ko', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  weekday: 'long',
+                  hour: 'numeric',
+                  hour12: true,
+                  timeZone: 'Asia/Seoul',
+              }).format(date)
+            : // Other locales: 12:00 • 8. February 2026 (day before month)
+              `12:00 • ${dayNumber}. ${new Intl.DateTimeFormat(locale, {
+                  year: 'numeric',
+                  month: 'long',
+              }).format(date)}`;
 
     return (
         <section className={className}>
@@ -81,7 +71,15 @@ export function InviteHero({ heroImage, coupleA, coupleB, dateISO, venueName, cl
                 </div>
                 <div className="mt-1 text-sm text-zinc-600">신부 홍정희 • 신랑 크리스티안 악셀</div>
                 <div className="mt-1 text-sm">{dateTimeString}</div>
-                <div className="mt-1 text-sm">{venueName}</div>
+                <div className="mt-1 text-sm">
+                    {locale === 'ko' ? (
+                        venueName
+                    ) : (
+                        <>
+                            {venueName} • {t('VENUE_LOCATION')}
+                        </>
+                    )}
+                </div>
             </div>
         </section>
     );

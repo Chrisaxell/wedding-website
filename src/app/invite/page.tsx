@@ -28,8 +28,8 @@ export default async function Page() {
     const savedGuestName = await getCookie('guest_name');
     const hasSeenRsvp = (await getCookie('rsvp_seen')) === 'true';
 
-    // Locale-aware venue address: use translated address for Korean locale
-    const venueAddressLocalized = locale === 'ko' ? t('VENUE_ADDRESS') : WEDDING_EVENT.venueAddress;
+    // Use translated venue location for all locales
+    const venueLocation = t('VENUE_LOCATION');
 
     return (
         <>
@@ -73,7 +73,7 @@ export default async function Page() {
                 <ScrollReveal threshold={0.3}>
                     <MapCard
                         venueName={t('VENUE_NAME')}
-                        address={venueAddressLocalized}
+                        address={venueLocation}
                         lat={WEDDING_EVENT.venueLat}
                         lng={WEDDING_EVENT.venueLng}
                     />
@@ -81,7 +81,7 @@ export default async function Page() {
 
                 <ScrollReveal threshold={0.5}>
                     <section className="px-6 py-10">
-                        <p className="text-center text-[10px] tracking-[0.3em] text-zinc-400">{t('INFO_LABEL')}</p>
+                        <p className="text-center text-[10px] tracking-[0.3em] text-zinc-400">INFORMATION</p>
                         <h3 className="mb-6 text-center text-lg font-medium">{t('INFO_HEADING')}</h3>
                         {/* Arrival notice */}
                         <p className="mb-4 text-center text-sm text-zinc-600">{t('INFO_ARRIVAL_NOTICE')}</p>
@@ -115,7 +115,7 @@ export default async function Page() {
                     <ScrollReveal threshold={0.5}>
                         <section className="px-6 pb-12">
                             <div className="text-center">
-                                <p className="text-[10px] tracking-[0.3em] text-zinc-400">{t('ACCOUNTS_LABEL')}</p>
+                                <p className="text-[10px] tracking-[0.3em] text-zinc-400">GIFTS</p>
                                 <h3 className="text-lg font-medium">{t('ACCOUNTS_SECTION_HEADING')}</h3>
                             </div>
                             <div className="mt-6">
@@ -142,7 +142,7 @@ export default async function Page() {
                     <ScrollReveal threshold={0.5}>
                         <section className="px-6 pb-12">
                             <div className="text-center">
-                                <p className="text-[10px] tracking-[0.3em] text-zinc-400">{t('ACCOUNTS_LABEL')}</p>
+                                <p className="text-[10px] tracking-[0.3em] text-zinc-400">GIFTS</p>
                                 <h3 className="text-lg font-medium">{t('ACCOUNTS_SECTION_HEADING')}</h3>
                             </div>
                             <div className="mt-6">

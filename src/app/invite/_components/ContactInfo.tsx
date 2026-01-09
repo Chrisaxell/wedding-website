@@ -11,7 +11,7 @@ export function ContactInfo() {
     return (
         <section className="space-y-4 px-6 py-10">
             <div className="text-center">
-                <p className="text-[10px] tracking-[0.3em] text-zinc-400">{t('CONTACT_LABEL')}</p>
+                <p className="text-[10px] tracking-[0.3em] text-zinc-400">CONTACT</p>
                 <h3 className="text-lg font-medium">{t('CONTACT_HEADING')}</h3>
                 <p className="mt-2 text-sm text-zinc-600">{t('CONTACT_DESC')}</p>
             </div>

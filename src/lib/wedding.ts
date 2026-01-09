@@ -9,7 +9,6 @@ export const WEDDING_EVENT = {
     endDateISO: '2026-03-28T16:00:00+09:00',
     foodTime: '13:30',
     venueName: 'Hanok Hwaje', // corrected spelling per user request
-    venueAddress: 'Busan, South Korea', // updated location with city and country
     venueLat: 35.36410463760984,
     venueLng: 128.99068710998083,
     timezone: 'Asia/Seoul',

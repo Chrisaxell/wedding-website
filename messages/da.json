@@ -18,7 +18,7 @@
         "COUNTDOWN_DAYS_LABEL": "dage",
         "COUNTDOWN_HOURS_LABEL": "timer",
         "COUNTDOWN_MINS_LABEL": "min",
-        "COUNTDOWN_SECS_LABEL": "sek",
+        "COUNTDOWN_SEC_LABEL": "sek",
         "GALLERY_LABEL": "GALLERI",
         "GALLERY_HEADING": "Galleri",
         "GALLERY_ALT": "galleri {index}",

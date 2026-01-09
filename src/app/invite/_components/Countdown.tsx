@@ -62,7 +62,7 @@ export function Countdown({ dateISO, padDays = true, padTime = true }: Countdown
                                 mounted={mounted}
                             />
                             <TimeBlock
-                                label={translate('COUNTDOWN_SECS_LABEL')}
+                                label={translate('COUNTDOWN_SEC_LABEL')}
                                 value={padTime ? t.secs.toString().padStart(2, '0') : t.secs.toString()}
                                 mounted={mounted}
                             />
