@@ -52,10 +52,10 @@ export default async function Page() {
                 <ScrollReveal threshold={1} className={'pt-5'}>
                     <section className="px-6 py-10 text-center">
                         <h2 className="mt-1 text-lg font-medium text-zinc-700">{t('INVITATION_HEADING')}</h2>
-                        <p className="mt-4 leading-7">
+                        <p className="mt-4 text-sm leading-relaxed">
                             {bodyLines.map((line, i) => (
-                                <span key={i} className="block first:mt-0">
-                                    {line}
+                                <span key={i} className={`block first:mt-0 ${line === '' ? 'mb-4' : ''}`}>
+                                    {line || '\u00A0'}
                                 </span>
                             ))}
                         </p>
