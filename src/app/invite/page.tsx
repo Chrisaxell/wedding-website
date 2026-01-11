@@ -52,13 +52,19 @@ export default async function Page() {
                 <ScrollReveal threshold={1} className={'pt-5'}>
                     <section className="px-6 py-10 text-center">
                         <h2 className="mt-1 text-lg font-medium text-zinc-700">{t('INVITATION_HEADING')}</h2>
-                        <p className="mt-4 text-sm leading-relaxed">
-                            {bodyLines.map((line, i) => (
-                                <span key={i} className={`block first:mt-0 ${line === '' ? 'mb-4' : ''}`}>
-                                    {line || '\u00A0'}
-                                </span>
-                            ))}
-                        </p>
+                        <div className="mt-4 space-y-1 text-sm leading-relaxed">
+                            {bodyLines.map((line, i) => {
+                                // Empty line = paragraph break
+                                if (line === '') {
+                                    return <div key={i} className="h-3" />;
+                                }
+                                return (
+                                    <div key={i} className="block">
+                                        {line}
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </section>
                 </ScrollReveal>
 
