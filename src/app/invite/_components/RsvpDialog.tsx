@@ -212,7 +212,7 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
             </DialogTrigger>
             <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-md">
                 <DialogHeader>
-                    <DialogTitle>
+                    <DialogTitle className="text-center">
                         {showCalendarPrompt
                             ? t('RSVP_SUCCESS_TITLE')
                             : locale === 'ko'

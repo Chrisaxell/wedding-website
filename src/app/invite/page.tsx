@@ -121,9 +121,9 @@ export default async function Page() {
                             <div className="mt-6">
                                 <AccountAccordion
                                     brideGroomAccounts={[
-                                        { bank: '한국 우리', number: '1002554754103', owner: '홍정희' },
+                                        { bank: '우리', number: '1002554754103', owner: '홍정희' },
                                         {
-                                            bank: '노르웨이 IBAN',
+                                            bank: 'DNB IBAN',
                                             number: 'NO88 1224 1832 919',
                                             owner: 'JEONGHEE HONG\nBIC SWIFT DNBANOKKXXX',
                                         },
