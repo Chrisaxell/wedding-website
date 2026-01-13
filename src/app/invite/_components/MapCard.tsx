@@ -7,7 +7,7 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useText, useRichText } from '@/components/TranslatedText';
+import { useText, useRichText, TranslatedText } from '@/components/TranslatedText';
 
 type Props = {
     venueName: string;
@@ -118,8 +118,9 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
                                 {text('TRANSPORT_PUBLIC_TITLE')}
                             </AccordionTrigger>
                             <AccordionContent className="text-sm text-zinc-600">
-                                <p className="mb-3">{richText('TRANSPORT_PUBLIC_DESC')}</p>
+                                <TranslatedText tKey={'TRANSPORT_PUBLIC_DESC'} />
                                 <div className="space-y-2">
+                                    <br />
                                     <div>
                                         <Link
                                             href={jeungsanStationKakaoLink}
