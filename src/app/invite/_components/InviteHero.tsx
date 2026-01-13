@@ -24,7 +24,7 @@ export function InviteHero({ heroImage, coupleA, coupleB, dateISO, venueName, cl
     const weekdayLocalized = new Intl.DateTimeFormat(locale, { weekday: 'long' }).format(date).toUpperCase();
     const weekdayEnglish = new Intl.DateTimeFormat('en', { weekday: 'long' }).format(date).toUpperCase();
 
-    const numericDate = `${String(dayNumber).padStart(2, '0')}. ${String(monthNumber).padStart(2, '0')}. ${yyyy}`;
+    const numericDate = `${String(dayNumber).padStart(2, '0')}.${String(monthNumber).padStart(2, '0')}.${yyyy}`;
 
     // Format date and time: Korean format vs simple format for all others
     const dateTimeString =

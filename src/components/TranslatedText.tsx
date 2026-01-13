@@ -79,6 +79,20 @@ export function TranslatedText({
 }: TranslatedTextProps) {
     const t = useTranslations(ns);
 
+    // Check if the translation exists and is not empty
+    let rawText: string;
+    try {
+        rawText = t.raw(tKey);
+    } catch {
+        // Key doesn't exist
+        return null;
+    }
+
+    // Don't render if the translation is empty
+    if (!rawText || rawText.trim() === '') {
+        return null;
+    }
+
     return <Tag className={className}>{t.rich(tKey, { ...richTextComponents, ...values })}</Tag>;
 }
 
