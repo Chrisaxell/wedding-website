@@ -39,42 +39,38 @@ export function Countdown({ dateISO, padDays = true, padTime = true }: Countdown
 
     return (
         <section className="px-6 pt-8 pb-6">
-            <Card className="bg-zinc-50">
-                <CardContent className="p-6">
-                    <div className="mb-4 text-center text-base text-sm font-medium text-zinc-700">
-                        {text('COUNTDOWN_HEADER', { days: time.days })}
-                    </div>
-                    <div className="flex justify-center">
-                        <div className="flex items-stretch justify-center gap-2">
-                            <TimeBlock
-                                label={text('COUNTDOWN_DAYS_LABEL')}
-                                value={padDays ? time.days.toString().padStart(2, '0') : time.days.toString()}
-                                mounted={mounted}
-                            />
-                            <TimeBlock
-                                label={text('COUNTDOWN_HOURS_LABEL')}
-                                value={padTime ? time.hours.toString().padStart(2, '0') : time.hours.toString()}
-                                mounted={mounted}
-                            />
-                            <TimeBlock
-                                label={text('COUNTDOWN_MINS_LABEL')}
-                                value={padTime ? time.mins.toString().padStart(2, '0') : time.mins.toString()}
-                                mounted={mounted}
-                            />
-                            <TimeBlock
-                                label={text('COUNTDOWN_SEC_LABEL')}
-                                value={padTime ? time.secs.toString().padStart(2, '0') : time.secs.toString()}
-                                mounted={mounted}
-                            />
-                        </div>
-                    </div>
-                    <div className="mt-4 flex justify-center">
-                        <div className="w-[250px]">
-                            <AddCalendarButton />
-                        </div>
-                    </div>
-                </CardContent>
-            </Card>
+            <div className="mb-4 text-center text-base text-sm font-medium text-zinc-700">
+                {text('COUNTDOWN_HEADER', { days: time.days })}
+            </div>
+            <div className="flex justify-center">
+                <div className="flex items-stretch justify-center gap-2">
+                    <TimeBlock
+                        label={text('COUNTDOWN_DAYS_LABEL')}
+                        value={padDays ? time.days.toString().padStart(2, '0') : time.days.toString()}
+                        mounted={mounted}
+                    />
+                    <TimeBlock
+                        label={text('COUNTDOWN_HOURS_LABEL')}
+                        value={padTime ? time.hours.toString().padStart(2, '0') : time.hours.toString()}
+                        mounted={mounted}
+                    />
+                    <TimeBlock
+                        label={text('COUNTDOWN_MINS_LABEL')}
+                        value={padTime ? time.mins.toString().padStart(2, '0') : time.mins.toString()}
+                        mounted={mounted}
+                    />
+                    <TimeBlock
+                        label={text('COUNTDOWN_SEC_LABEL')}
+                        value={padTime ? time.secs.toString().padStart(2, '0') : time.secs.toString()}
+                        mounted={mounted}
+                    />
+                </div>
+            </div>
+            <div className="mt-4 flex justify-center">
+                <div className="w-[250px]">
+                    <AddCalendarButton />
+                </div>
+            </div>
         </section>
     );
 }
