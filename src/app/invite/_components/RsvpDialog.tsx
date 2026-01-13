@@ -264,7 +264,10 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
                         )}
 
                         <div className="space-y-2">
-                            <Label htmlFor="name">{text('RSVP_NAME_LABEL')}</Label>
+                            <Label htmlFor="name">
+                                {text('RSVP_NAME_LABEL')}
+                                {!name.trim() && <span className="ml-1 text-red-500">*</span>}
+                            </Label>
                             <Input
                                 id="name"
                                 placeholder={text('RSVP_NAME_PLACEHOLDER')}
@@ -286,7 +289,10 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="email">{text('RSVP_EMAIL_LABEL')}</Label>
+                            <Label htmlFor="email">
+                                {text('RSVP_EMAIL_LABEL')}
+                                {!email.trim() && !phone.trim() && <span className="ml-1 text-red-500">*</span>}
+                            </Label>
                             <div className="relative">
                                 <Input
                                     id="email"
@@ -304,7 +310,10 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="phone">{text('RSVP_PHONE_LABEL')}</Label>
+                            <Label htmlFor="phone">
+                                {text('RSVP_PHONE_LABEL')}
+                                {!email.trim() && !phone.trim() && <span className="ml-1 text-red-500">*</span>}
+                            </Label>
                             <Input
                                 id="phone"
                                 type="tel"
