@@ -41,7 +41,7 @@ export function Countdown({ dateISO, padDays = true, padTime = true }: Countdown
         <section className="px-6 pt-8 pb-6">
             <Card className="bg-zinc-50">
                 <CardContent className="p-6">
-                    <div className="mb-4 text-center text-base font-medium text-zinc-700">
+                    <div className="mb-4 text-center text-base text-sm font-medium text-zinc-700">
                         {text('COUNTDOWN_HEADER', { days: time.days })}
                     </div>
                     <div className="flex justify-center">

@@ -49,22 +49,26 @@ export function InviteHero({ heroImage, coupleA, coupleB, dateISO, venueName, cl
         <section className={className}>
             <div className="px-6 pt-8 pb-4 text-center">
                 <div className="text-[10px] tracking-[0.3em] text-zinc-400">{text('WEDDING_DAY')}</div>
-                <div className="mt-2 text-2xl leading-tight text-zinc-700">{numericDate}</div>
+                <div className="text text-zing mt-2 text-2xl leading-tight tracking-[0.06em] text-zinc-700">
+                    {numericDate}
+                </div>
                 <div className="text-xs leading-tight tracking-[0.3em] text-zinc-400">
                     {locale === 'ko' ? weekdayEnglish : weekdayLocalized}
                 </div>
             </div>
 
             <div className="px-6">
-                <Image
-                    src={heroImage}
-                    alt="wedding"
-                    width={1000}
-                    height={1600}
-                    priority
-                    placeholder="blur"
-                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQtJSEkLzYvLy02Ly4vMj1CRUI+PkZGTk5PT09PT09PT09PT09PT09PT0//2wBDARUXFx4aHh4aGh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-                />
+                <div className="relative h-[500px] w-full overflow-hidden">
+                    <Image
+                        src={heroImage}
+                        alt="wedding"
+                        fill
+                        priority
+                        className="object-cover object-bottom"
+                        placeholder="blur"
+                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQtJSEkLzYvLy02Ly4vMj1CRUI+PkZGTk5PT09PT09PT09PT09PT09PT0//2wBDARUXFx4aHh4aGh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                    />
+                </div>
             </div>
 
             <div className="mt-5 text-center">
@@ -74,7 +78,8 @@ export function InviteHero({ heroImage, coupleA, coupleB, dateISO, venueName, cl
                     <span>{coupleB}</span>
                 </div>
                 <div className="mt-1 text-sm text-zinc-600">신부 홍정희 • 신랑 크리스티안 악셀</div>
-                <div className="mt-1 text-sm">{dateTimeString}</div>
+                <br />
+                <div className="te mt-1 text-sm">{dateTimeString}</div>
                 <div className="mt-1 text-sm">
                     {locale === 'ko' ? (
                         venueName

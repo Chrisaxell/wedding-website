@@ -1,6 +1,10 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-    purge: [],
-    darkMode: false,
+    content: [
+        './src/**/*.{js,ts,jsx,tsx,mdx}',
+        './app/**/*.{js,ts,jsx,tsx,mdx}',
+        './components/**/*.{js,ts,jsx,tsx,mdx}',
+    ],
     theme: {
         extend: {
             fontFamily: {
@@ -8,9 +12,6 @@ module.exports = {
                 sans: ['var(--font-noto-sans)', 'Noto Sans', 'sans-serif'],
             },
         },
-    },
-    variants: {
-        extend: {},
     },
     plugins: [],
 };
