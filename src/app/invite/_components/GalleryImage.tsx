@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useText } from '@/components/TranslatedText';
 
 type GalleryImageProps = {
     src: string;
@@ -18,7 +18,7 @@ export function GalleryImage({
     aspectRatio = 'auto',
     objectPosition = 'center',
 }: GalleryImageProps) {
-    const t = useTranslations('WeddingInvite');
+    const text = useText();
 
     return (
         <div
@@ -28,7 +28,7 @@ export function GalleryImage({
         >
             <Image
                 src={src}
-                alt={t('GALLERY_ALT', { index })}
+                alt={text('GALLERY_ALT', { index })}
                 fill
                 unoptimized
                 className="object-cover transition-transform duration-300 hover:scale-[1.03]"

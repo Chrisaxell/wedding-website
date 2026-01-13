@@ -1,5 +1,10 @@
 # GitHub Copilot Instructions
 
+## General Guidelines
+- Follow best practices for Next.js, TypeScript, and Tailwind CSS
+- Write clean, maintainable, and well-documented code
+- Make reusable components. Avoid duplication. Use shadcn/ui components when possible
+
 ## Shell
 - **Always use PowerShell** for terminal commands, NOT cmd or bash
 

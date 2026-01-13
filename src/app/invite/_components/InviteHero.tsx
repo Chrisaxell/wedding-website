@@ -1,7 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { useTranslations, useLocale } from 'next-intl';
+import { useLocale } from 'next-intl';
+import { useText } from '@/components/TranslatedText';
 
 type Props = {
     heroImage: string;
@@ -14,8 +15,8 @@ type Props = {
 };
 
 export function InviteHero({ heroImage, coupleA, coupleB, dateISO, venueName, className }: Props) {
-    const t = useTranslations('WeddingInvite');
     const locale = useLocale();
+    const text = useText();
     const date = new Date(dateISO);
     const yyyy = date.getFullYear();
     const dayNumber = date.getDate();
@@ -47,7 +48,7 @@ export function InviteHero({ heroImage, coupleA, coupleB, dateISO, venueName, cl
     return (
         <section className={className}>
             <div className="px-6 pt-8 pb-4 text-center">
-                <div className="text-[10px] tracking-[0.3em] text-zinc-400">{t('WEDDING_DAY')}</div>
+                <div className="text-[10px] tracking-[0.3em] text-zinc-400">{text('WEDDING_DAY')}</div>
                 <div className="mt-2 text-2xl leading-tight text-zinc-700">{numericDate}</div>
                 <div className="text-xs leading-tight tracking-[0.3em] text-zinc-400">
                     {locale === 'ko' ? weekdayEnglish : weekdayLocalized}
@@ -79,7 +80,7 @@ export function InviteHero({ heroImage, coupleA, coupleB, dateISO, venueName, cl
                         venueName
                     ) : (
                         <>
-                            {venueName} • {t('VENUE_LOCATION')}
+                            {venueName} • {text('VENUE_LOCATION')}
                         </>
                     )}
                 </div>

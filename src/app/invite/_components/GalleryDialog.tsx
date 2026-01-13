@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useText } from '@/components/TranslatedText';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { XIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { useCallback, useEffect } from 'react';
@@ -21,7 +21,7 @@ interface GalleryDialogProps {
 }
 
 export function GalleryDialog({ gallery, openIndex, onOpenChange, onNavigate }: GalleryDialogProps) {
-    const t = useTranslations('WeddingInvite');
+    const text = useText();
     const total = gallery.length;
 
     const goPrev = useCallback(() => {
@@ -66,7 +66,7 @@ export function GalleryDialog({ gallery, openIndex, onOpenChange, onNavigate }: 
                         <div className="relative flex h-[82vh] items-center justify-center select-none">
                             <Image
                                 src={gallery[openIndex].src}
-                                alt={t('GALLERY_ALT', { index: openIndex + 1 })}
+                                alt={text('GALLERY_ALT', { index: openIndex + 1 })}
                                 width={900}
                                 height={1200}
                                 className="max-h-full max-w-full object-contain"

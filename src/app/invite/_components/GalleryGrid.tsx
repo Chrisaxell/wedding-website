@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useText } from '@/components/TranslatedText';
 import { useState, useEffect } from 'react';
 import { GalleryDialog } from './GalleryDialog';
 import { GalleryImage } from './GalleryImage';
@@ -16,7 +16,7 @@ const INITIAL_ITEMS_PER_COLUMN_LEFT = 3; // Left column shows 3 images with 3rd 
 const INITIAL_ITEMS_PER_COLUMN_RIGHT = 2; // Right column shows only 2 images
 
 export function GalleryGrid() {
-    const t = useTranslations('WeddingInvite');
+    const text = useText();
     const [openIndex, setOpenIndex] = useState<number | null>(null);
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -40,7 +40,7 @@ export function GalleryGrid() {
         <section className="px-4 py-10">
             <div className="text-center">
                 <p className="text-[10px] tracking-[0.3em] text-zinc-400">GALLERY</p>
-                <h3 className="text-lg font-medium">{t('GALLERY_HEADING')}</h3>
+                <h3 className="text-lg font-medium">{text('GALLERY_HEADING')}</h3>
             </div>
 
             <div className="relative mt-6">
@@ -96,7 +96,7 @@ export function GalleryGrid() {
             {!isExpanded && (
                 <div className="mt-6 flex justify-center">
                     <Button onClick={() => setIsExpanded(true)} variant="outline" className="px-8">
-                        {t('GALLERY_SHOW_MORE')}
+                        {text('GALLERY_SHOW_MORE')}
                     </Button>
                 </div>
             )}

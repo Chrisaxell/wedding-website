@@ -6,7 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useState, useEffect } from 'react';
-import { useTranslations, useLocale } from 'next-intl';
+import { useLocale } from 'next-intl';
+import { useText } from '@/components/TranslatedText';
 import { submitRSVP } from '@/actions/rsvp';
 import { downloadICSFile } from '@/lib/ics';
 import { WEDDING_EVENT } from '@/lib/wedding';
@@ -33,7 +34,7 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
     const [showUpdateConfirmation, setShowUpdateConfirmation] = useState(false);
     const [emailCheckTimeout, setEmailCheckTimeout] = useState<NodeJS.Timeout | null>(null);
     const [checkingEmail, setCheckingEmail] = useState(false);
-    const t = useTranslations('WeddingInvite');
+    const text = useText();
     const locale = useLocale();
 
     const open = controlledOpen !== undefined ? controlledOpen : internalOpen;
@@ -173,11 +174,11 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
         const start = new Date(WEDDING_EVENT.dateISO);
         const end = new Date(WEDDING_EVENT.endDateISO || start.getTime() + 2 * 60 * 60 * 1000);
         const event = {
-            title: t('CALENDAR_EVENT_TITLE', {
+            title: text('CALENDAR_EVENT_TITLE', {
                 coupleA: WEDDING_EVENT.coupleA,
                 coupleB: WEDDING_EVENT.coupleB,
             }),
-            description: t('CALENDAR_EVENT_DESCRIPTION', {
+            description: text('CALENDAR_EVENT_DESCRIPTION', {
                 coupleA: WEDDING_EVENT.coupleA,
                 coupleB: WEDDING_EVENT.coupleB,
                 venue: WEDDING_EVENT.venueName,
@@ -188,7 +189,7 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
             latitude: WEDDING_EVENT.venueLat,
             longitude: WEDDING_EVENT.venueLng,
         };
-        downloadICSFile(event, t('CALENDAR_FILE_NAME'));
+        downloadICSFile(event, text('CALENDAR_FILE_NAME'));
         trackEvent('calendar_downloaded', {
             guest_name: name,
         });
@@ -208,29 +209,29 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button className="px-6">{t('RSVP_OPEN_BUTTON')}</Button>
+                <Button className="px-6">{text('RSVP_OPEN_BUTTON')}</Button>
             </DialogTrigger>
             <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-md">
                 <DialogHeader>
                     <DialogTitle className="text-center">
                         {showCalendarPrompt
-                            ? t('RSVP_SUCCESS_TITLE')
+                            ? text('RSVP_SUCCESS_TITLE')
                             : locale === 'ko'
-                              ? t('RSVP_SECTION_HEADING')
-                              : t('RSVP_DIALOG_TITLE')}
+                              ? text('RSVP_SECTION_HEADING')
+                              : text('RSVP_DIALOG_TITLE')}
                     </DialogTitle>
                 </DialogHeader>
 
                 {showCalendarPrompt ? (
                     <div className="space-y-4">
-                        <p className="text-sm text-zinc-600">{t('RSVP_SUCCESS_MESSAGE')}</p>
-                        <p className="text-sm text-zinc-600">{t('RSVP_CALENDAR_PROMPT')}</p>
+                        <p className="text-sm text-zinc-600">{text('RSVP_SUCCESS_MESSAGE')}</p>
+                        <p className="text-sm text-zinc-600">{text('RSVP_CALENDAR_PROMPT')}</p>
                         <div className="flex flex-col gap-2">
                             <Button onClick={handleCalendarDownload} className="w-full">
-                                {t('CALENDAR_ADD_BUTTON')}
+                                {text('CALENDAR_ADD_BUTTON')}
                             </Button>
                             <Button onClick={handleSkipCalendar} variant="outline" className="w-full">
-                                {t('RSVP_SKIP_CALENDAR')}
+                                {text('RSVP_SKIP_CALENDAR')}
                             </Button>
                         </div>
                     </div>
@@ -242,20 +243,20 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
                                 <div className="w-full max-w-sm space-y-4">
                                     <div className="text-center">
                                         <p className="text-sm font-medium text-zinc-700">
-                                            {t('RSVP_EXISTING_FOUND', { name: existingRsvp.name })}
+                                            {text('RSVP_EXISTING_FOUND', { name: existingRsvp.name })}
                                         </p>
-                                        <p className="mt-2 text-sm text-zinc-500">{t('RSVP_UPDATE_QUESTION')}</p>
+                                        <p className="mt-2 text-sm text-zinc-500">{text('RSVP_UPDATE_QUESTION')}</p>
                                     </div>
                                     <div className="flex flex-col gap-2">
                                         <Button onClick={() => handleUpdateConfirmation(true)} className="w-full">
-                                            {t('RSVP_UPDATE_YES')}
+                                            {text('RSVP_UPDATE_YES')}
                                         </Button>
                                         <Button
                                             onClick={() => handleUpdateConfirmation(false)}
                                             variant="outline"
                                             className="w-full"
                                         >
-                                            {t('RSVP_UPDATE_NO')}
+                                            {text('RSVP_UPDATE_NO')}
                                         </Button>
                                     </div>
                                 </div>
@@ -263,17 +264,17 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
                         )}
 
                         <div className="space-y-2">
-                            <Label htmlFor="name">{t('RSVP_NAME_LABEL')}</Label>
+                            <Label htmlFor="name">{text('RSVP_NAME_LABEL')}</Label>
                             <Input
                                 id="name"
-                                placeholder={t('RSVP_NAME_PLACEHOLDER')}
+                                placeholder={text('RSVP_NAME_PLACEHOLDER')}
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                             />
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="numberOfPeople">{t('RSVP_NUMBER_OF_PEOPLE_LABEL')}</Label>
+                            <Label htmlFor="numberOfPeople">{text('RSVP_NUMBER_OF_PEOPLE_LABEL')}</Label>
                             <Input
                                 id="numberOfPeople"
                                 type="number"
@@ -281,16 +282,16 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
                                 value={numberOfPeople}
                                 onChange={(e) => setNumberOfPeople(e.target.value)}
                             />
-                            <span className="text-xs text-zinc-500">{t('RSVP_NUMBER_OF_PEOPLE_HINT')}</span>
+                            <span className="text-xs text-zinc-500">{text('RSVP_NUMBER_OF_PEOPLE_HINT')}</span>
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="email">{t('RSVP_EMAIL_LABEL')}</Label>
+                            <Label htmlFor="email">{text('RSVP_EMAIL_LABEL')}</Label>
                             <div className="relative">
                                 <Input
                                     id="email"
                                     type="email"
-                                    placeholder={t('RSVP_EMAIL_PLACEHOLDER')}
+                                    placeholder={text('RSVP_EMAIL_PLACEHOLDER')}
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
@@ -303,33 +304,33 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="phone">{t('RSVP_PHONE_LABEL')}</Label>
+                            <Label htmlFor="phone">{text('RSVP_PHONE_LABEL')}</Label>
                             <Input
                                 id="phone"
                                 type="tel"
-                                placeholder={t('RSVP_PHONE_PLACEHOLDER')}
+                                placeholder={text('RSVP_PHONE_PLACEHOLDER')}
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
                             />
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="dietary">{t('RSVP_DIETARY_LABEL')}</Label>
+                            <Label htmlFor="dietary">{text('RSVP_DIETARY_LABEL')}</Label>
                             <textarea
                                 id="dietary"
-                                placeholder={t('RSVP_DIETARY_PLACEHOLDER')}
+                                placeholder={text('RSVP_DIETARY_PLACEHOLDER')}
                                 value={dietaryRestrictions}
                                 onChange={(e) => setDietaryRestrictions(e.target.value)}
                                 rows={3}
                                 className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex min-h-[80px] w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                             />
                         </div>
-                        <p className="text-xs font-medium text-zinc-600">{t('RSVP_DEADLINE')}</p>
+                        <p className="text-xs font-medium text-zinc-600">{text('RSVP_DEADLINE')}</p>
 
-                        <p className="text-xs text-zinc-500">{t('RSVP_CONTACT_INFO')}</p>
+                        <p className="text-xs text-zinc-500">{text('RSVP_CONTACT_INFO')}</p>
 
                         <div className="space-y-2">
-                            <Label>{t('RSVP_ATTENDANCE_LABEL')}</Label>
+                            <Label>{text('RSVP_ATTENDANCE_LABEL')}</Label>
                             <div className="flex gap-2">
                                 {(['yes', 'maybe', 'no'] as const).map((s) => {
                                     const labelKey =
@@ -346,7 +347,7 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
                                             onClick={() => setStatus(s)}
                                             className="flex-1"
                                         >
-                                            {t(labelKey)}
+                                            {text(labelKey)}
                                         </Button>
                                     );
                                 })}
@@ -354,11 +355,11 @@ export function RsvpDialog({ guestName, open: controlledOpen, onOpenChange }: Pr
                         </div>
 
                         <Button onClick={submit} className="w-full" disabled={loading || !name || (!email && !phone)}>
-                            {loading ? '...' : t('RSVP_SUBMIT')}
+                            {loading ? '...' : text('RSVP_SUBMIT')}
                         </Button>
 
                         <Button onClick={() => setOpen(false)} variant="outline" className="w-full">
-                            {t('RSVP_ANSWER_LATER')}
+                            {text('RSVP_ANSWER_LATER')}
                         </Button>
 
                         {error && <p className="text-xs text-red-600">{error}</p>}
