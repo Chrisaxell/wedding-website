@@ -70,7 +70,7 @@ function LocaleControl() {
 }
 
 function MusicControl() {
-    const [muted, setMuted] = useState(false); // start unmuted - music plays by default
+    const [muted, setMuted] = useState(true); // start muted - music off by default
     const [audioAvailable, setAudioAvailable] = useState(true);
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
