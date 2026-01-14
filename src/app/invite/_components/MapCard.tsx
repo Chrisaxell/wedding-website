@@ -1,12 +1,13 @@
 'use client';
 
-import { useLocale, useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
 import GoogleMap from '@/components/maps/GoogleMap';
 import KakaoMap from '@/components/maps/KakaoMap';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useText, useRichText, TranslatedText } from '@/components/TranslatedText';
 
 type Props = {
     venueName: string;
@@ -16,8 +17,9 @@ type Props = {
 };
 
 export default function MapCard({ venueName, address, lat, lng }: Props) {
-    const t = useTranslations('WeddingInvite');
     const locale = useLocale();
+    const text = useText();
+    const richText = useRichText();
     const canRender = typeof lat === 'number' && typeof lng === 'number';
 
     const [value, setValue] = useState<'google' | 'kakao'>('kakao');
@@ -53,11 +55,14 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
         <section className="px-4 py-10">
             <div className="text-center">
                 <p className="text-[10px] tracking-[0.3em] text-zinc-400">LOCATION</p>
-                <h3 className="text-lg font-medium">{t('LOCATION_HEADING')}</h3>
+                <h3 className="text-lg font-medium">{text('LOCATION_HEADING')}</h3>
             </div>
             <div className="mt-4 text-center">
                 <div className="text-base font-medium text-black">{venueName}</div>
                 <div className="text-sm text-zinc-500">{address}</div>
+                {text('VENUE_ADDRESS_FULL') && (
+                    <div className="mt-1 text-xs text-zinc-400">{text('VENUE_ADDRESS_FULL')}</div>
+                )}
             </div>
 
             <div className="mx-auto mt-6 max-w-md">
@@ -76,7 +81,7 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
                                     />
                                 ) : (
                                     <div className="flex aspect-[4/3] items-center justify-center text-sm text-zinc-500">
-                                        {t('MAP_PLACEHOLDER')}
+                                        {text('MAP_PLACEHOLDER')}
                                     </div>
                                 )}
                             </div>
@@ -91,7 +96,7 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
                                     />
                                 ) : (
                                     <div className="flex aspect-[4/3] items-center justify-center text-sm text-zinc-500">
-                                        {t('MAP_PLACEHOLDER')}
+                                        {text('MAP_PLACEHOLDER')}
                                     </div>
                                 )}
                             </div>
@@ -100,8 +105,8 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
 
                     {/* Tabs Below Map - Full Width */}
                     <TabsList className="grid w-full grid-cols-2 rounded-t-none rounded-b-lg">
-                        <TabsTrigger value="google">{t('MAP_TAB_GOOGLE')}</TabsTrigger>
-                        <TabsTrigger value="kakao">{t('MAP_TAB_KAKAO')}</TabsTrigger>
+                        <TabsTrigger value="google">{text('MAP_TAB_GOOGLE')}</TabsTrigger>
+                        <TabsTrigger value="kakao">{text('MAP_TAB_KAKAO')}</TabsTrigger>
                     </TabsList>
                 </Tabs>
 
@@ -110,11 +115,12 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="public-transport">
                             <AccordionTrigger className="text-sm font-medium">
-                                {t('TRANSPORT_PUBLIC_TITLE')}
+                                {text('TRANSPORT_PUBLIC_TITLE')}
                             </AccordionTrigger>
                             <AccordionContent className="text-sm text-zinc-600">
-                                <p className="mb-3">{t('TRANSPORT_PUBLIC_DESC')}</p>
+                                <TranslatedText tKey={'TRANSPORT_PUBLIC_DESC'} />
                                 <div className="space-y-2">
+                                    <br />
                                     <div>
                                         <Link
                                             href={jeungsanStationKakaoLink}
@@ -122,7 +128,7 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
                                             rel="noopener noreferrer"
                                             className="text-zinc-900 underline hover:text-zinc-700"
                                         >
-                                            {t('TRANSPORT_PUBLIC_LINK')}
+                                            {text('TRANSPORT_PUBLIC_LINK')}
                                         </Link>
                                     </div>
                                     <div>
@@ -132,7 +138,7 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
                                             rel="noopener noreferrer"
                                             className="text-zinc-900 underline hover:text-zinc-700"
                                         >
-                                            {t('TRANSPORT_PUBLIC_NAVER')}
+                                            {text('TRANSPORT_PUBLIC_NAVER')}
                                         </Link>
                                     </div>
                                     {!isKorean && (
@@ -143,27 +149,21 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
                                                 rel="noopener noreferrer"
                                                 className="text-zinc-900 underline hover:text-zinc-700"
                                             >
-                                                {t('TRANSPORT_PUBLIC_GOOGLE')}
+                                                {text('TRANSPORT_PUBLIC_GOOGLE')}
                                             </Link>
                                         </div>
                                     )}
                                 </div>
-                                <p className="mt-3 text-xs text-zinc-500">{t('TRANSPORT_NOTE')}</p>
+                                <p className="mt-3 text-xs text-zinc-500">{text('TRANSPORT_NOTE')}</p>
                             </AccordionContent>
                         </AccordionItem>
 
                         <AccordionItem value="driving">
                             <AccordionTrigger className="text-sm font-medium">
-                                {t('TRANSPORT_DRIVING_TITLE')}
+                                {text('TRANSPORT_DRIVING_TITLE')}
                             </AccordionTrigger>
                             <AccordionContent className="text-sm text-zinc-600">
-                                {t('TRANSPORT_DRIVING_DESC')
-                                    .split('\n')
-                                    .map((text) => (
-                                        <p key={text} className="mb-3">
-                                            {text}
-                                        </p>
-                                    ))}
+                                <p className="mb-3">{richText('TRANSPORT_DRIVING_DESC')}</p>
                                 <div className="space-y-2">
                                     <div>
                                         <Link
@@ -172,7 +172,7 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
                                             rel="noopener noreferrer"
                                             className="text-zinc-900 underline hover:text-zinc-700"
                                         >
-                                            {t('TRANSPORT_DRIVING_LINK')}
+                                            {text('TRANSPORT_DRIVING_LINK')}
                                         </Link>
                                     </div>
                                     <div>
@@ -182,11 +182,11 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
                                             rel="noopener noreferrer"
                                             className="text-zinc-900 underline hover:text-zinc-700"
                                         >
-                                            {t('TRANSPORT_DRIVING_NAVER')}
+                                            {text('TRANSPORT_DRIVING_NAVER')}
                                         </Link>
                                     </div>
                                 </div>
-                                <p className="mt-3 text-xs text-zinc-500">{t('TRANSPORT_DRIVING_PARKING')}</p>
+                                <p className="mt-3 text-xs text-zinc-500">{text('TRANSPORT_DRIVING_PARKING')}</p>
                             </AccordionContent>
                         </AccordionItem>
 
@@ -194,17 +194,17 @@ export default function MapCard({ venueName, address, lat, lng }: Props) {
                         {isKorean !== true && (
                             <AccordionItem value="taxi">
                                 <AccordionTrigger className="text-sm font-medium">
-                                    {t('TRANSPORT_TAXI_TITLE')}
+                                    {text('TRANSPORT_TAXI_TITLE')}
                                 </AccordionTrigger>
                                 <AccordionContent className="text-sm text-zinc-600">
-                                    <p className="mb-3">{t('TRANSPORT_TAXI_DESC')}</p>
+                                    <p className="mb-3">{text('TRANSPORT_TAXI_DESC')}</p>
                                     <Link
                                         href="https://kride.kakaomobility.com/"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="text-zinc-900 underline hover:text-zinc-700"
                                     >
-                                        {t('TRANSPORT_TAXI_LINK')}
+                                        {text('TRANSPORT_TAXI_LINK')}
                                     </Link>
                                 </AccordionContent>
                             </AccordionItem>

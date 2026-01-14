@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useText } from '@/components/TranslatedText';
 import { trackEvent } from '@/components/AnalyticsTracker';
 
 type Props = {
@@ -19,7 +19,7 @@ export function EmailCheckDialog({ open, onOpenChange, onContinue }: Props) {
     const [loading, setLoading] = useState(false);
     const [showUpdateConfirmation, setShowUpdateConfirmation] = useState(false);
     const [existingRsvp, setExistingRsvp] = useState<{ name: string; status: string } | null>(null);
-    const t = useTranslations('WeddingInvite');
+    const text = useText();
 
     async function handleContinue() {
         if (!email || !email.includes('@')) {
@@ -98,35 +98,37 @@ export function EmailCheckDialog({ open, onOpenChange, onContinue }: Props) {
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
-                    <DialogTitle>{t('RSVP_DIALOG_TITLE')}</DialogTitle>
+                    <DialogTitle>{text('RSVP_DIALOG_TITLE')}</DialogTitle>
                 </DialogHeader>
 
                 {showUpdateConfirmation && existingRsvp ? (
                     <div className="space-y-4 pb-4">
-                        <p className="text-sm text-zinc-600">{t('RSVP_EXISTING_FOUND', { name: existingRsvp.name })}</p>
-                        <p className="text-sm text-zinc-500">{t('RSVP_UPDATE_QUESTION')}</p>
+                        <p className="text-sm text-zinc-600">
+                            {text('RSVP_EXISTING_FOUND', { name: existingRsvp.name })}
+                        </p>
+                        <p className="text-sm text-zinc-500">{text('RSVP_UPDATE_QUESTION')}</p>
                         <div className="flex flex-col gap-2">
                             <Button onClick={() => handleUpdateConfirmation(true)} className="w-full">
-                                {t('RSVP_UPDATE_YES')}
+                                {text('RSVP_UPDATE_YES')}
                             </Button>
                             <Button
                                 onClick={() => handleUpdateConfirmation(false)}
                                 variant="outline"
                                 className="w-full"
                             >
-                                {t('RSVP_UPDATE_NO')}
+                                {text('RSVP_UPDATE_NO')}
                             </Button>
                         </div>
                     </div>
                 ) : (
                     <div className="space-y-4 pb-4">
-                        <p className="text-sm text-zinc-600">{t('RSVP_EMAIL_CHECK_PROMPT')}</p>
+                        <p className="text-sm text-zinc-600">{text('RSVP_EMAIL_CHECK_PROMPT')}</p>
                         <div className="space-y-2">
-                            <Label htmlFor="email-check">{t('RSVP_EMAIL_LABEL')}</Label>
+                            <Label htmlFor="email-check">{text('RSVP_EMAIL_LABEL')}</Label>
                             <Input
                                 id="email-check"
                                 type="email"
-                                placeholder={t('RSVP_EMAIL_PLACEHOLDER')}
+                                placeholder={text('RSVP_EMAIL_PLACEHOLDER')}
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 onKeyDown={(e) => {
@@ -138,10 +140,10 @@ export function EmailCheckDialog({ open, onOpenChange, onContinue }: Props) {
                         </div>
                         <div className="flex flex-col gap-2">
                             <Button onClick={handleContinue} disabled={loading} className="w-full">
-                                {loading ? '...' : t('RSVP_EMAIL_CHECK_CONTINUE')}
+                                {loading ? '...' : text('RSVP_EMAIL_CHECK_CONTINUE')}
                             </Button>
                             <Button onClick={handleSkip} variant="outline" className="w-full">
-                                {t('RSVP_EMAIL_CHECK_SKIP')}
+                                {text('RSVP_EMAIL_CHECK_SKIP')}
                             </Button>
                         </div>
                     </div>

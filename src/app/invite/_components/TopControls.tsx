@@ -62,7 +62,7 @@ function LocaleControl() {
                     ref={localePanelRef}
                     className="animate-in fade-in zoom-in-95 mt-2 w-64 rounded-lg border border-zinc-300 bg-white p-2 text-zinc-700 shadow-lg ring-1 ring-black/5"
                 >
-                    <LanguageSwitcher />
+                    <LanguageSwitcher onSelect={() => setShowLocales(false)} />
                 </div>
             )}
         </div>
@@ -70,7 +70,7 @@ function LocaleControl() {
 }
 
 function MusicControl() {
-    const [muted, setMuted] = useState(false); // start unmuted - music plays by default
+    const [muted, setMuted] = useState(true); // start muted - music off by default
     const [audioAvailable, setAudioAvailable] = useState(true);
     const audioRef = useRef<HTMLAudioElement | null>(null);
 

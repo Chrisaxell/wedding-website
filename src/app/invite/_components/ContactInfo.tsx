@@ -1,19 +1,20 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Mail, Phone } from 'lucide-react';
 import Link from 'next/link';
+import { useText, useRichText } from '@/components/TranslatedText';
 
 export function ContactInfo() {
-    const t = useTranslations('WeddingInvite');
+    const text = useText();
+    const richText = useRichText();
 
     return (
         <section className="space-y-4 px-6 py-10">
             <div className="text-center">
                 <p className="text-[10px] tracking-[0.3em] text-zinc-400">CONTACT</p>
-                <h3 className="text-lg font-medium">{t('CONTACT_HEADING')}</h3>
-                <p className="mt-2 text-sm text-zinc-600">{t('CONTACT_DESC')}</p>
+                <h3 className="text-lg font-medium">{text('CONTACT_HEADING')}</h3>
+                <p className="mt-2 text-sm text-zinc-600">{richText('CONTACT_DESC')}</p>
             </div>
             <Card>
                 <CardHeader>
@@ -47,7 +48,7 @@ export function ContactInfo() {
                             className="flex items-center gap-2 text-xs text-zinc-600 transition-colors hover:text-zinc-900"
                         >
                             <Phone className="h-3.5 w-3.5" />
-                            <span>{t('CONTACT_BRIDE_PHONE')}</span>
+                            <span>{text('CONTACT_BRIDE_PHONE')}</span>
                         </Link>
                         <Link
                             href="mailto:hhh0015@gmail.com"

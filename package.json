@@ -9,9 +9,6 @@
         "lint": "eslint",
         "format": "prettier . --write",
         "format:check": "prettier . --check",
-        "prisma:generate": "prisma generate",
-        "prisma:migrate": "prisma migrate dev --name init",
-        "prisma:seed": "node prisma/seed.js",
         "postinstall": "prisma generate"
     },
     "dependencies": {

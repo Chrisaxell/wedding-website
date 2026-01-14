@@ -2,7 +2,7 @@
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
-import { useTranslations } from 'next-intl';
+import { useText, useRichText } from '@/components/TranslatedText';
 
 type AccountItem = {
     bank: string;
@@ -16,30 +16,28 @@ type Props = {
 };
 
 export function AccountAccordion({ brideGroomAccounts, brideParentsAccounts }: Props) {
-    const t = useTranslations('WeddingInvite');
+    const text = useText();
+    const richText = useRichText();
 
-    const copyToClipboard = (text: string) => {
-        navigator.clipboard.writeText(text);
+    const copyToClipboard = (textToCopy: string) => {
+        navigator.clipboard.writeText(textToCopy);
     };
 
     return (
         <div className="space-y-4">
-            {/* Introduction text */}
-            <p className="text-center text-sm leading-relaxed whitespace-pre-line text-zinc-600">
-                {t('ACCOUNTS_INTRO_TEXT')}
-            </p>
+            <p className="text-center text-sm leading-relaxed text-zinc-600">{richText('ACCOUNTS_INTRO_TEXT')}</p>
 
             <Accordion type="multiple" className="w-full">
                 {/* Bride & Groom Section */}
                 <AccordionItem value="bride-groom">
-                    <AccordionTrigger>{t('ACCOUNTS_BRIDE_GROOM_TITLE')}</AccordionTrigger>
+                    <AccordionTrigger>{text('ACCOUNTS_BRIDE_GROOM_TITLE')}</AccordionTrigger>
                     <AccordionContent>
                         <div className="space-y-2 pt-2">
                             {brideGroomAccounts.map((account, i) => (
                                 <div key={i} className="flex items-start gap-3 rounded-md border bg-white p-3">
                                     <div className="flex-1 text-sm">
-                                        <div className="font-medium text-zinc-800">
-                                            {account.bank} {account.number}
+                                        <div className="text-zinc-800">
+                                            {account.bank} <span className="font-medium">{account.number}</span>
                                         </div>
                                         <div className="mt-0.5 whitespace-pre-line text-zinc-600">{account.owner}</div>
                                     </div>
@@ -49,7 +47,7 @@ export function AccountAccordion({ brideGroomAccounts, brideParentsAccounts }: P
                                         onClick={() => copyToClipboard(account.number)}
                                         className="shrink-0 px-3"
                                     >
-                                        {t('ACCOUNTS_COPY')}
+                                        {text('ACCOUNTS_COPY')}
                                     </Button>
                                 </div>
                             ))}
@@ -60,14 +58,14 @@ export function AccountAccordion({ brideGroomAccounts, brideParentsAccounts }: P
                 {/* Bride's Parents Section */}
                 {brideParentsAccounts && brideParentsAccounts.length > 0 && (
                     <AccordionItem value="bride-parents">
-                        <AccordionTrigger>{t('ACCOUNTS_BRIDE_PARENTS_TITLE')}</AccordionTrigger>
+                        <AccordionTrigger>{text('ACCOUNTS_BRIDE_PARENTS_TITLE')}</AccordionTrigger>
                         <AccordionContent>
                             <div className="space-y-2 pt-2">
                                 {brideParentsAccounts.map((account, i) => (
                                     <div key={i} className="flex items-start gap-3 rounded-md border bg-white p-3">
                                         <div className="flex-1 text-sm">
-                                            <div className="font-medium text-zinc-800">
-                                                {account.bank} {account.number}
+                                            <div className="text-zinc-800">
+                                                {account.bank} <span className="font-medium">{account.number}</span>
                                             </div>
                                             <div className="mt-0.5 whitespace-pre-line text-zinc-600">
                                                 {account.owner}
@@ -79,7 +77,7 @@ export function AccountAccordion({ brideGroomAccounts, brideParentsAccounts }: P
                                             onClick={() => copyToClipboard(account.number)}
                                             className="shrink-0 px-3"
                                         >
-                                            {t('ACCOUNTS_COPY')}
+                                            {text('ACCOUNTS_COPY')}
                                         </Button>
                                     </div>
                                 ))}

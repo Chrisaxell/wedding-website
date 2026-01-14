@@ -16,13 +16,13 @@ import { WEDDING_EVENT } from '@/lib/wedding';
 import { getCookie } from '@/lib/cookies';
 import Image from 'next/image';
 import { ScrollReveal } from '@/components/ScrollReveal';
+import { TranslatedText } from '@/components/TranslatedText';
 
 export const dynamic = 'force-dynamic';
 
 export default async function Page() {
     const t = await getTranslations('WeddingInvite');
     const locale = await getLocale();
-    const bodyLines = t('INVITATION_BODY').split('\n');
 
     // Check if user has saved name from previous RSVP
     const savedGuestName = await getCookie('guest_name');
@@ -33,11 +33,6 @@ export default async function Page() {
 
     return (
         <>
-            {/* Preload all gallery images (server-side link preload) */}
-            {GALLERY.map((img) => (
-                <link key={img.src} rel="preload" as="image" href={img.src} />
-            ))}
-
             <main className="mx-auto w-full max-w-[430px] bg-white">
                 <TopControls />
                 <InviteHero
@@ -49,22 +44,28 @@ export default async function Page() {
                     className={'pt-8'}
                 />
 
-                <ScrollReveal threshold={1} className={'pt-5'}>
+                <ScrollReveal threshold={0.5} className={'pt-5'}>
                     <section className="px-6 py-10 text-center">
-                        <h2 className="mt-1 text-lg font-medium text-zinc-700">{t('INVITATION_HEADING')}</h2>
-                        <div className="mt-4 space-y-1 text-sm leading-relaxed">
-                            {bodyLines.map((line, i) => {
-                                // Empty line = paragraph break
-                                if (line === '') {
-                                    return <div key={i} className="h-3" />;
-                                }
-                                return (
-                                    <div key={i} className="block">
-                                        {line}
-                                    </div>
-                                );
-                            })}
-                        </div>
+                        <TranslatedText
+                            tKey="INVITATION_HEADING"
+                            as="h2"
+                            className="mt-1 text-lg font-medium text-zinc-700"
+                        />
+                        <TranslatedText
+                            tKey="INVITATION_BODY"
+                            as="div"
+                            className="mt-4 space-y-1 text-sm leading-relaxed"
+                        />
+                    </section>
+                </ScrollReveal>
+
+                <ScrollReveal threshold={1}>
+                    <section className="px-6 pb-10 text-center">
+                        <TranslatedText
+                            tKey="INVITATION_PARENTS"
+                            as="div"
+                            className="space-y-1 text-sm leading-relaxed"
+                        />
                     </section>
                 </ScrollReveal>
 
@@ -88,9 +89,13 @@ export default async function Page() {
                 <ScrollReveal threshold={0.5}>
                     <section className="px-6 py-10">
                         <p className="text-center text-[10px] tracking-[0.3em] text-zinc-400">INFORMATION</p>
-                        <h3 className="mb-6 text-center text-lg font-medium">{t('INFO_HEADING')}</h3>
+                        <TranslatedText tKey="INFO_HEADING" as="h3" className="mb-6 text-center text-lg font-medium" />
                         {/* Arrival notice */}
-                        <p className="mb-4 text-center text-sm text-zinc-600">{t('INFO_ARRIVAL_NOTICE')}</p>
+                        <TranslatedText
+                            tKey="INFO_ARRIVAL_NOTICE"
+                            as="p"
+                            className="mb-4 text-center text-sm text-zinc-600"
+                        />
                         <InfoTabs />
                     </section>
                 </ScrollReveal>
@@ -104,14 +109,24 @@ export default async function Page() {
                         <div className="text-center">
                             <p className="text-[10px] tracking-[0.3em] text-zinc-400">RSVP</p>
                             <h3 className="text-lg font-medium">
-                                {locale === 'ko' ? t('RSVP_SECTION_HEADING') : "Répondez s\'il vous plaît"}
+                                {locale === 'ko' ? (
+                                    <TranslatedText tKey="RSVP_SECTION_HEADING" />
+                                ) : (
+                                    "Répondez s'il vous plaît"
+                                )}
                             </h3>
                         </div>
                         <div className="mt-6 rounded-xl border bg-zinc-50 p-6">
-                            <p className="text-center text-sm whitespace-pre-line text-zinc-500">
-                                {t('RSVP_SECTION_SUB')}
-                            </p>
-                            <p className="mt-1 text-center text-xs font-medium text-zinc-600">{t('RSVP_DEADLINE')}</p>
+                            <TranslatedText
+                                tKey="RSVP_SECTION_SUB"
+                                as="p"
+                                className="text-center text-sm text-zinc-500"
+                            />
+                            <TranslatedText
+                                tKey="RSVP_DEADLINE"
+                                as="p"
+                                className="mt-1 text-center text-xs font-medium text-zinc-600"
+                            />
                             <RsvpSection guestName={savedGuestName} hasSeenRsvp={hasSeenRsvp} />
                         </div>
                     </section>
@@ -122,7 +137,11 @@ export default async function Page() {
                         <section className="px-6 pb-12">
                             <div className="text-center">
                                 <p className="text-[10px] tracking-[0.3em] text-zinc-400">GIFTS</p>
-                                <h3 className="text-lg font-medium">{t('ACCOUNTS_SECTION_HEADING')}</h3>
+                                <TranslatedText
+                                    tKey="ACCOUNTS_SECTION_HEADING"
+                                    as="h3"
+                                    className="text-lg font-medium"
+                                />
                             </div>
                             <div className="mt-6">
                                 <AccountAccordion
@@ -149,7 +168,11 @@ export default async function Page() {
                         <section className="px-6 pb-12">
                             <div className="text-center">
                                 <p className="text-[10px] tracking-[0.3em] text-zinc-400">GIFTS</p>
-                                <h3 className="text-lg font-medium">{t('ACCOUNTS_SECTION_HEADING')}</h3>
+                                <TranslatedText
+                                    tKey="ACCOUNTS_SECTION_HEADING"
+                                    as="h3"
+                                    className="text-lg font-medium"
+                                />
                             </div>
                             <div className="mt-6">
                                 <AccountAccordion
@@ -177,7 +200,6 @@ export default async function Page() {
                             height={800}
                             className="w-full opacity-90"
                         />
-                        {/* Removed text overlay figcaption */}
                     </figure>
                 </ScrollReveal>
 
