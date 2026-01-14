@@ -1,7 +1,7 @@
 'use client';
 
 import { useText } from '@/components/TranslatedText';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { GalleryDialog } from './GalleryDialog';
 import { GalleryImage } from './GalleryImage';
 import { Button } from '@/components/ui/button';
@@ -9,32 +9,14 @@ import { GALLERY } from '@/lib/gallery';
 
 // Note: gallery data is centralized in src/lib/gallery.ts
 
-// Preload gallery images on the client so expanding the gallery / opening dialog is instant
-// We use a lightweight Image() prefetch which leverages the browser cache.
-
-const INITIAL_ITEMS_PER_COLUMN_LEFT = 3; // Left column shows 3 images with 3rd cut off
-const INITIAL_ITEMS_PER_COLUMN_RIGHT = 2; // Right column shows only 2 images
-
 export function GalleryGrid() {
     const text = useText();
     const [openIndex, setOpenIndex] = useState<number | null>(null);
     const [isExpanded, setIsExpanded] = useState(false);
 
-    useEffect(() => {
-        if (typeof window === 'undefined') return;
-        GALLERY.forEach((img) => {
-            const i = new Image();
-            i.src = img.src;
-        });
-    }, []);
-
     // Alternate images between columns (odd indices in left, even indices in right)
     const leftColumn = GALLERY.filter((_, idx) => idx % 2 === 0);
     const rightColumn = GALLERY.filter((_, idx) => idx % 2 === 1);
-
-    // Limit displayed images when not expanded
-    const displayLeftColumn = isExpanded ? leftColumn : leftColumn.slice(0, INITIAL_ITEMS_PER_COLUMN_LEFT);
-    const displayRightColumn = isExpanded ? rightColumn : rightColumn.slice(0, INITIAL_ITEMS_PER_COLUMN_RIGHT);
 
     return (
         <section className="px-4 py-10">
@@ -44,13 +26,16 @@ export function GalleryGrid() {
             </div>
 
             <div className="relative mt-6">
-                <div className="grid grid-cols-2 gap-2 px-2">
-                    {/* Left Column - shows 2 full images + barely top of 3rd portrait */}
-                    <div
-                        className="flex flex-col gap-2"
-                        style={!isExpanded ? { maxHeight: '300px', overflow: 'hidden' } : undefined}
-                    >
-                        {displayLeftColumn.map((image, idx) => {
+                <div
+                    className="grid grid-cols-2 gap-2 px-2 transition-[max-height] duration-500 ease-in-out"
+                    style={{
+                        maxHeight: isExpanded ? '5000px' : '300px',
+                        overflow: 'hidden',
+                    }}
+                >
+                    {/* Left Column - all images prerendered */}
+                    <div className="flex flex-col gap-2">
+                        {leftColumn.map((image, idx) => {
                             const originalIndex = idx * 2;
                             return (
                                 <GalleryImage
@@ -65,12 +50,9 @@ export function GalleryGrid() {
                         })}
                     </div>
 
-                    {/* Right Column - shows only 2 full images */}
-                    <div
-                        className="flex flex-col gap-2"
-                        style={!isExpanded ? { maxHeight: '300px', overflow: 'hidden' } : undefined}
-                    >
-                        {displayRightColumn.map((image, idx) => {
+                    {/* Right Column - all images prerendered */}
+                    <div className="flex flex-col gap-2">
+                        {rightColumn.map((image, idx) => {
                             const originalIndex = idx * 2 + 1;
                             return (
                                 <GalleryImage
