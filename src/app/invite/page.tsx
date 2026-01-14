@@ -33,11 +33,6 @@ export default async function Page() {
 
     return (
         <>
-            {/* Preload all gallery images (server-side link preload) */}
-            {GALLERY.map((img) => (
-                <link key={img.src} rel="preload" as="image" href={img.src} />
-            ))}
-
             <main className="mx-auto w-full max-w-[430px] bg-white">
                 <TopControls />
                 <InviteHero

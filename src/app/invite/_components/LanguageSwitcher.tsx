@@ -18,7 +18,7 @@ const LOCALES: { code: string; label: string }[] = [
     { code: 'gn', label: 'Guaraní' },
 ];
 
-export default function LanguageSwitcher() {
+export default function LanguageSwitcher({ onSelect }: { onSelect?: () => void } = {}) {
     const router = useRouter();
     const [pending, startTransition] = useTransition();
 
@@ -27,6 +27,7 @@ export default function LanguageSwitcher() {
         startTransition(() => {
             router.refresh();
         });
+        onSelect?.();
     }
 
     return (
